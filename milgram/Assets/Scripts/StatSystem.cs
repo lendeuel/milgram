@@ -26,11 +26,6 @@ public class StatSystem : MonoBehaviour
 	public void AddValueToStat (Stats stat, float value)
 	{
 		stats [stat] += value;
-		
-		Debug.Log ("Health:" + GetValueForStat (Stats.health));
-		Debug.Log ("Willingness:" + GetValueForStat (Stats.willingness));
-		Debug.Log ("Willpower:" + GetValueForStat (Stats.willpower));
-		Debug.Log ("Tolerance:" + GetValueForStat (Stats.tolerance));
 	}
 
 	public void AddStat(Stats stat, float value)
@@ -62,5 +57,13 @@ public class StatSystem : MonoBehaviour
 	public Dictionary<Stats, float> GetStats()
 	{
 		return stats;
+	}
+
+	public void DebugReportStats()
+	{
+		Debug.Log ("Health:" + GetValueForStat (Stats.health));
+		Debug.Log ("Willingness:" + GetValueForStat (Stats.willingness));
+		Debug.Log ("Willpower:" + GetValueForStat (Stats.willpower));
+		Debug.Log ("Tolerance:" + GetValueForStat (Stats.tolerance));
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class OpenFile : MonoBehaviour 
 {
-	public GameObject fileOpen;
+	public GameObject fileToOpen;
 
 	// Use this for initialization
 	void Start () 
@@ -19,13 +19,13 @@ public class OpenFile : MonoBehaviour
 
 	void OnMouseUp()
 	{
-		if (fileOpen.activeSelf == false)
+		if (fileToOpen.activeSelf == false)
 		{
-			fileOpen.SetActive(true);
+			fileToOpen.SetActive(true);
 		}
 		else 
 		{
-			fileOpen.SetActive(false);
+			fileToOpen.SetActive(false);
 		}
 	}
 }

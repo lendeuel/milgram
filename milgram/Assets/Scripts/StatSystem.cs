@@ -15,16 +15,26 @@ public class StatSystem : MonoBehaviour
 
 	void Awake () 
 	{
-		stats = new Dictionary<Stats, float> ();	
+		stats = new Dictionary<Stats, float> ();
+
+		AddStat (Stats.health, 0.0f);
+		AddStat (Stats.willingness, 0.0f);
+		AddStat (Stats.willpower, 0.0f);
+		AddStat (Stats.tolerance, 0.0f);
 	}
-	
-	public void AddValueToStat(Stats stat, float value)
+
+	public void AddValueToStat (Stats stat, float value)
 	{
+		stats [stat] += value;
+		
 		Debug.Log ("Health:" + GetValueForStat (Stats.health));
 		Debug.Log ("Willingness:" + GetValueForStat (Stats.willingness));
 		Debug.Log ("Willpower:" + GetValueForStat (Stats.willpower));
 		Debug.Log ("Tolerance:" + GetValueForStat (Stats.tolerance));
+	}
 
+	public void AddStat(Stats stat, float value)
+	{		
 		if (!stats.ContainsKey (stat)) 
 		{
 			stats.Add(stat, value);

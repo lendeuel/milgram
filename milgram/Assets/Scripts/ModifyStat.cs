@@ -27,6 +27,5 @@ public class ModifyStat : MonoBehaviour
 		suspectsStats.AddValueToStat (StatSystem.Stats.willingness, willingnessModify);
 		suspectsStats.AddValueToStat (StatSystem.Stats.willpower, willpowerModify);
 		suspectsStats.AddValueToStat (StatSystem.Stats.tolerance, toleranceModify);
-
 	}
 }

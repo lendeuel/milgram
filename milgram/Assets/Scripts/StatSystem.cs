@@ -20,6 +20,11 @@ public class StatSystem : MonoBehaviour
 	
 	public void AddValueToStat(Stats stat, float value)
 	{
+		Debug.Log ("Health:" + GetValueForStat (Stats.health));
+		Debug.Log ("Willingness:" + GetValueForStat (Stats.willingness));
+		Debug.Log ("Willpower:" + GetValueForStat (Stats.willpower));
+		Debug.Log ("Tolerance:" + GetValueForStat (Stats.tolerance));
+
 		if (!stats.ContainsKey (stat)) 
 		{
 			stats.Add(stat, value);

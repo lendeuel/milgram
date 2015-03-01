@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class ListenerManager : MonoBehaviour 
 {
 	List<DragListener> listeners;
+
 	// Use this for initialization
 	void Awake () 
 	{

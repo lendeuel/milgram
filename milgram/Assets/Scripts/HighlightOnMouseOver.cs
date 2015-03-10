@@ -9,7 +9,7 @@ public class HighlightOnMouseOver : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		originalColor = renderer.material.color;
+		originalColor = GetComponent<Renderer>().material.color;
 
 		// If the user hasn't specified a highlight color, make it yellow
 		if (highlightColor == Color.clear) 
@@ -20,11 +20,11 @@ public class HighlightOnMouseOver : MonoBehaviour
 	
 	void OnMouseEnter()
 	{
-		renderer.material.color = highlightColor;
+		GetComponent<Renderer>().material.color = highlightColor;
 	}
 
 	void OnMouseExit()
 	{
-		renderer.material.color = originalColor;
+		GetComponent<Renderer>().material.color = originalColor;
 	}
 }

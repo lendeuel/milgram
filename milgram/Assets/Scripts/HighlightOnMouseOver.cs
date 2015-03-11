@@ -20,11 +20,11 @@ public class HighlightOnMouseOver : MonoBehaviour
 	
 	void OnMouseEnter()
 	{
-		GetComponent<Renderer>().material.color = highlightColor;
+		this.renderer.material.color = highlightColor;
 	}
 
 	void OnMouseExit()
 	{
-		GetComponent<Renderer>().material.color = originalColor;
+		this.renderer.material.color = originalColor;
 	}
 }

@@ -7,39 +7,54 @@ public class Suspect1Events : MonoBehaviour
 
 	void OnMouseUp()
 	{
-		if (objectNumber == 1) // Element 1
-		{
-			Debug.Log ("I'm an event for Element # 1");
-		}
-
-		else if (objectNumber == 2) // Element 2
-		{
-			Debug.Log ("I'm an event for Element # 2");
-		}
-
-		else if (objectNumber == 3) // Element 3
-		{
-			Debug.Log ("I'm an event for Element # 3");
-		}
-
-		else if (objectNumber == 4) // Element 4
-		{
-			Debug.Log ("I'm an event for Element # 4");
-		}
-
-		else if (objectNumber == 5) // Name
+		if (objectNumber == 1) // Name
 		{
 			Debug.Log ("I'm an event for Name");
 		}
 
-		else if (objectNumber == 6) // Date of Birth
+		else if (objectNumber == 2) // DOB
 		{
 			Debug.Log ("I'm an event for Date of Birth");
 		}
 
-		else if (objectNumber == 7) // Mugshot
+		else if (objectNumber == 3) // Location
 		{
-			Debug.Log ("I'm an event for Mugshot");
+			Debug.Log ("I'm an event for Location");
+		}
+
+		else if (objectNumber == 4) // Previous Convictions
+		{
+			Debug.Log ("I'm an event for Previous Convictions");
+		}
+		
+		else if (objectNumber == 5) // Personal Affects
+		{
+			Debug.Log ("I'm an event for Personal Affects");
+		}
+
+		else if (objectNumber == 6) // Stats
+		{
+			Debug.Log ("I'm an event for Stats");
+		}
+
+		else if (objectNumber == 7) // Occupation
+		{
+			Debug.Log ("I'm an event for Occupation");
+		}
+
+		else if (objectNumber == 8) // Known Affiliates
+		{
+			Debug.Log ("I'm an event for Known Affiliates");
+		}
+
+		else if (objectNumber == 9) // Reason For Arrest
+		{
+			Debug.Log ("I'm an event for Reason For Arrest");
+		}
+
+		else if (objectNumber == 10) // Portrait
+		{
+			Debug.Log ("I'm an event for Portrait");
 		}
 	}
 }

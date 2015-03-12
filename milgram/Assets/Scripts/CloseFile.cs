@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CloseFile : MonoBehaviour 
 {
-
 	// Use this for initialization
 	void Start () 
 	{

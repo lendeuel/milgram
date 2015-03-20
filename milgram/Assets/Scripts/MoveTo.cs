@@ -11,6 +11,9 @@ public class MoveTo : ButtonAction
 {
 	//public Direction direction;
 	public Vector3 location;
+	private Vector3 destination; 
+	private Vector3 placeToMove = new Vector3 (29,4,-20); 
+	private int numTrack = 0;
 	public float speed;
 	private bool mMoving=false;
 
@@ -22,14 +25,20 @@ public class MoveTo : ButtonAction
 	void Update () 
 	{
 		if(mMoving)
-		{
-			transform.position = Vector3.MoveTowards(transform.position, location, speed*Time.deltaTime);
+		{			
+			transform.position = Vector3.MoveTowards(transform.position, destination, speed*Time.deltaTime);
 		}
 	}
 
 	public override void takeAction()
 	{
-		Debug.Log ("actioning");
+		numTrack++;
+		if(numTrack % 2 == 1) {
+			destination = location;
+		}
+		else if(numTrack % 2 == 0){
+			destination = placeToMove;
+		}
 		mMoving=true;
 	}
 }

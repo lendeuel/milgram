@@ -33,7 +33,7 @@ public class TextScroller : ButtonAction
 					displayAll=true;
 				}
 				string text = textToLoad [index].Substring (0, stoppingPoint);
-				GetComponent<Text> ().text = text;
+				GetComponent<Text> ().text = textToLoad[index];
 			}
 		}
 	}

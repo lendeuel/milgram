@@ -32,13 +32,19 @@ public class MoveTo : ButtonAction
 
 	public override void takeAction()
 	{
-		numTrack++;
-		if(numTrack % 2 == 1) {
-			destination = location;
-		}
-		else if(numTrack % 2 == 0){
-			destination = placeToMove;
-		}
-		mMoving=true;
+		// Commented out for now.  For some reason the tool won't properly drop 
+		// in the drawer if the toolrack has been pulled out.
+
+//		if (!FindObjectOfType<TypeWriter>().isChatWindowOpen && !FindObjectOfType<OpenFile>().fileToOpen.activeSelf)
+//		{
+//			numTrack++;
+//			if(numTrack % 2 == 1) {
+//				destination = location;
+//			}
+//			else if(numTrack % 2 == 0){
+//				destination = placeToMove;
+//			}
+//			mMoving=true;
+//		}
 	}
 }

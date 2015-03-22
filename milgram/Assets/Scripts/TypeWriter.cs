@@ -42,35 +42,6 @@ public class TypeWriter : MonoBehaviour
 		theTextBox.text = "";
 	}
 
-	public struct TypeMessageInfo
-	{
-		string messageToType;
-		int whoIsTalking;
-		AutoResetEvent autoEvent;
-
-		public TypeMessageInfo(string text, int number, AutoResetEvent e)
-		{
-			messageToType = text;
-			whoIsTalking = number;
-			autoEvent = e;
-		}
-
-		public AutoResetEvent GetAutoEvent()
-		{
-			return autoEvent;
-		}
-
-		public string GetMessage()
-		{
-			return messageToType;
-		}
-
-		public int GetWhosTalking()
-		{
-			return whoIsTalking;
-		}
-	}
-
 	public void Dialog(Dictionary<string, int> dict)
 	{
 		foreach(KeyValuePair<string, int> kvp in dict)
@@ -80,6 +51,17 @@ public class TypeWriter : MonoBehaviour
 		}
 
 		TypeMessage ((string)myQueueMessages.Dequeue (), (int)myQueueSpeakers.Dequeue ());		
+	}
+
+	public void QueueMessage(string messageToType, int whosTalking)
+	{
+		myQueueMessages.Enqueue(messageToType);
+		myQueueSpeakers.Enqueue(whosTalking);
+
+		if (isChatWindowOpen == false)
+		{
+			TypeMessage ((string)myQueueMessages.Dequeue (), (int)myQueueSpeakers.Dequeue ());	
+		}
 	}
 
 	public void TypeMessage(string messageToType, int whosTalking)

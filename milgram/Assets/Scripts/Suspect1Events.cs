@@ -12,8 +12,6 @@ public class Suspect1Events : MonoBehaviour
 
 	void Start()
 	{
-
-
 		tw = FindObjectOfType<TypeWriter> ();
 	}
 
@@ -27,23 +25,22 @@ public class Suspect1Events : MonoBehaviour
 			{
 				Debug.Log ("I'm an event for Name");
 
-				dict.Add("Hi James, my name is Harvey.", 0);
-				dict.Add("Hey Harvey, nice to meet you.", 1);
-				dict.Add("Not likewise.  Tell me why you are here.", 0);
+//				dict.Add("Hi James, my name is Harvey.", 0);
+//				dict.Add("Hey Harvey, nice to meet you.", 1);
+//				dict.Add("Not likewise.  Tell me why you are here.", 0);
+//				tw.Dialog(dict);
 
-				foreach (KeyValuePair<string, int> kvp in dict)
-				{
-					Debug.Log ("Key:" + kvp.Key + " Value:" + kvp.Value);
-				}
-
-				tw.Dialog(dict);
+				// The Above can be done like so.  It should be done this way in case another message is currently being displayed.
+				tw.QueueMessage("Hi James, my name is Harvey.", 0);
+				tw.QueueMessage("Hey Harvey, nice to meet you.", 1);
+				tw.QueueMessage("Not likewise.  Tell me why you are here.", 0);
 			}
 
 			else if (objectNumber == 2) // DOB
 			{
 				Debug.Log ("I'm an event for Date of Birth");
 
-				tw.TypeMessage("You're too old to be getting in trouble.", 0);
+				tw.QueueMessage("You're too old to be getting in trouble.", 0);
 			}
 
 			else if (objectNumber == 3) // Location
@@ -85,7 +82,7 @@ public class Suspect1Events : MonoBehaviour
 			{
 				Debug.Log ("I'm an event for Portrait");
 
-				tw.TypeMessage("Odd, I don't remember having blue eyes.  Are you sure I'm your guy?", 1);
+				tw.QueueMessage("Odd, I don't remember having blue eyes.  Are you sure I'm your guy?", 1);
 			}
 		}
 	}

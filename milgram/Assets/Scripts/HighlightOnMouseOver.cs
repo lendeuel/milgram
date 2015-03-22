@@ -6,9 +6,13 @@ public class HighlightOnMouseOver : MonoBehaviour
 	private Color originalColor;
 	public Color highlightColor;
 
+	private TypeWriter typeWriter;
+
 	// Use this for initialization
 	void Start () 
 	{
+		typeWriter = FindObjectOfType<TypeWriter> ();
+
 		originalColor = GetComponent<Renderer>().material.color;
 
 		// If the user hasn't specified a highlight color, make it yellow
@@ -20,7 +24,10 @@ public class HighlightOnMouseOver : MonoBehaviour
 	
 	void OnMouseEnter()
 	{
-		this.renderer.material.color = highlightColor;
+		if (typeWriter.isChatWindowOpen == false)
+		{
+			this.renderer.material.color = highlightColor;
+		}
 	}
 
 	void OnMouseExit()

@@ -15,7 +15,7 @@ public class MoveTo : ButtonAction
 	private Vector3 placeToMove = new Vector3 (29,4,-20); 
 	private int numTrack = 0;
 	public float speed;
-	private bool mMoving=false;
+	private bool mMoving = false;
 
 	void Start () 
 	{

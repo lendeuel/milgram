@@ -3,10 +3,11 @@ using System.Collections;
 
 public class CloseFile : MonoBehaviour 
 {
-	// Use this for initialization
-	void Start () 
-	{
+	TypeWriter tw;
 	
+	void Start()
+	{
+		tw = FindObjectOfType<TypeWriter> ();
 	}
 	
 	// Update is called once per frame
@@ -17,6 +18,9 @@ public class CloseFile : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		this.transform.parent.gameObject.SetActive (false);
+		if (tw.isChatWindowOpen == false)
+		{
+			this.transform.parent.gameObject.SetActive (false);
+		}
 	}
 }

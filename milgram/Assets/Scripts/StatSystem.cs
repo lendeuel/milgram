@@ -17,10 +17,10 @@ public class StatSystem : MonoBehaviour
 	{
 		stats = new Dictionary<Stats, float> ();
 
-		AddStat (Stats.health, 0.0f);
-		AddStat (Stats.willingness, 0.0f);
-		AddStat (Stats.willpower, 0.0f);
-		AddStat (Stats.tolerance, 0.0f);
+		AddStat (Stats.health, 5.0f);
+		AddStat (Stats.willingness, 10.0f);
+		AddStat (Stats.willpower, 2.0f);
+		AddStat (Stats.tolerance, 7.0f);
 	}
 
 	public void AddValueToStat (Stats stat, float value)

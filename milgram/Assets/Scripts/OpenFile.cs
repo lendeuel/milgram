@@ -5,10 +5,11 @@ public class OpenFile : MonoBehaviour
 {
 	public GameObject fileToOpen;
 
-	// Use this for initialization
-	void Start () 
-	{
+	TypeWriter tw;
 	
+	void Start()
+	{
+		tw = FindObjectOfType<TypeWriter> ();
 	}
 	
 	// Update is called once per frame
@@ -19,13 +20,16 @@ public class OpenFile : MonoBehaviour
 
 	void OnMouseUp()
 	{
-		if (fileToOpen.activeSelf == false)
+		if (tw.isChatWindowOpen == false)
 		{
-			fileToOpen.SetActive(true);
-		}
-		else 
-		{
-			fileToOpen.SetActive(false);
+			if (fileToOpen.activeSelf == false)
+			{
+				fileToOpen.SetActive(true);
+			}
+			else 
+			{
+				fileToOpen.SetActive(false);
+			}
 		}
 	}
 }

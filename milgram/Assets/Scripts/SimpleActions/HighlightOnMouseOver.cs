@@ -4,27 +4,16 @@ using System.Collections;
 public class HighlightOnMouseOver : MonoBehaviour 
 {
 	private Color originalColor;
-	public Color highlightColor;
-
-	private TypeWriter typeWriter;
-
-	// Use this for initialization
+	public Color highlightColor = Color.yellow;
+	
 	void Start () 
 	{
-		typeWriter = FindObjectOfType<TypeWriter> ();
-
 		originalColor = GetComponent<Renderer>().material.color;
-
-		// If the user hasn't specified a highlight color, make it yellow
-		if (highlightColor == Color.clear) 
-		{
-			highlightColor = Color.yellow;
-		}
 	}
 	
 	void OnMouseEnter()
 	{
-		if (typeWriter.isChatWindowOpen == false)
+		if (DataHolder.allowInteractions)
 		{
 			this.renderer.material.color = highlightColor;
 		}

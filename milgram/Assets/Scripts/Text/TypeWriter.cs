@@ -21,14 +21,14 @@ public class TypeWriter : MonoBehaviour
 	string message;
 	Collider thisCollider; 
 
-	Queue myQueueMessages;
-	Queue myQueueSpeakers;
+	Queue<string> myQueueMessages;
+	Queue<int> myQueueSpeakers;
 
 	// Use this for initialization
 	void Start () 
 	{
-		myQueueMessages = new Queue ();
-		myQueueSpeakers = new Queue ();
+		myQueueMessages = new Queue<string> ();
+		myQueueSpeakers = new Queue<int> ();
 
 		thisCollider = this.collider;
 		thisCollider.enabled = false;

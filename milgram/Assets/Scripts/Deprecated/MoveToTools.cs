@@ -1,13 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-public enum Direction
-{
-	up=0,down,right,left
-};
-
-public class MoveTo : ButtonAction
+public class MoveToTools : ButtonAction
 {
 	//public Direction direction;
 	public Vector3 location;
@@ -35,7 +29,7 @@ public class MoveTo : ButtonAction
 		// Commented out for now.  For some reason the tool won't properly drop 
 		// in the drawer if the toolrack has been pulled out.
 
-		if (!FindObjectOfType<TypeWriter>().isChatWindowOpen && !FindObjectOfType<OpenFile>().fileToOpen.activeSelf)
+		if (DataHolder.allowInteractions)
 		{
 			numTrack++;
 			if(numTrack % 2 == 1) {

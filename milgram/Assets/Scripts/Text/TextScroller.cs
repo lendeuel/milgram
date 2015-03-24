@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 public class TextScroller : ButtonAction
 {
+	public interface TextScrollerEndedResponder
+	{
+		void textScrollerEnded();
+	}
+
 	public string[] textToLoad;
 	public float lettersPerSecond;
 	public MonoBehaviour endedResponse;
@@ -13,9 +18,19 @@ public class TextScroller : ButtonAction
 
 	void Update()
 	{
+		DataHolder.allowInteractions = false;
 		if(index>textToLoad.Length+1)
 		{
-
+			if(endedResponse is TextScrollerEndedResponder)
+			{
+				(endedResponse as TextScrollerEndedResponder).textScrollerEnded();
+			}
+			else
+			{
+				Debug.Log("Ended responder must implement TextScrollerEndedResponder");
+			}
+			DataHolder.allowInteractions = true;
+			Destroy(gameObject);
 		}
 		else
 		{
@@ -33,7 +48,7 @@ public class TextScroller : ButtonAction
 					displayAll=true;
 				}
 				string text = textToLoad [index].Substring (0, stoppingPoint);
-				GetComponent<Text> ().text = textToLoad[index];
+				GetComponent<Text> ().text = text;
 			}
 		}
 	}

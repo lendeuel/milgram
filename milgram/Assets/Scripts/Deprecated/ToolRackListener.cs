@@ -10,6 +10,9 @@ public class DrawerToolListener : SimpleDragListener
 
 	public override void OnDrop (GameObject drop)
 	{
-
+		if(drop.tag == "Tool")
+		{
+			drop.transform.parent = transform;
+		}
 	}
 }

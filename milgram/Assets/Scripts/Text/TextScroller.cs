@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class TextScroller : ButtonAction
@@ -9,17 +10,27 @@ public class TextScroller : ButtonAction
 		void textScrollerEnded();
 	}
 
-	public string[] textToLoad;
+	public bool destroyOnComplete=true;
+	public string[] linesToLoad;
 	public float lettersPerSecond;
 	public MonoBehaviour endedResponse;
 	private float mTimeElapsed=0;
 	private int index = 0;
 	private bool displayAll=false;
+	private List<string> lines;
+
+	void Start()
+	{
+		foreach(string s in linesToLoad)
+		{
+			lines.Add (s);
+		}
+	}
 
 	void Update()
 	{
 		DataHolder.allowInteractions = false;
-		if(index>textToLoad.Length+1)
+		if(index>lines.Count+1)
 		{
 			if(endedResponse is TextScrollerEndedResponder)
 			{
@@ -30,27 +41,36 @@ public class TextScroller : ButtonAction
 				Debug.Log("Ended responder must implement TextScrollerEndedResponder");
 			}
 			DataHolder.allowInteractions = true;
-			Destroy(gameObject);
+			if(destroyOnComplete)
+			{
+				Destroy(gameObject);
+			}
 		}
 		else
 		{
 			if(displayAll)
 			{
-				GetComponent<Text> ().text = textToLoad[index];
+				GetComponent<Text> ().text = lines[index];
 			}
 			else
 			{
 				mTimeElapsed += Time.deltaTime;
 				int stoppingPoint = (int)(mTimeElapsed * lettersPerSecond);
-				if(stoppingPoint>textToLoad[index].Length)
+				if(stoppingPoint>lines[index].Length)
 				{
-					stoppingPoint=textToLoad[index].Length;
+					stoppingPoint=lines[index].Length;
 					displayAll=true;
 				}
-				string text = textToLoad [index].Substring (0, stoppingPoint);
+				string text = lines [index].Substring (0, stoppingPoint);
 				GetComponent<Text> ().text = text;
 			}
 		}
+	}
+
+	public void addString(string s)
+	{
+		DataHolder.allowInteractions = false;
+		lines.Add (s);
 	}
 
 	public override void takeAction()

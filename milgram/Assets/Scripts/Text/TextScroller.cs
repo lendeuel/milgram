@@ -39,18 +39,14 @@ public class TextScroller : ButtonAction
 
 	void Start()
 	{
-<<<<<<< HEAD
-		lines = new List<LineAndSpeaker> ();
-=======
+
 		lines = new List<LineAndSpeaker>();
 
->>>>>>> 15b4ac7f149c751d0e2a0979161b3d0e7d615a0d
 		foreach(LineAndSpeaker s in linesToLoad)
 		{
 			//Debug.Log(s.line);
 			lines.Add (s);
 		}
-<<<<<<< HEAD
 		chatWindow = GetComponentInParent<MeshRenderer> ();
 		if(index<lines.Count)
 		{
@@ -60,18 +56,6 @@ public class TextScroller : ButtonAction
 				{
 					chatWindow.material = c.material;
 				}
-=======
-
-		int tempCount = 0;
-
-		foreach(CharacterToMaterial c in characterToMaterialMapping)
-		{
-			if(c.character == lines[tempCount].speaker)
-			{
-				GetComponent<MeshRenderer> ().material = c.material;
-
-				tempCount++;
->>>>>>> 15b4ac7f149c751d0e2a0979161b3d0e7d615a0d
 			}
 		}
 		transform.parent.gameObject.SetActive (false);
@@ -103,8 +87,6 @@ public class TextScroller : ButtonAction
 					Destroy(this);
 				}
 			}
-<<<<<<< HEAD
-=======
 
 			DataHolder.allowInteractions = true;
 
@@ -112,7 +94,6 @@ public class TextScroller : ButtonAction
 			{
 				Destroy(gameObject);
 			}
->>>>>>> 15b4ac7f149c751d0e2a0979161b3d0e7d615a0d
 		}
 		else
 		{

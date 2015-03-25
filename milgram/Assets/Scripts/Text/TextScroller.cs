@@ -15,7 +15,7 @@ public class LineAndSpeaker
 public class CharacterToMaterial
 {
 	public Characters character;
-	public Material material;
+	public Sprite material;
 }
 
 public class TextScroller : ButtonAction
@@ -34,7 +34,7 @@ public class TextScroller : ButtonAction
 	private bool displayAll=false;
 	private List<LineAndSpeaker> lines;
 	public CharacterToMaterial[] characterToMaterialMapping;
-	private MeshRenderer chatWindow;
+	private Image chatWindow;
 	private bool hasEnded=false;
 
 	void Start()
@@ -47,14 +47,14 @@ public class TextScroller : ButtonAction
 			//Debug.Log(s.line);
 			lines.Add (s);
 		}
-		chatWindow = GetComponentInParent<MeshRenderer> ();
+		chatWindow = GetComponentInParent<Image> ();
 		if(index<lines.Count)
 		{
 			foreach(CharacterToMaterial c in characterToMaterialMapping)
 			{
 				if(c.character == lines[index].speaker)
 				{
-					chatWindow.material = c.material;
+					chatWindow.sprite = c.material;
 				}
 			}
 		}
@@ -162,7 +162,8 @@ public class TextScroller : ButtonAction
 					{
 						if(c.character == lines[index].speaker)
 						{
-							chatWindow.material = c.material;
+							Debug.Log("changing sprite");
+							chatWindow.sprite = c.material;
 						}
 					}
 				}

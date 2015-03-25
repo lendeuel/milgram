@@ -6,7 +6,7 @@ public class MoveToTools : ButtonAction
 	//public Direction direction;
 	public Vector3 location;
 	private Vector3 destination; 
-	private Vector3 placeToMove = new Vector3 (29,4,-20); 
+	private Vector3 placeToMove = new Vector3 (185,25,-12); 
 	private int numTrack = 0;
 	public float speed;
 	private bool mMoving = false;

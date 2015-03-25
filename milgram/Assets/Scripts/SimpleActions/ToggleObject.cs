@@ -3,17 +3,17 @@ using System.Collections;
 
 public class ToggleObject : ButtonAction 
 {
-	public GameObject fileToOpen;
+	public GameObject objectToToggle;
 
 	public override void takeAction ()
 	{
-		if(fileToOpen.activeSelf)
+		if(objectToToggle.activeSelf)
 		{
-			fileToOpen.SetActive (false);
+			objectToToggle.SetActive (false);
 		}
 		else
 		{
-			fileToOpen.SetActive (true);
+			objectToToggle.SetActive (true);
 		}
 	}
 

@@ -9,7 +9,7 @@ public class Suspect1Events : MonoBehaviour
 
 	TypeWriter tw;
 
-	Dictionary<string, int> dict;
+	//Dictionary<string, int> dict;
 
 	void Start()
 	{
@@ -18,7 +18,7 @@ public class Suspect1Events : MonoBehaviour
 
 	void OnMouseUp()
 	{
-		dict = new Dictionary<string, int> ();
+		//dict = new Dictionary<string, int> ();
 
 		if (tw.isChatWindowOpen == false)
 		{

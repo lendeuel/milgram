@@ -78,6 +78,6 @@ public class DropTool : MonoBehaviour
 		}
 
 		// Modify Stats
-		col.gameObject.GetComponent<ModifyStat>().modify();
+		col.gameObject.GetComponent<ModifyStats>().modify();
 	}
 }

@@ -5,7 +5,6 @@ public class Button : MonoBehaviour
 {
 	public ButtonAction action;
 
-
 	void Start()
 	{
 	}

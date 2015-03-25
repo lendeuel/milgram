@@ -25,7 +25,6 @@ public class TextScroller : ButtonAction
 		void textScrollerEnded();
 	}
 
-
 	public bool destroyOnComplete=true;
 	public LineAndSpeaker[] linesToLoad;
 	public float lettersPerSecond=3;
@@ -38,15 +37,22 @@ public class TextScroller : ButtonAction
 
 	void Start()
 	{
+		lines = new List<LineAndSpeaker>();
+
 		foreach(LineAndSpeaker s in linesToLoad)
 		{
 			lines.Add (s);
 		}
+
+		int tempCount = 0;
+
 		foreach(CharacterToMaterial c in characterToMaterialMapping)
 		{
-			if(c.character == lines[index].speaker)
+			if(c.character == lines[tempCount].speaker)
 			{
 				GetComponent<MeshRenderer> ().material = c.material;
+
+				tempCount++;
 			}
 		}
 	}
@@ -67,7 +73,9 @@ public class TextScroller : ButtonAction
 					Debug.Log("Ended responder must implement TextScrollerEndedResponder");
 				}
 			}
+
 			DataHolder.allowInteractions = true;
+
 			if(destroyOnComplete)
 			{
 				Destroy(gameObject);

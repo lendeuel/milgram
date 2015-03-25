@@ -12,7 +12,7 @@ public class Button : MonoBehaviour
 
 	void OnMouseUp()
 	{
-		if(DataHolder.allowInteractions)
+		if(DataHolder.allowInteractions || action is TextScroller)
 		{
 			action.takeAction();
 		}

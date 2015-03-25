@@ -35,42 +35,56 @@ public class TextScroller : ButtonAction
 	private bool displayAll=false;
 	private List<LineAndSpeaker> lines;
 	public CharacterToMaterial[] characterToMaterialMapping;
+	private MeshRenderer chatWindow;
+	private bool hasEnded=false;
 
 	void Start()
 	{
+		lines = new List<LineAndSpeaker> ();
 		foreach(LineAndSpeaker s in linesToLoad)
 		{
+			//Debug.Log(s.line);
 			lines.Add (s);
 		}
-		foreach(CharacterToMaterial c in characterToMaterialMapping)
+		chatWindow = GetComponentInParent<MeshRenderer> ();
+		if(index<lines.Count)
 		{
-			if(c.character == lines[index].speaker)
+			foreach(CharacterToMaterial c in characterToMaterialMapping)
 			{
-				GetComponent<MeshRenderer> ().material = c.material;
+				if(c.character == lines[index].speaker)
+				{
+					chatWindow.material = c.material;
+				}
 			}
 		}
+		transform.parent.gameObject.SetActive (false);
 	}
 
 	void Update()
 	{
 		DataHolder.allowInteractions = false;
-		if(index>lines.Count+1)
+		if(index>=lines.Count)
 		{
-			if(endedResponse!=null)
+			if(!hasEnded)
 			{
-				if(endedResponse is TextScrollerEndedResponder)
+				if(endedResponse!=null)
 				{
-					(endedResponse as TextScrollerEndedResponder).textScrollerEnded();
+					if(endedResponse is TextScrollerEndedResponder)
+					{
+						(endedResponse as TextScrollerEndedResponder).textScrollerEnded();
+					}
+					else
+					{
+						Debug.Log("Ended responder must implement TextScrollerEndedResponder");
+					}
 				}
-				else
+				hasEnded=true;
+				Debug.Log("good im here");
+				DataHolder.allowInteractions = true;
+				if(destroyOnComplete)
 				{
-					Debug.Log("Ended responder must implement TextScrollerEndedResponder");
+					Destroy(this);
 				}
-			}
-			DataHolder.allowInteractions = true;
-			if(destroyOnComplete)
-			{
-				Destroy(gameObject);
 			}
 		}
 		else
@@ -96,8 +110,29 @@ public class TextScroller : ButtonAction
 
 	public void addString(LineAndSpeaker s)
 	{
+		hasEnded = false;
 		DataHolder.allowInteractions = false;
 		lines.Add (s);
+		if(index>=lines.Count)
+		{
+			mTimeElapsed = 0;
+		}
+	}
+
+	public void addStrings(LineAndSpeaker[] s)
+	{
+		hasEnded = false;
+		Debug.Log (lines.Count);
+		DataHolder.allowInteractions = false;
+		foreach(LineAndSpeaker l in s)
+		{
+			lines.Add (l);
+		}
+		Debug.Log (lines.Count);
+		foreach(LineAndSpeaker l in lines)
+		{
+			Debug.Log(l.line);
+		}
 		if(index>lines.Count)
 		{
 			mTimeElapsed = 0;
@@ -107,22 +142,33 @@ public class TextScroller : ButtonAction
 	public override void takeAction()
 	{
 		Debug.Log ("box clicked");
-		if(displayAll)
+		if(index<lines.Count)
 		{
-			mTimeElapsed = 0;
-			index++;
-			foreach(CharacterToMaterial c in characterToMaterialMapping)
+			if(displayAll)
 			{
-				if(c.character == lines[index].speaker)
+				mTimeElapsed = 0;
+				index++;
+				if(index<lines.Count)
 				{
-					GetComponent<MeshRenderer> ().material = c.material;
+					foreach(CharacterToMaterial c in characterToMaterialMapping)
+					{
+						if(c.character == lines[index].speaker)
+						{
+							chatWindow.material = c.material;
+						}
+					}
 				}
+				displayAll=false;
 			}
-			displayAll=false;
+			else
+			{
+				displayAll=true;
+			}
 		}
-		else
-		{
-			displayAll=true;
-		}
+	}
+
+	void OnMouseUp()
+	{
+		//takeAction ();
 	}
 }

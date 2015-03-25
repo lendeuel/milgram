@@ -10,6 +10,10 @@ public class DropBoxListener : SimpleDragListener
 	
 	public override void OnDrop (GameObject drop)
 	{
-		
+		if (drop.GetComponent<ModifyStats>() != null)
+			drop.GetComponent<ModifyStats>().modify();
+
+		if (drop.GetComponent<DialogQueuer>() != null)
+			drop.GetComponent<DialogQueuer>().takeAction();
 	}
 }

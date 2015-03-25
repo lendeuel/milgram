@@ -5,9 +5,17 @@ public class Drag : MonoBehaviour
 {
 	Vector3 screenPoint;
 	Vector3 offset;
+	Vector3 originalLocation;
+
+	void Start()
+	{
+
+	}
 
 	void OnMouseDown()
 	{
+		originalLocation = this.transform.position;
+
 		if(DataHolder.allowInteractions)
 		{
 			screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
@@ -17,7 +25,7 @@ public class Drag : MonoBehaviour
 
 	void OnMouseDrag()
 	{
-		if(DataHolder.allowInteractions)
+		if(DataHolder.allowInteractions)  
 		{
 			Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
 			Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
@@ -30,6 +38,7 @@ public class Drag : MonoBehaviour
 		if(DataHolder.allowInteractions)
 		{
 			GameObject.FindObjectOfType<ListenerManager>().OnDrop(gameObject);
+			this.transform.position = originalLocation;
 		}
 	}
 }

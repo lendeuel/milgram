@@ -25,7 +25,23 @@ public class HighlightOnMouseOver : MonoBehaviour
 		}
 	}
 
+	void OnMouseDown() {
+		this.renderer.material.color = originalColor;
+	}
+	
+	void OnMouseUp() {
+		if (DataHolder.allowInteractions)
+		{
+			this.renderer.material.color = highlightColor;
+		}
+	}
+
 	void OnMouseExit()
+	{
+		this.renderer.material.color = originalColor;
+	}
+
+	void OnMouseDrag()
 	{
 		this.renderer.material.color = originalColor;
 	}

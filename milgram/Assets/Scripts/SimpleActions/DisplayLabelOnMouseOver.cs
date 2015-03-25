@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Fades the label from 0 alpha to 1 alpha over time when the mouse hovers over it
+//Fades the label from 1 alpha to 0 alpha over time when the mouse is no longer over it or the player has "grabbed" the object
+
 public class DisplayLabelOnMouseOver : MonoBehaviour 
 {
 	private Renderer thisRenderer;
@@ -14,8 +17,20 @@ public class DisplayLabelOnMouseOver : MonoBehaviour
 	
 	void OnMouseEnter()
 	{
-		//CANT GET THIS TO WORK FOR SOME REASON
 		thisRenderer.material.color = new Color (1f, 1f, 1f, Mathf.Lerp(0f,1f,55f));
+	}
+
+	void OnMouseDown() {
+		thisRenderer.material.color = new Color (1f, 1f, 1f, Mathf.Lerp(1f,0f,55f));
+	}
+
+	void OnMouseUp() {
+		thisRenderer.material.color = new Color (1f, 1f, 1f, Mathf.Lerp(0f,1f,55f));
+	}
+
+	void OnMouseDrag()
+	{
+		thisRenderer.material.color = new Color (1f, 1f, 1f, Mathf.Lerp(1f,0f,55f));
 	}
 	
 	void OnMouseExit()

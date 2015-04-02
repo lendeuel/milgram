@@ -16,6 +16,6 @@ public class SubtractTime : ButtonAction
 
 	public override void takeAction()
 	{
-		t.SubtractTime(days,hours,minutes);
+		if (!DataHolder.isGameOver)	t.SubtractTime(days,hours,minutes);
 	}
 }

@@ -58,7 +58,8 @@ public class TimeManager : MonoBehaviour
 	// This is called every time defaultIntervalInSeconds has passed.  Each time it is called, a minute is taken off the time left.
 	void OnTimedEvent(object source, ElapsedEventArgs e)
 	{
-		SubtractTime(0,0,1);
+		if (!DataHolder.isGameOver) SubtractTime(0,0,1);
+		else t.Close();
 	}
 
 	public void SubtractTime(int days, int hours, int minutes)
@@ -147,13 +148,14 @@ public class TimeManager : MonoBehaviour
 		children[4].material = numbers[minute1];
 		children[5].material = numbers[minute2];
 
-
 		needsUpdate = false;
+
+		if (startingDays <= 0 && startingHours <= 0 && startingMinutes <= 0) DataHolder.isGameOver = true;
+	
 	}
 
 	void OnApplicationQuit()
 	{
-		t.Stop();
-		t.Dispose();
+		if (!DataHolder.isGameOver) t.Close();
 	}
 }

@@ -2,7 +2,8 @@ fileFormatVersion: 2
 guid: 60a1b458190df4b479ba251e08cefd0c
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - chatWindow: {fileID: 138352, guid: 0a4a8564c252441c79daa654138e4f88, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

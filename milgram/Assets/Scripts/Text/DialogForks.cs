@@ -16,7 +16,6 @@ namespace AssemblyCSharp
 		public MonoBehaviour endedResponse;
 		public LineAndSpeaker[] lines;
 
-
 		public bool getHasBeenQueued()
 		{
 			return hasBeenQueued;
@@ -40,7 +39,7 @@ namespace AssemblyCSharp
 
 	public class DialogForks : ButtonAction
 	{
-		public TheseDialogQueuers[] dialogQueuers;
+		public List<TheseDialogQueuers> dialogQueuers;
 		public CharacterToMaterial[] characterToMaterialMapping;
 		public GameObject chatWindow;
 
@@ -62,19 +61,55 @@ namespace AssemblyCSharp
 
 		public override void takeAction ()
 		{
-			foreach(TheseDialogQueuers d in dialogQueuers)
+			if (dialogQueuers.Count != 0)
 			{
-				d.getThisDialogQueuer().takeAction();
-				if (d.isKey) 
+				// This prints one dialogue each time the item is clicked
+				bool dialogQueued = false;
+
+				while (!dialogQueued)
 				{
-					DataHolder.keysFound++;
-
-					Debug.Log(DataHolder.keysFound);
+					int randomNum = UnityEngine.Random.Range(0,dialogQueuers.Count);
+					
+					if (dialogQueuers[randomNum].isKey)
+					{
+						DataHolder.keysFound++;
+						Debug.Log("Key element found on " + this.gameObject.name);
+					}
+					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
+					
+					dialogQueuers.RemoveAt(randomNum);
+					
+					dialogQueued = true;
 				}
-			}
-			 
-		}
 
+
+			// This prints all the dialogue for the item once it's clicked
+
+//				int temp = dialogQueuers.Count;
+//			
+//				for (int i = 0; i < temp; i++)
+//				{
+//					bool dialogQueued = false;
+//				
+//					while (!dialogQueued)
+//					{
+//						int randomNum = UnityEngine.Random.Range(0,dialogQueuers.Count);
+//					
+//						if (dialogQueuers[randomNum].isKey)
+//						{
+//							DataHolder.keysFound++;
+//							Debug.Log("Key element found on " + this.gameObject.name);
+//						}
+
+//						dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
+//					
+//						dialogQueuers.RemoveAt(randomNum);
+//					
+//						dialogQueued = true;
+//					}
+//				}
+			}
+		}	
 	}
 }
 

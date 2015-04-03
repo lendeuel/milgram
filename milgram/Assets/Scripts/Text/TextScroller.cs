@@ -47,7 +47,9 @@ public class TextScroller : ButtonAction
 			//Debug.Log(s.line);
 			lines.Add (s);
 		}
+
 		chatWindow = GetComponentInParent<Image> ();
+
 		if(index<lines.Count)
 		{
 			foreach(CharacterToMaterial c in characterToMaterialMapping)
@@ -58,7 +60,10 @@ public class TextScroller : ButtonAction
 				}
 			}
 		}
-		transform.parent.gameObject.SetActive (false);
+
+		transform.parent.gameObject.GetComponent<Image>().enabled = false;
+		transform.parent.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+		transform.gameObject.GetComponent<Text>().enabled = false;
 	}
 
 	void Update()

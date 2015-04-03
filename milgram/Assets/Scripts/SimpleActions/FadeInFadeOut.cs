@@ -136,7 +136,6 @@ public class FadeInFadeOut : MonoBehaviour
 			}
 		}
 		
-		
 		Debug.Log ("fade sequence end : " + fadingOut); 
 		
 	}
@@ -153,7 +152,7 @@ public class FadeInFadeOut : MonoBehaviour
 	{
 		if (DataHolder.allowInteractions && !DataHolder.fileOpen && !DataHolder.toolRackMoving)
 		{
-			FadeOut(fadeTime);
+			FadeOut(0);
 		}
 	}
 	
@@ -169,7 +168,7 @@ public class FadeInFadeOut : MonoBehaviour
 	{
 		if (DataHolder.allowInteractions && !DataHolder.fileOpen && !DataHolder.toolRackMoving)
 		{
-			FadeOut(fadeTime);
+			FadeOut(0);
 		}
 	}
 	

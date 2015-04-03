@@ -22,12 +22,17 @@ public class MoveToTools : ButtonAction
 		{			
 			transform.position = Vector3.MoveTowards(transform.position, destination, speed*Time.deltaTime);
 		}
+
+		if (transform.position == destination || transform.position == location)
+		{
+			mMoving = false;
+			DataHolder.toolRackMoving = false;
+		}
 	}
 
 	public override void takeAction()
 	{
-
-		if (DataHolder.allowInteractions)
+		if (DataHolder.allowInteractions && !DataHolder.fileOpen)
 		{
 			numTrack++;
 			if(numTrack % 2 == 1) {
@@ -36,7 +41,9 @@ public class MoveToTools : ButtonAction
 			else if(numTrack % 2 == 0){
 				destination = placeToMove;
 			}
+
 			mMoving=true;
+			DataHolder.toolRackMoving = true;
 		}
 	}
 }

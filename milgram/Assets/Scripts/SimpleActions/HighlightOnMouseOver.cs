@@ -1,48 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class HighlightOnMouseOver : MonoBehaviour 
 {
 	private Color originalColor;
 	public Color highlightColor;  // = Color.yellow;  With color, it auto populates it with a color.  Default "clear"
-	
+
+	private Image thisImage;
+
 	void Start () 
 	{
+		thisImage = GetComponent<Image>();
+		originalColor = thisImage.color;
+
 		// Default Highlight Color
-		if (highlightColor == Color.clear)
+		if (highlightColor == Color.black)
 		{
 			highlightColor = Color.yellow;
 		}
-
-		originalColor = GetComponent<Renderer>().material.color;
 	}
 	
 	void OnMouseEnter()
 	{
 		if (DataHolder.allowInteractions)
 		{
-			this.renderer.material.color = highlightColor;
+			thisImage.color = highlightColor;
 		}
 	}
 
-	void OnMouseDown() {
-		this.renderer.material.color = originalColor;
+	void OnMouseDown() 
+	{
+		thisImage.color = originalColor;
 	}
 	
-	void OnMouseUp() {
+	void OnMouseUp() 
+	{
 		if (DataHolder.allowInteractions)
 		{
-			this.renderer.material.color = highlightColor;
+			if (this.name != "RedX") thisImage.color = highlightColor;
 		}
 	}
 
 	void OnMouseExit()
 	{
-		this.renderer.material.color = originalColor;
+		thisImage.color = originalColor;
 	}
 
 	void OnMouseDrag()
 	{
-		this.renderer.material.color = originalColor;
+		thisImage.color = originalColor;
 	}
 }

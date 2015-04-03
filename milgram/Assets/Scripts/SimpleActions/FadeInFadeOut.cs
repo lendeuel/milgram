@@ -22,8 +22,6 @@ public class FadeInFadeOut : MonoBehaviour
 	private bool fadeOutOnStart = true;
 	private bool logInitialFadeSequence = false; 
 
-	private float tempFadeTime = 0.0f;
-
 	// store colours
 	private Color[] colors; 
 	
@@ -41,7 +39,7 @@ public class FadeInFadeOut : MonoBehaviour
 		
 		if (fadeOutOnStart)
 		{
-			FadeOut (tempFadeTime); 
+			FadeOut (0); 
 		}
 	}
 
@@ -135,9 +133,7 @@ public class FadeInFadeOut : MonoBehaviour
 				}
 			}
 		}
-		
-		Debug.Log ("fade sequence end : " + fadingOut); 
-		
+		//Debug.Log ("fade sequence end : " + fadingOut); 
 	}
 
 	void OnMouseEnter()

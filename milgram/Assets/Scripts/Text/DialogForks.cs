@@ -58,12 +58,35 @@ public class DialogForks : ButtonAction
 		}
 	}
 
-	public void AddQueuers(DialogForks d)
+	public void AddQueuers(DialogForks d, int randomNum)
 	{
 		d.takeAction();
 
 		foreach(TheseDialogQueuers t in d.dialogQueuers)
 		{
+			// Add lines of this dialogQueuer with index of randomNum to a temp array of LineAndSpeaker
+			LineAndSpeaker[] temp1 = dialogQueuers[randomNum].lines;
+
+			// Add lines of t.dialogQueuer to a second temp array of LineAndSpeaker
+			LineAndSpeaker[] temp2 = t.lines;
+
+			// create new array of LineAndSpeaker with size of temp1 + temp2
+			LineAndSpeaker[] both = new LineAndSpeaker[temp1.Length+temp2.Length];
+
+			// Populate array with lineAndSpeakers from temp1 and temp2
+			for (int i = 0; i < temp1.Length; i++)
+			{
+				both[i] = temp1[i];
+			}
+
+			for (int i = 0; i < temp2.Length; i++)
+			{
+				both[i+temp1.Length] = temp2[i];
+			}
+
+			// Set lines of this dialogQueuer to the last array
+			t.getThisDialogQueuer().lines = both;
+
 			dialogQueuers.Add(t);
 		}
 	}
@@ -86,10 +109,17 @@ public class DialogForks : ButtonAction
 			{
 				int randomNum = UnityEngine.Random.Range(0,dialogQueuers.Count);
 					
+				// If we found a key in this dialog queuer all other branches on this tree are irrelevant
 				if (dialogQueuers[randomNum].isKey)
 				{
 					DataHolder.keysFound++;
 					Debug.Log("Key element found on " + this.gameObject.name);
+
+					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
+					dialogQueuers.RemoveRange(0,dialogQueuers.Count);
+
+					dialogQueued = true;
+					break;
 				}
 
 				int count = 0;
@@ -104,22 +134,16 @@ public class DialogForks : ButtonAction
 					count++;
 				}
 
-				// If we found a key in this dialog queuer all other branches on this tree are irrelevant
-				if (dialogQueuers[randomNum].isKey)
-				{
-					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
-					dialogQueuers.RemoveRange(0,dialogQueuers.Count);
-				}
-				else if (!hasAFork)
+				if (!hasAFork)
 				{
 					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
 					dialogQueuers.RemoveAt(randomNum);
 				}
-				else if (hasAFork)
+				if (hasAFork)
 				{
 					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
 
-					AddQueuers(dialogQueuers[randomNum].lines[indexOfFork].dialogFork);
+					AddQueuers(dialogQueuers[randomNum].lines[indexOfFork].dialogFork, randomNum);
 
 					dialogQueuers.RemoveAt(randomNum);
 				}

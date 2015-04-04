@@ -9,7 +9,10 @@ public class LineAndSpeaker
 {
 	public string line;
 	public Characters speaker;
+	public bool hasFork;
+	public DialogForks dialogFork;
 }
+
 
 [Serializable]
 public class CharacterToMaterial
@@ -85,7 +88,7 @@ public class TextScroller : ButtonAction
 					}
 				}
 				hasEnded=true;
-				Debug.Log("good im here");
+				//Debug.Log("good im here");
 				DataHolder.allowInteractions = true;
 				if(destroyOnComplete)
 				{
@@ -135,16 +138,16 @@ public class TextScroller : ButtonAction
 	public void addStrings(LineAndSpeaker[] s)
 	{
 		hasEnded = false;
-		Debug.Log (lines.Count);
+		//Debug.Log (lines.Count);
 		DataHolder.allowInteractions = false;
 		foreach(LineAndSpeaker l in s)
 		{
 			lines.Add (l);
 		}
-		Debug.Log (lines.Count);
+		//Debug.Log (lines.Count);
 		foreach(LineAndSpeaker l in lines)
 		{
-			Debug.Log(l.line);
+			//Debug.Log(l.line);
 		}
 		if(index>lines.Count)
 		{
@@ -154,7 +157,7 @@ public class TextScroller : ButtonAction
 
 	public override void takeAction()
 	{
-		Debug.Log ("box clicked");
+		//Debug.Log ("box clicked");
 		if(index<lines.Count)
 		{
 			if(displayAll)
@@ -167,7 +170,7 @@ public class TextScroller : ButtonAction
 					{
 						if(c.character == lines[index].speaker)
 						{
-							Debug.Log("changing sprite");
+							//Debug.Log("changing sprite");
 							chatWindow.sprite = c.material;
 						}
 					}

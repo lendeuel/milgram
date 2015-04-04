@@ -30,7 +30,6 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 		s.endedResponse = this;
 		s.characterToMaterialMapping = characterToMaterialMapping;
 		s.lettersPerSecond = lettersPerSecond;
-
 	}
 
 	public void textScrollerEnded()
@@ -38,7 +37,7 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 		chatWindow.GetComponent<Image>().enabled = false;
 		chatWindow.GetComponent<BoxCollider2D>().enabled = false;
 		chatWindow.GetComponentInChildren<Text>().enabled = false;
-
+	
 		if(endedResponse!=null)
 		{
 			if(endedResponse is TextScroller.TextScrollerEndedResponder)
@@ -50,6 +49,8 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 				Debug.Log("Ended responder must implement TextScrollerEndedResponder");
 			}
 		}
+
+		//Destroy(this);
 	}
 	
 }

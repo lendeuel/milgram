@@ -10,7 +10,6 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 
 	public MonoBehaviour endedResponse;
 	public LineAndSpeaker[] lines;
-	//public CharacterToMaterial[] characterToMaterialMapping;
 	public GameObject chatWindow;
 
 	TextScroller s;
@@ -25,10 +24,8 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 		chatWindow.GetComponent<Image>().enabled = true;
 		chatWindow.GetComponent<BoxCollider2D>().enabled = true;
 		chatWindow.GetComponentInChildren<Text>().enabled = true;
-
 		s.addStrings(lines);
 		s.endedResponse = this;
-		//s.characterToMaterialMapping = characterToMaterialMapping;
 		s.lettersPerSecond = lettersPerSecond;
 	}
 

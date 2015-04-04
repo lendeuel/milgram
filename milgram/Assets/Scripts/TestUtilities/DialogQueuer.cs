@@ -10,7 +10,7 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 
 	public MonoBehaviour endedResponse;
 	public LineAndSpeaker[] lines;
-	public CharacterToMaterial[] characterToMaterialMapping;
+	//public CharacterToMaterial[] characterToMaterialMapping;
 	public GameObject chatWindow;
 
 	TextScroller s;
@@ -28,7 +28,7 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 
 		s.addStrings(lines);
 		s.endedResponse = this;
-		s.characterToMaterialMapping = characterToMaterialMapping;
+		//s.characterToMaterialMapping = characterToMaterialMapping;
 		s.lettersPerSecond = lettersPerSecond;
 	}
 

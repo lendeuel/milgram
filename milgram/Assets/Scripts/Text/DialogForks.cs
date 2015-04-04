@@ -38,7 +38,7 @@ public class TheseDialogQueuers
 public class DialogForks : ButtonAction
 {
 	public List<TheseDialogQueuers> dialogQueuers;
-	public CharacterToMaterial[] characterToMaterialMapping;
+	//public CharacterToMaterial[] characterToMaterialMapping;
 	public GameObject chatWindow;
 
 	void Start()
@@ -51,7 +51,7 @@ public class DialogForks : ButtonAction
 			temp.lines = d.lines;
 			temp.lettersPerSecond = d.lettersPerSecond;
 			temp.endedResponse = d.endedResponse;
-			temp.characterToMaterialMapping = characterToMaterialMapping;
+			//temp.characterToMaterialMapping = characterToMaterialMapping;
 			temp.chatWindow = chatWindow;
 
 			d.setThisDialogQueuer(temp);

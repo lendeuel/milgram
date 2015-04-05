@@ -12,6 +12,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class FadeInFadeOut : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class FadeInFadeOut : MonoBehaviour
 	private bool fadeInOnStart = false; 
 	private bool fadeOutOnStart = true;
 	private bool logInitialFadeSequence = false; 
-
+	
 	// store colours
 	private Color[] colors; 
 	
@@ -42,17 +43,17 @@ public class FadeInFadeOut : MonoBehaviour
 			FadeOut (0); 
 		}
 	}
-
+	
 	// check the alpha value of most opaque object
 	float MaxAlpha()
 	{
 		float maxAlpha = 0.0f; 
-		Renderer[] rendererObjects = GetComponentsInChildren<Renderer>(); 
-		foreach (Renderer item in rendererObjects)
+		Image[] rendererObjects = GetComponentsInChildren<Image>(); 
+		foreach (Image item in rendererObjects)
 		{
 			if (item.tag != "Tool")
 			{
-				maxAlpha = Mathf.Max (maxAlpha, item.material.color.a); 
+				maxAlpha = Mathf.Max (maxAlpha, item.color.a); 
 			}
 		}
 		return maxAlpha; 
@@ -66,7 +67,7 @@ public class FadeInFadeOut : MonoBehaviour
 		float fadingOutSpeed = 1.0f / fadingOutTime; 
 		
 		// grab all child objects
-		Renderer[] rendererObjects = GetComponentsInChildren<Renderer>(); 
+		Image[] rendererObjects = GetComponentsInChildren<Image>(); 
 		if (colors == null)
 		{
 			//create a cache of colors if necessary
@@ -77,7 +78,7 @@ public class FadeInFadeOut : MonoBehaviour
 			{
 				if (rendererObjects[i].tag != "Tool")
 				{
-					colors[i] = rendererObjects[i].material.color; 
+					colors[i] = rendererObjects[i].color; 
 				}
 			}
 		}
@@ -90,7 +91,7 @@ public class FadeInFadeOut : MonoBehaviour
 				rendererObjects[i].enabled = true;
 			}
 		}
-
+		
 		// get current max alpha
 		float alphaValue = MaxAlpha();  
 		
@@ -112,10 +113,10 @@ public class FadeInFadeOut : MonoBehaviour
 			{
 				if (rendererObjects[i].tag != "Tool")
 				{
-					Color newColor = (colors != null ? colors[i] : rendererObjects[i].material.color);
+					Color newColor = (colors != null ? colors[i] : rendererObjects[i].color);
 					newColor.a = Mathf.Min ( newColor.a, alphaValue ); 
 					newColor.a = Mathf.Clamp (newColor.a, 0.0f, 1.0f); 				
-					rendererObjects[i].material.SetColor("_Color", newColor); 
+					rendererObjects[i].color = newColor; 
 				}
 			}
 			
@@ -135,7 +136,7 @@ public class FadeInFadeOut : MonoBehaviour
 		}
 		//Debug.Log ("fade sequence end : " + fadingOut); 
 	}
-
+	
 	void OnMouseEnter()
 	{
 		if (DataHolder.allowInteractions && !DataHolder.fileOpen && !DataHolder.toolRackMoving)

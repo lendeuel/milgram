@@ -18,6 +18,7 @@ public class CharacterToMaterial
 {
 	public Characters character;
 	public Sprite material;
+	public AudioClip[] thisCharactersAudio;
 }
 
 public class TextScroller : ButtonAction
@@ -39,8 +40,12 @@ public class TextScroller : ButtonAction
 	private Image chatWindow;
 	private bool hasEnded=false;
 
+	private AudioSource source;
+
 	void Start()
 	{
+		source = GetComponent<AudioSource>();
+
 		lines = new List<LineAndSpeaker>();
 
 		foreach(LineAndSpeaker s in linesToLoad)
@@ -70,6 +75,7 @@ public class TextScroller : ButtonAction
 	void Update()
 	{
 		DataHolder.allowInteractions = false;
+
 		if(index>=lines.Count)
 		{
 			if(!hasEnded)
@@ -105,10 +111,25 @@ public class TextScroller : ButtonAction
 		{
 			if(displayAll)
 			{
+				source.Stop();
+
 				GetComponent<Text> ().text = lines[index].line;
 			}
 			else
 			{
+				if (!source.isPlaying)
+				{
+					foreach(CharacterToMaterial c in characterToMaterialMapping)
+					{
+						if (c.character == lines[index].speaker)
+						{
+							int randomClip = UnityEngine.Random.Range(0, c.thisCharactersAudio.Length);
+							source.clip = c.thisCharactersAudio[randomClip];
+							source.Play();
+						}
+					}
+				}
+
 				mTimeElapsed += Time.deltaTime;
 				int stoppingPoint = (int)(mTimeElapsed * lettersPerSecond);
 				if(stoppingPoint>lines[index].line.Length)

@@ -127,9 +127,9 @@ public class TextScroller : ButtonAction
 							source.clip = c.thisCharactersAudio[randomClip];
 							source.Play();
 						}
-					}
+					}	
 				}
-
+			
 				mTimeElapsed += Time.deltaTime;
 				int stoppingPoint = (int)(mTimeElapsed * lettersPerSecond);
 				if(stoppingPoint>lines[index].line.Length)
@@ -168,6 +168,16 @@ public class TextScroller : ButtonAction
 		{
 			//Debug.Log(l.line);
 		}
+
+		foreach(CharacterToMaterial c in characterToMaterialMapping)
+		{
+			if(c.character == lines[index].speaker)
+			{
+				Debug.Log("changing sprite");
+				chatWindow.sprite = c.material;
+			}
+		}
+
 		if(index>lines.Count)
 		{
 			mTimeElapsed = 0;
@@ -185,12 +195,13 @@ public class TextScroller : ButtonAction
 				index++;
 				if(index<lines.Count)
 				{
+					Debug.Log("In 1: " + index);
 					foreach(CharacterToMaterial c in characterToMaterialMapping)
 					{
 						if(c.character == lines[index].speaker)
 						{
 							Debug.Log("changing sprite");
-							chatWindow.overrideSprite = c.material;
+							chatWindow.sprite = c.material;
 						}
 					}
 				}

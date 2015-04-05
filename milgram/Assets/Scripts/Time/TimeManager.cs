@@ -28,8 +28,6 @@ public class TimeManager : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		Debug.Log("Running");
-
 		for (int i = 0; i < spacing; i++)
 		{
 			theSpaces += " ";
@@ -63,7 +61,7 @@ public class TimeManager : MonoBehaviour
 	{
 		if (needsUpdate)
 		{
-			Debug.Log("In Needs Update");
+			//Debug.Log("In Needs Update");
 
 			SetNumbers();
 		}
@@ -101,13 +99,11 @@ public class TimeManager : MonoBehaviour
 	
 	void SetNumbers()
 	{
-		Debug.Log("In Set Numbers");
-
 		startingDays = ts.Days;
 		startingHours = ts.Hours;
 		startingMinutes = ts.Minutes;
 
-		Debug.Log(startingDays + " " + startingHours + " " + startingMinutes);
+		//Debug.Log(startingDays + " " + startingHours + " " + startingMinutes);
 
 		// Set days
 		char[] daysSplit = startingDays.ToString().ToCharArray();

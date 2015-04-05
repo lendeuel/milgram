@@ -13,7 +13,7 @@ public class DropBoxListener : SimpleDragListener
 		if (drop.GetComponent<ModifyStats>() != null)
 			drop.GetComponent<ModifyStats>().modify();
 
-		if (drop.GetComponent<DialogQueuer>() != null)
-			drop.GetComponent<DialogQueuer>().takeAction();
+		if (drop.GetComponent<DialogForks>() != null)
+			drop.GetComponent<DialogForks>().takeAction();
 	}
 }

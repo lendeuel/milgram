@@ -5,12 +5,17 @@ public class MoveToTools : ButtonAction
 {
 	//public Direction direction;
 	public Vector3 location;
-	private Vector3 destination; 
-	private Vector3 placeToMove = new Vector3 (575,9,-45); 
+	public Vector3 destination; 
+	public Vector3 placeToMove = new Vector3(500, 71.4f, -154); 
 	private int numTrack = 0;
 	public float speed;
 	private bool mMoving = false;
-	
+
+	void Start()
+	{
+		location = transform.position;
+	}
+
 	void Update () 
 	{
 		if(mMoving)
@@ -18,7 +23,8 @@ public class MoveToTools : ButtonAction
 			transform.position = Vector3.MoveTowards(transform.position, destination, speed*Time.deltaTime);
 		}
 
-		if (transform.position == destination || transform.position == location)
+		// With UI this isn't activating ever.  So I commented out some code below
+		if (transform.position == destination)
 		{
 			mMoving = false;
 			DataHolder.toolRackMoving = false;
@@ -30,15 +36,17 @@ public class MoveToTools : ButtonAction
 		if (DataHolder.allowInteractions && !DataHolder.fileOpen)
 		{
 			numTrack++;
-			if(numTrack % 2 == 1) {
-				destination = location;
-			}
-			else if(numTrack % 2 == 0){
+			if(numTrack % 2 == 1) 
+			{
 				destination = placeToMove;
+			}
+			else if(numTrack % 2 == 0)
+			{
+				destination = location;
 			}
 
 			mMoving=true;
-			DataHolder.toolRackMoving = true;
+			//DataHolder.toolRackMoving = true;
 		}
 	}
 }

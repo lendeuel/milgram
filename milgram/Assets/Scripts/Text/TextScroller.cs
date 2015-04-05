@@ -13,7 +13,6 @@ public class LineAndSpeaker
 	public DialogForks dialogFork;
 }
 
-
 [Serializable]
 public class CharacterToMaterial
 {
@@ -30,7 +29,7 @@ public class TextScroller : ButtonAction
 
 	public bool destroyOnComplete=true;
 	public LineAndSpeaker[] linesToLoad;
-	public float lettersPerSecond=3;
+	public float lettersPerSecond=15;
 	public MonoBehaviour endedResponse;
 	private float mTimeElapsed=0;
 	private int index = 0;
@@ -42,7 +41,6 @@ public class TextScroller : ButtonAction
 
 	void Start()
 	{
-
 		lines = new List<LineAndSpeaker>();
 
 		foreach(LineAndSpeaker s in linesToLoad)
@@ -59,7 +57,7 @@ public class TextScroller : ButtonAction
 			{
 				if(c.character == lines[index].speaker)
 				{
-					chatWindow.sprite = c.material;
+					chatWindow.overrideSprite = c.material;
 				}
 			}
 		}
@@ -171,10 +169,11 @@ public class TextScroller : ButtonAction
 						if(c.character == lines[index].speaker)
 						{
 							//Debug.Log("changing sprite");
-							chatWindow.sprite = c.material;
+							chatWindow.overrideSprite = c.material;
 						}
 					}
 				}
+
 				displayAll=false;
 			}
 			else

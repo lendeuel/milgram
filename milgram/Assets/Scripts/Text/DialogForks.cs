@@ -8,22 +8,11 @@ using System;
 public class TheseDialogQueuers
 {
 	private DialogQueuer thisDialogQueuer;
-	private bool hasBeenQueued = false;
 	public bool isKey = false;
 	public int lettersPerSecond = 15;
 	public MonoBehaviour endedResponse;
 	public LineAndSpeaker[] lines;
-
-	public bool getHasBeenQueued()
-	{
-		return hasBeenQueued;
-	}
-
-	public void setHasBeenQueued(bool value)
-	{
-		hasBeenQueued = value;
-	}
-
+	
 	public DialogQueuer getThisDialogQueuer()
 	{
 		return thisDialogQueuer;
@@ -38,19 +27,29 @@ public class TheseDialogQueuers
 public class DialogForks : ButtonAction
 {
 	public List<TheseDialogQueuers> dialogQueuers;
-	public GameObject chatWindow;
+
+	private List<TheseDialogQueuers> emptyDialogueQueuers;
+
+	public DialogForks baseFork;
+	private bool hasParent = false;
+
+	private DialogQueuer option;
+
+	private List<LineAndSpeaker> lines = new List<LineAndSpeaker>();
 
 	void Start()
 	{
+		GameObject go = GameObject.Find("DialogueForks");
+		option = go.GetComponent<DialogQueuer>();
+
 		// Populate variables
 		foreach(TheseDialogQueuers d in dialogQueuers)
 		{
 			DialogQueuer temp = this.gameObject.AddComponent<DialogQueuer>();
-
+			temp.chatWindow = GameObject.FindGameObjectWithTag("DialogHandler");
 			temp.lines = d.lines;
 			temp.lettersPerSecond = d.lettersPerSecond;
 			temp.endedResponse = d.endedResponse;
-			temp.chatWindow = chatWindow;
 
 			d.setThisDialogQueuer(temp);
 		}
@@ -58,6 +57,8 @@ public class DialogForks : ButtonAction
 
 	public void AddQueuers(DialogForks d, int randomNum)
 	{
+		d.hasParent = true;
+
 		d.takeAction();
 
 		foreach(TheseDialogQueuers t in d.dialogQueuers)
@@ -114,10 +115,18 @@ public class DialogForks : ButtonAction
 					Debug.Log("Key element found on " + this.gameObject.name);
 
 					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
-					dialogQueuers.RemoveRange(0,dialogQueuers.Count);
+
+					if (!hasParent)
+					{
+						dialogQueuers.RemoveRange(0,dialogQueuers.Count);
+					}
+					else 
+					{
+						baseFork.dialogQueuers.RemoveRange(0, baseFork.dialogQueuers.Count);
+					}
 
 					dialogQueued = true;
-					break;
+					return;
 				}
 
 				int count = 0;
@@ -140,9 +149,7 @@ public class DialogForks : ButtonAction
 				if (hasAFork)
 				{
 					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
-
 					AddQueuers(dialogQueuers[randomNum].lines[indexOfFork].dialogFork, randomNum);
-
 					dialogQueuers.RemoveAt(randomNum);
 				}
 
@@ -176,7 +183,33 @@ public class DialogForks : ButtonAction
 //						dialogQueued = true;
 //					}
 //				}
+
 		}
+		// If it branches into this code it means the user clicked the box when no DialogQueuers were on this DialogFork
+		else
+		{
+			int randomNum = UnityEngine.Random.Range(0, 2);
+
+			LineAndSpeaker line = new LineAndSpeaker();
+			line.speaker = Characters.Suspect;
+			lines = new List<LineAndSpeaker>();
+
+			if (randomNum == 1)
+			{
+				line.line = "...";
+				lines.Add(line);
+
+			}
+			else 
+			{
+				line.line = "I have nothing more to say about this.";
+				lines.Add(line);
+			}
+
+			option.lines = lines.ToArray();
+			option.takeAction();
+		}
+
 	}
 
 	public void DestroyThis()

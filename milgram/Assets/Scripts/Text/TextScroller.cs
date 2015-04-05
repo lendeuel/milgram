@@ -168,7 +168,7 @@ public class TextScroller : ButtonAction
 					{
 						if(c.character == lines[index].speaker)
 						{
-							//Debug.Log("changing sprite");
+							Debug.Log("changing sprite");
 							chatWindow.overrideSprite = c.material;
 						}
 					}

@@ -53,7 +53,7 @@ public class MoveToTools : ButtonAction
 		}
 		else
 		{
-			if (DataHolder.allowInteractions && !DataHolder.fileOpen && DataHolder.keysFound == 3)
+			if (DataHolder.allowInteractions && DataHolder.keysFound == 3)
 			{
 				numTrack++;
 				if(numTrack % 2 == 1) 

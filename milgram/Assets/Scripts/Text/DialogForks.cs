@@ -40,7 +40,6 @@ public class DialogForks : ButtonAction
 
 	void Start()
 	{
-		GameObject go = GameObject.Find("DialogueForks");
 		option = go.GetComponent<DialogQueuer>();
 
 		// Populate variables

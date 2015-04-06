@@ -10,6 +10,8 @@ public class TheseDialogQueuers
 	private DialogQueuer thisDialogQueuer;
 	public bool isKey = false;
 	public bool isLocation = false;
+	public GameObject location;
+
 	public int lettersPerSecond = 15;
 	public MonoBehaviour endedResponse;
 	public LineAndSpeaker[] lines;
@@ -25,7 +27,7 @@ public class TheseDialogQueuers
 	}
 }
 
-public class DialogForks : ButtonAction
+public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 {
 	public List<TheseDialogQueuers> dialogQueuers;
 
@@ -34,12 +36,21 @@ public class DialogForks : ButtonAction
 	public DialogForks baseFork;
 	private bool hasParent = false;
 
+	private MonoBehaviour endedResponseWithLocation;
+	private GameObject triggeredLocation;
+
 	private DialogQueuer option;
 
 	private List<LineAndSpeaker> lines = new List<LineAndSpeaker>();
 
+	private GameObject chatWindow;
+
+	private bool processLocation = false;
+
 	void Start()
 	{
+		chatWindow = GameObject.FindGameObjectWithTag("DialogHandler");
+
 		GameObject go = GameObject.FindGameObjectWithTag("GameController");
 		option = go.GetComponent<DialogQueuer>();
 
@@ -50,7 +61,7 @@ public class DialogForks : ButtonAction
 			temp.chatWindow = GameObject.FindGameObjectWithTag("DialogHandler");
 			temp.lines = d.lines;
 			temp.lettersPerSecond = d.lettersPerSecond;
-			temp.endedResponse = d.endedResponse;
+			temp.endedResponse = this;
 
 			d.setThisDialogQueuer(temp);
 		}
@@ -113,7 +124,15 @@ public class DialogForks : ButtonAction
 				if (dialogQueuers[randomNum].isKey || dialogQueuers[randomNum].isLocation)
 				{
 					if (dialogQueuers[randomNum].isKey) DataHolder.keysFound++;
-					if (dialogQueuers[randomNum].isLocation) DataHolder.locationsFound++;
+
+					if (dialogQueuers[randomNum].isLocation)
+					{
+						GameObject.FindGameObjectWithTag("Map").
+							GetComponent<FadeIntoLocation>().FocusOn(dialogQueuers[randomNum].location);   
+
+//						triggeredLocation = dialogQueuers[randomNum].location;
+//						processLocation = true;
+					}
 
 					Debug.Log("Key or location found on " + this.gameObject.name);
 
@@ -210,9 +229,38 @@ public class DialogForks : ButtonAction
 			}
 
 			option.lines = lines.ToArray();
+			option.endedResponse = this;
 			option.takeAction();
 		}
 
+	}
+
+	public void textScrollerEnded()
+	{	
+		Debug.Log("In DialogForks textscrollerended");
+
+		chatWindow.GetComponent<Image>().enabled = false;
+		chatWindow.GetComponent<BoxCollider2D>().enabled = false;
+		chatWindow.GetComponentInChildren<Text>().enabled = false;
+
+		if(processLocation)
+		{
+			Debug.Log("In Second Dialogforks textscrollerended");
+			if(endedResponseWithLocation is TextScroller.TextScrollerEndedResponder)
+			{
+				(endedResponseWithLocation as TextScroller.TextScrollerEndedResponder).textScrollerEnded();
+			}
+			else
+			{
+				Debug.Log("Ended responder must implement TextScrollerEndedResponder");
+			}
+		}
+		else
+		{
+			Debug.Log("In Third dialogForks textscrollerended");
+		}
+		
+		//Destroy(this);
 	}
 
 	public void DestroyThis()

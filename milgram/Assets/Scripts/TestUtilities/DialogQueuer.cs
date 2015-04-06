@@ -16,6 +16,7 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 
 	void Start()
 	{
+		chatWindow = GameObject.FindGameObjectWithTag("DialogHandler");
 		s = chatWindow.GetComponentInChildren<TextScroller> ();
 	}
 
@@ -25,12 +26,13 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 		chatWindow.GetComponent<BoxCollider2D>().enabled = true;
 		chatWindow.GetComponentInChildren<Text>().enabled = true;
 		s.addStrings(lines);
-		s.endedResponse = this;
+		s.endedResponse = endedResponse;
 		s.lettersPerSecond = lettersPerSecond;
 	}
 
 	public void textScrollerEnded()
 	{
+		Debug.Log("In DialogQueuer textscrollerended");
 		chatWindow.GetComponent<Image>().enabled = false;
 		chatWindow.GetComponent<BoxCollider2D>().enabled = false;
 		chatWindow.GetComponentInChildren<Text>().enabled = false;

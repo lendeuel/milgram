@@ -26,6 +26,7 @@ public class TextScroller : ButtonAction
 	public interface TextScrollerEndedResponder
 	{
 		void textScrollerEnded();
+		//void FocusOnLocation(GameObject location);
 	}
 
 	public bool destroyOnComplete=true;
@@ -82,6 +83,7 @@ public class TextScroller : ButtonAction
 			{
 				if(endedResponse!=null)
 				{
+					Debug.Log("In textScroller ended responder");
 					if(endedResponse is TextScrollerEndedResponder)
 					{
 						(endedResponse as TextScrollerEndedResponder).textScrollerEnded();
@@ -173,7 +175,7 @@ public class TextScroller : ButtonAction
 		{
 			if(c.character == lines[index].speaker)
 			{
-				Debug.Log("changing sprite");
+				//Debug.Log("changing sprite");
 				chatWindow.sprite = c.material;
 			}
 		}
@@ -195,12 +197,12 @@ public class TextScroller : ButtonAction
 				index++;
 				if(index<lines.Count)
 				{
-					Debug.Log("In 1: " + index);
+					//Debug.Log("In 1: " + index);
 					foreach(CharacterToMaterial c in characterToMaterialMapping)
 					{
 						if(c.character == lines[index].speaker)
 						{
-							Debug.Log("changing sprite");
+							//Debug.Log("changing sprite");
 							chatWindow.sprite = c.material;
 						}
 					}

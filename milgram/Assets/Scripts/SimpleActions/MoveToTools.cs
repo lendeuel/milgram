@@ -33,20 +33,55 @@ public class MoveToTools : ButtonAction
 
 	public override void takeAction()
 	{
-		if (DataHolder.allowInteractions && !DataHolder.fileOpen)
+		if (gameObject.tag == "Map")
 		{
-			numTrack++;
-			if(numTrack % 2 == 1) 
+			if (DataHolder.allowInteractions && !DataHolder.fileOpen)
 			{
-				destination = placeToMove;
-			}
-			else if(numTrack % 2 == 0)
-			{
-				destination = location;
-			}
+				numTrack++;
+				if(numTrack % 2 == 1) 
+				{
+					destination = placeToMove;
+				}
+				else if(numTrack % 2 == 0)
+				{	
+					destination = location;
+				}
 
-			mMoving=true;
-			//DataHolder.toolRackMoving = true;
+				mMoving=true;
+				//DataHolder.toolRackMoving = true;
+			}
 		}
+		else
+		{
+			if (DataHolder.allowInteractions && !DataHolder.fileOpen && DataHolder.keysFound == 3)
+			{
+				numTrack++;
+				if(numTrack % 2 == 1) 
+				{
+					destination = placeToMove;
+				}
+				else if(numTrack % 2 == 0)
+				{	
+					destination = location;
+				}
+				
+				mMoving=true;
+				//DataHolder.toolRackMoving = true;
+			}
+		}
+	}
+
+	public void MoveToDestination()
+	{
+		destination = placeToMove;
+
+		mMoving = true;
+	}
+
+	public void MoveToOriginalLocation()
+	{
+		destination = location;
+
+		mMoving = true;
 	}
 }

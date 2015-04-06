@@ -11,7 +11,7 @@ public class Button : MonoBehaviour
 
 	void OnMouseUp()
 	{
-		if(DataHolder.allowInteractions || action is TextScroller)
+		if(DataHolder.allowInteractions || action is TextScroller || action is LoadScene)
 		{
 			action.takeAction();
 		}

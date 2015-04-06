@@ -9,6 +9,13 @@ public class LoadScene : ButtonAction
 	{
 		Debug.Log("Loading");
 
-		Application.LoadLevel(index);
+		if (index != -1)
+		{
+			Application.LoadLevel(index);
+		}
+		else
+		{
+			Application.Quit();
+		}
 	}
 }

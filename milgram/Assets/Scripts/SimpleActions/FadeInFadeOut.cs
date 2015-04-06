@@ -31,17 +31,19 @@ public class FadeInFadeOut : MonoBehaviour
 	{
 		//yield return null; 
 		yield return new WaitForSeconds (fadeDelay); 
-		
+
 		if (fadeInOnStart)
 		{
 			logInitialFadeSequence = true; 
 			FadeIn (); 
 		}
-		
+
 		if (fadeOutOnStart)
 		{
 			FadeOut (0); 
 		}
+
+
 	}
 	
 	// check the alpha value of most opaque object
@@ -177,7 +179,7 @@ public class FadeInFadeOut : MonoBehaviour
 		}
 	}
 	
-	void FadeIn ()
+	public void FadeIn ()
 	{
 		FadeIn (fadeTime); 
 	}

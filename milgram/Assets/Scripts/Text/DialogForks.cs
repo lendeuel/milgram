@@ -9,6 +9,7 @@ public class TheseDialogQueuers
 {
 	private DialogQueuer thisDialogQueuer;
 	public bool isKey = false;
+	public bool isLocation = false;
 	public int lettersPerSecond = 15;
 	public MonoBehaviour endedResponse;
 	public LineAndSpeaker[] lines;
@@ -109,10 +110,12 @@ public class DialogForks : ButtonAction
 				int randomNum = UnityEngine.Random.Range(0,dialogQueuers.Count);
 					
 				// If we found a key in this dialog queuer all other branches on this tree are irrelevant
-				if (dialogQueuers[randomNum].isKey)
+				if (dialogQueuers[randomNum].isKey || dialogQueuers[randomNum].isLocation)
 				{
-					DataHolder.keysFound++;
-					Debug.Log("Key element found on " + this.gameObject.name);
+					if (dialogQueuers[randomNum].isKey) DataHolder.keysFound++;
+					if (dialogQueuers[randomNum].isLocation) DataHolder.locationsFound++;
+
+					Debug.Log("Key or location found on " + this.gameObject.name);
 
 					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
 

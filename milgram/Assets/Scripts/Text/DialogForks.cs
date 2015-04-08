@@ -127,8 +127,10 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 
 					if (dialogQueuers[randomNum].isLocation)
 					{
-						GameObject.FindGameObjectWithTag("Map").
-							GetComponent<FadeIntoLocation>().FocusOn(dialogQueuers[randomNum].location);   
+						GameObject.FindGameObjectWithTag("NewLocation").
+							GetComponent<FadeIntoObject>().FocusOn(); 
+
+						dialogQueuers[randomNum].location.SetActive(true);
 
 //						triggeredLocation = dialogQueuers[randomNum].location;
 //						processLocation = true;

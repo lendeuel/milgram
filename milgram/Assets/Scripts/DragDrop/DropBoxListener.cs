@@ -15,5 +15,8 @@ public class DropBoxListener : SimpleDragListener
 
 		if (drop.GetComponent<DialogForks>() != null)
 			drop.GetComponent<DialogForks>().takeAction();
+
+		if (drop.GetComponent<FadeInFadeOut>() != null)
+			drop.GetComponent<FadeInFadeOut>().FadeOut();
 	}
 }

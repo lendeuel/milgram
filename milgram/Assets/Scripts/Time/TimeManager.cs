@@ -69,7 +69,7 @@ public class TimeManager : MonoBehaviour
 	// This is called every time defaultIntervalInSeconds has passed.  Each time it is called, a minute is taken off the time left.
 	void OnTimedEvent(object source, ElapsedEventArgs e)
 	{
-		if (!DataHolder.isGameOver && DataHolder.locationsFound < 3) SubtractTime(0,0,1);
+		if (!DataHolder.isGameOver && DataHolder.locationsFound <= 3) SubtractTime(0,0,1);
 		else t.Close();
 	}
 	

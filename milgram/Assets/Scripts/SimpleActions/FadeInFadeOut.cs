@@ -184,18 +184,18 @@ public class FadeInFadeOut : MonoBehaviour
 		FadeIn (fadeTime); 
 	}
 	
-	void FadeOut ()
+	public void FadeOut ()
 	{
 		FadeOut (fadeTime); 		
 	}
 	
-	void FadeIn (float newFadeTime)
+	public void FadeIn (float newFadeTime)
 	{
 		StopAllCoroutines(); 
 		StartCoroutine("FadeSequence", newFadeTime); 
 	}
 	
-	void FadeOut (float newFadeTime)
+	public void FadeOut (float newFadeTime)
 	{
 		StopAllCoroutines(); 
 		StartCoroutine("FadeSequence", -newFadeTime); 

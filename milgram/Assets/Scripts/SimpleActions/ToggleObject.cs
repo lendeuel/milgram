@@ -1,28 +1,61 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ToggleObject : ButtonAction 
 {
-	public GameObject objectToToggle;
+	public List<GameObject> objectsToToggle;
+
+	private int length;
+	private int activeCount;
+	private int inactiveCount;
+
+	void Start ()
+	{
+		length = objectsToToggle.Count;
+	}
 
 	public override void takeAction ()
 	{
-		if(objectToToggle.activeSelf)
+		foreach(GameObject g in objectsToToggle)
 		{
-			objectToToggle.SetActive (false);
-
-			if (objectToToggle.tag == "File")
+			if(g.activeSelf)
 			{
-				DataHolder.fileOpen = false;
+				activeCount++;
+			}
+			else
+			{
+				inactiveCount++;
 			}
 		}
-		else
-		{
-			objectToToggle.SetActive (true);
 
-			if (objectToToggle.tag == "File")
+		foreach(GameObject g in objectsToToggle)
+		{
+			if (activeCount > 0)
 			{
-				DataHolder.fileOpen = true;
+				g.SetActive (false);
+				
+				if (g.tag == "File")
+				{
+					DataHolder.fileOpen = false;
+				}
+				else if (g.tag == "Notepad")
+				{
+					DataHolder.notepadOpen = false;
+				}
+			}
+			else
+			{
+				g.SetActive (true);
+				
+				if (g.tag == "File")
+				{
+					DataHolder.fileOpen = true;
+				}
+				else if (g.tag == "Notepad")
+				{
+					DataHolder.notepadOpen = true;
+				}
 			}
 		}
 	}

@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-		//onStart.takeAction();
+		DataHolder.SetStart();
 	}
 
 	// Update is called once per frame

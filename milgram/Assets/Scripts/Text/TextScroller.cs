@@ -166,8 +166,7 @@ public class TextScroller : ButtonAction
 
 		if (lines[index].options.notesText != "")
 		{
-			Text temp = GameObject.FindGameObjectWithTag("NotepadNotes").GetComponent<Text>();
-			temp.text += "\n\n" + lines[index].options.notesText;
+			GameObject.FindObjectOfType<NotepadManager>().AddLine(lines[index].options.notesText);
 		}
 	}
 

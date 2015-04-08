@@ -7,13 +7,27 @@ public class HighlightOnMouseOver : MonoBehaviour
 	private Color originalColor;
 	public Color highlightColor;  // = Color.yellow;  With color, it auto populates it with a color.  Default "clear"
 
+	private bool isText = false;
+	private bool isImage = false;
+
 	private Image thisImage;
+	private Text thisText;
 
 	void Start () 
 	{
-		thisImage = GetComponent<Image>();
-		originalColor = thisImage.color;
-
+		if (GetComponent<Text>() != null)
+		{
+			isText = true;
+			thisText = GetComponent<Text>();
+			originalColor = thisText.color;
+		}
+		else if (GetComponent<Image>() != null)
+		{
+			isImage = true;
+			thisImage = GetComponent<Image>();
+			originalColor = thisImage.color;
+		}
+		
 		// Default Highlight Color
 		if (highlightColor == Color.black)
 		{
@@ -25,30 +39,68 @@ public class HighlightOnMouseOver : MonoBehaviour
 	{
 		if (DataHolder.allowInteractions)
 		{
-			thisImage.color = highlightColor;
+			if (isText)
+			{
+				thisText.color = highlightColor;
+			}
+			else if (isImage)
+			{
+				thisImage.color = highlightColor;
+			}
 		}
 	}
 
 	void OnMouseDown() 
 	{
-		thisImage.color = originalColor;
+		if (isText)
+		{
+			thisText.color = originalColor;
+		}
+		else if (isImage)
+		{
+			thisImage.color = originalColor;
+		}	
 	}
 	
 	void OnMouseUp() 
 	{
 		if (DataHolder.allowInteractions)
 		{
-			if (this.name != "RedX") thisImage.color = highlightColor;
+			if (this.name != "RedX") 
+			{
+				if (isText)
+				{
+					thisText.color = highlightColor;
+				}
+				else if (isImage)
+				{
+					thisImage.color = highlightColor;
+				}
+			}
 		}
 	}
 
 	void OnMouseExit()
 	{
-		thisImage.color = originalColor;
+		if (isText)
+		{
+			thisText.color = originalColor;
+		}
+		else if (isImage)
+		{
+			thisImage.color = originalColor;
+		}	
 	}
 
 	void OnMouseDrag()
 	{
-		thisImage.color = originalColor;
+		if (isText)
+		{
+			thisText.color = originalColor;
+		}
+		else if (isImage)
+		{
+			thisImage.color = originalColor;
+		}	
 	}
 }

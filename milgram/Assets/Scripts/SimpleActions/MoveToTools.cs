@@ -35,7 +35,7 @@ public class MoveToTools : ButtonAction
 	{
 		if (gameObject.tag == "Map")
 		{
-			if (DataHolder.allowInteractions && !DataHolder.fileOpen)
+			if (DataHolder.allowInteractions)
 			{
 				numTrack++;
 				if(numTrack % 2 == 1) 
@@ -48,7 +48,6 @@ public class MoveToTools : ButtonAction
 				}
 
 				mMoving=true;
-				//DataHolder.toolRackMoving = true;
 			}
 		}
 		else

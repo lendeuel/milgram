@@ -5,12 +5,25 @@ using UnityEngine.UI;
 using System;
 
 [Serializable]
+public class Options
+{
+	public bool isKey;
+	public bool isLocation;
+	public string notesText;
+	public GameObject location;
+	public bool hasFork;
+	public DialogForks dialogFork;
+	public bool isHint;
+	public string hintsText;
+	public DialogForks hintsDialogFork;
+}
+
+[Serializable]
 public class LineAndSpeaker
 {
 	public string line;
 	public Characters speaker;
-	public bool hasFork;
-	public DialogForks dialogFork;
+	public Options options;	
 }
 
 [Serializable]
@@ -145,6 +158,40 @@ public class TextScroller : ButtonAction
 		}
 	}
 
+	public void ProcessKey()
+	{
+		DataHolder.keysFound++;
+		GameObject.FindGameObjectWithTag("NewHint").
+			GetComponent<FadeIntoObject>().FocusOn(); 
+
+		if (lines[index].options.notesText != "")
+		{
+			Text temp = GameObject.FindGameObjectWithTag("NotepadNotes").GetComponent<Text>();
+			temp.text += "\n\n" + lines[index].options.notesText;
+		}
+	}
+
+	public void ProcessLocation()
+	{
+		DataHolder.locationsFound++;
+
+		GameObject.FindGameObjectWithTag("NewLocation").
+			GetComponent<FadeIntoObject>().FocusOn(); 
+		
+		lines[index].options.location.SetActive(true);							
+	}
+
+	public void ProcessHint()
+	{
+		DataHolder.hintsFound++;
+
+		GameObject.FindGameObjectWithTag("NewHint").
+			GetComponent<FadeIntoObject>().FocusOn();
+
+		GameObject.FindGameObjectWithTag("NotepadHints").GetComponent<Text>().text = lines[index].line;
+
+	}
+
 	public void addString(LineAndSpeaker s)
 	{
 		hasEnded = false;
@@ -206,6 +253,32 @@ public class TextScroller : ButtonAction
 							chatWindow.sprite = c.material;
 						}
 					}
+
+					if (lines[index].options.isKey)
+					{
+						ProcessKey();
+					}
+					else if (lines[index].options.isLocation)
+					{
+						ProcessLocation();
+					}
+					else if (lines[index].options.isHint)
+					{
+						ProcessHint();
+					}
+
+					//					if (dialogQueuers[randomNum].isKey) DataHolder.keysFound++;
+					//
+					//					if (dialogQueuers[randomNum].isLocation)
+					//					{
+					//						GameObject.FindGameObjectWithTag("NewLocation").
+					//							GetComponent<FadeIntoObject>().FocusOn(); 
+					//
+					//						dialogQueuers[randomNum].location.SetActive(true);
+					//
+					////						triggeredLocation = dialogQueuers[randomNum].location;
+					////						processLocation = true;
+					//					}
 				}
 
 				displayAll=false;

@@ -13,7 +13,7 @@ public class StatSystem : MonoBehaviour
 
 	private Dictionary<Stats, float> stats;
 
-	void Awake () 
+	void Start () 
 	{
 		stats = new Dictionary<Stats, float> ();
 
@@ -21,6 +21,14 @@ public class StatSystem : MonoBehaviour
 		AddStat (Stats.willingness, 10.0f);
 		AddStat (Stats.willpower, 2.0f);
 		AddStat (Stats.tolerance, 7.0f);
+	}
+
+	void Update()
+	{
+		Debug.Log ("Health:" + GetValueForStat (Stats.health) 
+		           + " Willingness:" + GetValueForStat (Stats.willingness) 
+		           + " Willpower:" + GetValueForStat (Stats.willpower)
+		           + " Tolerance:" + GetValueForStat (Stats.tolerance));
 	}
 
 	public void AddValueToStat (Stats stat, float value)

@@ -10,6 +10,7 @@ public class DataHolder
 	public static bool toolRackMoving = false;
 	public static int keysFound = 0;
 	public static int locationsFound = 0;
+	public static int hintsFound = 0;
 
 	// These are only needed if we keep the restart button
 	private static bool allowInteractionsI;
@@ -19,6 +20,7 @@ public class DataHolder
 	private static bool toolRackMovingI;
 	private static int keysFoundI;
 	private static int locationsFoundI;
+	private static int hintsFoundI;
 
 	public static void SetStart()
 	{
@@ -29,6 +31,7 @@ public class DataHolder
 		toolRackMovingI = toolRackMoving;
 		keysFoundI = keysFound;
 		locationsFoundI = locationsFound;
+		hintsFoundI = hintsFound;
 	}
 
 	public static void Reset()
@@ -40,5 +43,6 @@ public class DataHolder
 		toolRackMoving = toolRackMovingI;
 		keysFound = keysFoundI;
 		locationsFound = locationsFoundI;
+		hintsFound = hintsFoundI;
 	}
 }

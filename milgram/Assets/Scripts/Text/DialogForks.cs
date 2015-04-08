@@ -8,9 +8,9 @@ using System;
 public class TheseDialogQueuers
 {
 	private DialogQueuer thisDialogQueuer;
-	public bool isKey = false;
-	public bool isLocation = false;
-	public GameObject location;
+
+	public bool containsKey = false;
+	public bool containsLocation = false;
 
 	public int lettersPerSecond = 15;
 	public MonoBehaviour endedResponse;
@@ -121,21 +121,8 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				int randomNum = UnityEngine.Random.Range(0,dialogQueuers.Count);
 					
 				// If we found a key in this dialog queuer all other branches on this tree are irrelevant
-				if (dialogQueuers[randomNum].isKey || dialogQueuers[randomNum].isLocation)
+				if (dialogQueuers[randomNum].containsKey || dialogQueuers[randomNum].containsLocation)
 				{
-					if (dialogQueuers[randomNum].isKey) DataHolder.keysFound++;
-
-					if (dialogQueuers[randomNum].isLocation)
-					{
-						GameObject.FindGameObjectWithTag("NewLocation").
-							GetComponent<FadeIntoObject>().FocusOn(); 
-
-						dialogQueuers[randomNum].location.SetActive(true);
-
-//						triggeredLocation = dialogQueuers[randomNum].location;
-//						processLocation = true;
-					}
-
 					Debug.Log("Key or location found on " + this.gameObject.name);
 
 					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
@@ -156,7 +143,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				int count = 0;
 				foreach(LineAndSpeaker l in dialogQueuers[randomNum].lines)
 				{
-					if (l.hasFork)
+					if (l.options.hasFork)
 					{
 						indexOfFork = count;
 						hasAFork = true;
@@ -173,7 +160,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				if (hasAFork)
 				{
 					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
-					AddQueuers(dialogQueuers[randomNum].lines[indexOfFork].dialogFork, randomNum);
+					AddQueuers(dialogQueuers[randomNum].lines[indexOfFork].options.dialogFork, randomNum);
 					dialogQueuers.RemoveAt(randomNum);
 				}
 

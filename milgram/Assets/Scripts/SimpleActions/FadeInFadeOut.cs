@@ -141,7 +141,7 @@ public class FadeInFadeOut : MonoBehaviour
 	
 	void OnMouseEnter()
 	{
-		if (DataHolder.allowInteractions && !DataHolder.toolRackMoving)
+		if (DataHolder.allowInteractions)
 		{
 			FadeIn(fadeTime);
 		}
@@ -149,7 +149,7 @@ public class FadeInFadeOut : MonoBehaviour
 	
 	void OnMouseDown() 
 	{
-		if (DataHolder.allowInteractions && !DataHolder.toolRackMoving)
+		if (DataHolder.allowInteractions)
 		{
 			FadeOut(0);
 		}
@@ -157,7 +157,7 @@ public class FadeInFadeOut : MonoBehaviour
 	
 	void OnMouseUp() 
 	{
-		if (DataHolder.allowInteractions && !DataHolder.toolRackMoving)
+		if (DataHolder.allowInteractions)
 		{
 			FadeIn(fadeTime);
 		}
@@ -165,7 +165,7 @@ public class FadeInFadeOut : MonoBehaviour
 	
 	void OnMouseDrag()
 	{
-		if (DataHolder.allowInteractions && !DataHolder.toolRackMoving)
+		if (DataHolder.allowInteractions)
 		{
 			FadeOut(0);
 		}
@@ -173,7 +173,7 @@ public class FadeInFadeOut : MonoBehaviour
 	
 	void OnMouseExit()
 	{	
-		if (DataHolder.allowInteractions && !DataHolder.toolRackMoving)
+		if (DataHolder.allowInteractions)
 		{
 			FadeOut(fadeTime);
 		}

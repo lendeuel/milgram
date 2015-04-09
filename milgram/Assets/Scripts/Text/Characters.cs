@@ -5,5 +5,7 @@ public enum Characters
 {
 	Harvey,
 	Suspect,
-	Radio
+	Radio,
+	Boss,
+	Mars
 }

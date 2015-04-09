@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class TimeManager : MonoBehaviour
 {
+	public int penaltyForSkipping = 7;
+
 	public int spacing = 2;
 	private string theSpaces = "";
 
@@ -69,10 +71,15 @@ public class TimeManager : MonoBehaviour
 	// This is called every time defaultIntervalInSeconds has passed.  Each time it is called, a minute is taken off the time left.
 	void OnTimedEvent(object source, ElapsedEventArgs e)
 	{
-		if (!DataHolder.isGameOver && DataHolder.locationsFound <= 3) SubtractTime(0,0,1);
+		if (!DataHolder.isGameOver) SubtractTime(0,0,1);
 		else t.Close();
 	}
-	
+
+	public void DialogueSkipped()
+	{
+		SubtractTime(0,0,penaltyForSkipping);
+	}
+
 	public void SubtractTime(int days, int hours, int minutes)
 	{
 		if (minutes >= 60)
@@ -160,9 +167,7 @@ public class TimeManager : MonoBehaviour
 		if (startingDays <= 0 && startingHours <= 0 && startingMinutes <= 0)
 		{
 			DataHolder.isGameOver = true;
-			t.Close();
 		}
-		
 	}
 	
 	void OnApplicationQuit()

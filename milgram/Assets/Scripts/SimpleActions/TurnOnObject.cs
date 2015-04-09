@@ -10,16 +10,14 @@ public class TurnOnObject : ButtonAction
 	{		
 		foreach(GameObject g in objectsToTurnOn)
 		{
-			g.SetActive (true);
-				
 			if (g.tag == "File")
 			{
-				DataHolder.fileOpen = true;
+				if (!DataHolder.fileOpen && !DataHolder.notepadOpen)
+				{
+					g.SetActive (true);
+				}
 			}
-			else if (g.tag == "Notepad")
-			{
-				DataHolder.notepadOpen = true;
-			}
+
 
 		}
 	}

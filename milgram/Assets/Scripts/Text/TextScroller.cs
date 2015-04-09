@@ -176,7 +176,12 @@ public class TextScroller : ButtonAction
 
 		GameObject.FindGameObjectWithTag("NewLocation").
 			GetComponent<FadeIntoObject>().FocusOn(); 
-		
+
+		if (lines[index].options.notesText != "")
+		{
+			GameObject.FindObjectOfType<NotepadManager>().AddLine(lines[index].options.notesText);
+		}
+
 		lines[index].options.location.SetActive(true);							
 	}
 
@@ -187,7 +192,15 @@ public class TextScroller : ButtonAction
 		GameObject.FindGameObjectWithTag("NewHint").
 			GetComponent<FadeIntoObject>().FocusOn();
 
-		GameObject.FindGameObjectWithTag("NotepadHints").GetComponent<Text>().text = lines[index].line;
+		if (lines[index].options.hintsText != "")
+		{
+			GameObject.FindObjectOfType<NotepadManager>()
+				.AddHint(lines[index].options.hintsText,lines[index].options.hintsDialogFork);
+		}
+		else 
+		{
+			Debug.Log("Hints text can't be null.");
+		}
 
 	}
 
@@ -253,16 +266,21 @@ public class TextScroller : ButtonAction
 						}
 					}
 
+					Debug.Log("Key: " + lines[index].options.isKey + " Location: " + lines[index].options.isLocation + " Hint: " + lines[index].options.isHint);
+
 					if (lines[index].options.isKey)
 					{
+						Debug.Log("Processing Key.");
 						ProcessKey();
 					}
-					else if (lines[index].options.isLocation)
+					if (lines[index].options.isLocation)
 					{
+						Debug.Log("Processing Location.");
 						ProcessLocation();
 					}
-					else if (lines[index].options.isHint)
+					if (lines[index].options.isHint)
 					{
+						Debug.Log("Processing Hint.");
 						ProcessHint();
 					}
 
@@ -285,6 +303,8 @@ public class TextScroller : ButtonAction
 			else
 			{
 				displayAll=true;
+
+				GameObject.FindObjectOfType<TimeManager>().DialogueSkipped();
 			}
 		}
 	}

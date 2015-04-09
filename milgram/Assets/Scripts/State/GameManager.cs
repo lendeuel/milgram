@@ -1,63 +1,89 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class GameManager : MonoBehaviour 
+[Serializable]
+public class TrackStateOf
+{
+	public GameObject file;
+	public GameObject notepadHints;
+	public GameObject notepadNotes;
+}
+
+[Serializable]
+public class Forks
 {
 	public DialogForks suspectPassedOut;
 	public DialogForks timeIsUp;
 	public DialogForks playerWon;
 	public DialogForks onStart;
 	public DialogForks threeKeysFound;
+}
 
-	public bool playStart = false;
-
+public class GameManager : MonoBehaviour 
+{
 	private bool playedPassedOut = false;
 	private bool playedTimesUp = false;
 	private bool playedPlayerWins = false;
 	private bool playedKeys = false;
 	private bool playedStart = false;
 
+	public Forks theForks;
+	public TrackStateOf trackStates;
+	public bool playStart = false;
+
 	void Start()
 	{
 		DataHolder.SetStart();
 	}
-
+	
 	// Update is called once per frame
 	void Update () 
 	{
-		Debug.Log("Active: " + DataHolder.notepadOpen);
+		if (trackStates.notepadHints.activeSelf || trackStates.notepadNotes.activeSelf)
+		{
+			DataHolder.notepadOpen = true;
+		}
+		else if (!trackStates.notepadHints.activeSelf && !trackStates.notepadNotes.activeSelf)
+		{
+			DataHolder.notepadOpen = false;
+		}
+
+		DataHolder.fileOpen = trackStates.file.activeSelf;
+
+		Debug.Log("" + DataHolder.notepadOpen + "" + DataHolder.fileOpen);
 
 		if (!playedStart && playStart)
 		{
-			onStart.takeAction();
+			theForks.onStart.takeAction();
 
 			playedStart = true;
 		}
 
 		else if (GetComponent<StatSystem>().GetValueForStat(StatSystem.Stats.health) <= 0 && !playedPassedOut)
 		{
-			suspectPassedOut.takeAction();
+			theForks.suspectPassedOut.takeAction();
 
 			playedPassedOut = true;
 		}
 
 		else if (DataHolder.isGameOver && !playedTimesUp)
 		{
-			timeIsUp.takeAction();
+			theForks.timeIsUp.takeAction();
 
 			playedTimesUp = true;  
 		}
 
 		else if (DataHolder.locationsFound == 3 && !playedPlayerWins)
 		{
-			playerWon.takeAction();
+			theForks.playerWon.takeAction();
 
 			playedPlayerWins = true;  
 		}
 
 		else if (DataHolder.keysFound == 3 && !playedKeys)
 		{
-			threeKeysFound.takeAction();
+			theForks.threeKeysFound.takeAction();
 			
 			playedKeys = true;  
 		}

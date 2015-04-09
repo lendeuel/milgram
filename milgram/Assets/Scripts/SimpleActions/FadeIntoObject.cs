@@ -41,7 +41,5 @@ public class FadeIntoObject : MonoBehaviour
 
 			theGameObject.GetComponent<FadeInFadeOut>().FadeOut();
 		}
-
-			DataHolder.locationsFound++;
 	}
 }

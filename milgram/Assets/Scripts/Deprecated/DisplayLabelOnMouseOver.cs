@@ -17,7 +17,7 @@ public class DisplayLabelOnMouseOver : MonoBehaviour
 	
 	void OnMouseEnter()
 	{
-		if (DataHolder.allowInteractions && !DataHolder.fileOpen)
+		if (DataHolder.allowInteractions)
 		{
 			thisRenderer.material.color = new Color (1f, 1f, 1f, Mathf.Lerp(0f,1f,55f));
 		}
@@ -25,7 +25,7 @@ public class DisplayLabelOnMouseOver : MonoBehaviour
 
 	void OnMouseDown() 
 	{
-		if (DataHolder.allowInteractions && !DataHolder.fileOpen)
+		if (DataHolder.allowInteractions)
 		{
 			thisRenderer.material.color = new Color (1f, 1f, 1f, Mathf.Lerp(1f,0f,55f));
 		}
@@ -33,7 +33,7 @@ public class DisplayLabelOnMouseOver : MonoBehaviour
 
 	void OnMouseUp() 
 	{
-		if (DataHolder.allowInteractions && !DataHolder.fileOpen)
+		if (DataHolder.allowInteractions)
 		{
 			thisRenderer.material.color = new Color (1f, 1f, 1f, Mathf.Lerp(0f,1f,55f));
 		}
@@ -41,7 +41,7 @@ public class DisplayLabelOnMouseOver : MonoBehaviour
 
 	void OnMouseDrag()
 	{
-		if (DataHolder.allowInteractions && !DataHolder.fileOpen)
+		if (DataHolder.allowInteractions)
 		{
 			thisRenderer.material.color = new Color (1f, 1f, 1f, Mathf.Lerp(1f,0f,55f));
 		}
@@ -49,7 +49,7 @@ public class DisplayLabelOnMouseOver : MonoBehaviour
 	
 	void OnMouseExit()
 	{	
-		if (DataHolder.allowInteractions && !DataHolder.fileOpen)
+		if (DataHolder.allowInteractions)
 		{
 			thisRenderer.material.color = new Color (1f, 1f, 1f, Mathf.Lerp(1f,0f,55f));
 		}

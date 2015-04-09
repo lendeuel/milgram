@@ -123,7 +123,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				// If we found a key in this dialog queuer all other branches on this tree are irrelevant
 				if (dialogQueuers[randomNum].containsKey || dialogQueuers[randomNum].containsLocation)
 				{
-					Debug.Log("Key or location found on " + this.gameObject.name);
+					//Debug.Log("Key or location found on " + this.gameObject.name);
 
 					dialogQueuers[randomNum].getThisDialogQueuer().takeAction();
 

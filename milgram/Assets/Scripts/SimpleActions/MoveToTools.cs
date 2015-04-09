@@ -22,13 +22,6 @@ public class MoveToTools : ButtonAction
 		{			
 			transform.position = Vector3.MoveTowards(transform.position, destination, speed*Time.deltaTime);
 		}
-
-		// With UI this isn't activating ever.  So I commented out some code below
-		if (transform.position == destination)
-		{
-			mMoving = false;
-			DataHolder.toolRackMoving = false;
-		}
 	}
 
 	public override void takeAction()
@@ -40,10 +33,12 @@ public class MoveToTools : ButtonAction
 				numTrack++;
 				if(numTrack % 2 == 1) 
 				{
+					DataHolder.mapOut = true;
 					destination = placeToMove;
 				}
 				else if(numTrack % 2 == 0)
 				{	
+					DataHolder.mapOut = false;
 					destination = location;
 				}
 
@@ -65,7 +60,6 @@ public class MoveToTools : ButtonAction
 				}
 				
 				mMoving=true;
-				//DataHolder.toolRackMoving = true;
 			}
 		}
 	}

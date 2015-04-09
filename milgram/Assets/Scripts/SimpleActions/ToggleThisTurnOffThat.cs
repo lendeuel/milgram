@@ -12,35 +12,29 @@ public class ToggleThisTurnOffThat : ButtonAction
 
 	public override void takeAction ()
 	{
-		if (thatGameObject.activeSelf)
+		if (!DataHolder.mapOut)
 		{
-			thatOn = true;
-		}
-		else 
-		{
-			thatOn = false;
-		}
-
-		if (thisGameObject.activeSelf)
-		{
-			thisGameObject.SetActive(false);
-
-			if (thisGameObject.tag == "Notepad")
+			if (thisGameObject.activeSelf)
 			{
-				DataHolder.notepadOpen = false;
+				thisGameObject.SetActive(false);
+
+				if (thisGameObject.tag == "Notepad")
+				{
+					DataHolder.notepadOpen = false;
+				}
+
+			}
+			else if (!thatOn)
+			{
+				thisGameObject.SetActive(true);
+
+				if (thisGameObject.tag == "Notepad")
+				{
+					DataHolder.notepadOpen = true;
+				}
 			}
 
+			thatGameObject.SetActive(false);
 		}
-		else if (!thatOn)
-		{
-			thisGameObject.SetActive(true);
-
-			if (thisGameObject.tag == "Notepad")
-			{
-				DataHolder.notepadOpen = true;
-			}
-		}
-
-		thatGameObject.SetActive(false);
 	}
 }

@@ -66,17 +66,20 @@ public class HighlightOnMouseOver : MonoBehaviour
 	{
 		if (DataHolder.allowInteractions)
 		{
-			if (this.name != "RedX") 
-			{
-				if (isText)
-				{
-					thisText.color = highlightColor;
-				}
-				else if (isImage)
-				{
-					thisImage.color = highlightColor;
-				}
-			}
+			// If the item disappears on click (which everything currently using HighlightOnMouserOver does), 
+			// this needs to be commented out.
+
+//			if (this.name != "RedX") 
+//			{
+//				if (isText)
+//				{
+//					thisText.color = highlightColor;
+//				}
+//				else if (isImage)
+//				{
+//					thisImage.color = highlightColor;
+//				}
+//			}
 		}
 	}
 

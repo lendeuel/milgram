@@ -22,12 +22,19 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 
 	public override void takeAction ()
 	{
+
+
 		chatWindow.GetComponent<Image>().enabled = true;
 		chatWindow.GetComponent<BoxCollider2D>().enabled = true;
 		chatWindow.GetComponentInChildren<Text>().enabled = true;
 		s.addStrings(lines);
 		s.endedResponse = endedResponse;
 		s.lettersPerSecond = lettersPerSecond;
+
+		try{GameObject.FindGameObjectWithTag("NotepadHints").SetActive(false);}catch(NullReferenceException e){}
+		try{GameObject.FindGameObjectWithTag("NotepadNotes").SetActive(false);}catch(NullReferenceException e){}
+		try{GameObject.FindGameObjectWithTag("File").SetActive(false);}catch(NullReferenceException e){}
+
 	}
 
 	public void textScrollerEnded()

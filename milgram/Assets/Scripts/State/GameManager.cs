@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
 		DataHolder.fileOpen = trackStates.file.activeSelf;
 
-		Debug.Log("" + DataHolder.notepadOpen + "" + DataHolder.fileOpen);
+		//Debug.Log("" + DataHolder.notepadOpen + "" + DataHolder.fileOpen);
 
 		if (!playedStart && playStart)
 		{

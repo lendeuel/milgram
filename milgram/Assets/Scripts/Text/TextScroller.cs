@@ -54,6 +54,12 @@ public class TextScroller : ButtonAction
 	private Image chatWindow;
 	private bool hasEnded=false;
 
+	private string[] splitString;
+	private int offset = 0;
+	private int currentTag = 0;
+	private bool processing = false;
+	private bool firstTag = true;
+
 	private AudioSource source;
 
 	void Start()
@@ -146,14 +152,72 @@ public class TextScroller : ButtonAction
 				}
 			
 				mTimeElapsed += Time.deltaTime;
-				int stoppingPoint = (int)(mTimeElapsed * lettersPerSecond);
+				int stoppingPoint = (int)(mTimeElapsed * lettersPerSecond) + offset;
 				if(stoppingPoint>lines[index].line.Length)
 				{
 					stoppingPoint=lines[index].line.Length;
 					displayAll=true;
 				}
+
+				string currChar = "";
 				string text = lines [index].line.Substring (0, stoppingPoint);
+				if (text.Length != 0)
+				{
+					currChar = lines[index].line.Substring(text.Length - 1, 1);
+				}
+
+				bool enteredFirst = false;
+
+				if (currChar == "<" && firstTag)
+				{
+					//Debug.Log("IN < FIRST");
+					enteredFirst = true;
+
+					firstTag = false;
+
+					splitString = lines[index].line.Split(new char[]{'<','>'});
+
+					// Increment Offset by size of splitString[1+(4*currentTag)] + 2;
+					int tempOffset = splitString[1+(4*currentTag)].Length+2; 
+					offset += splitString[1+(4*currentTag)].Length + 2;
+
+					text = lines[index].line.Substring(0,stoppingPoint + tempOffset);
+
+					processing = true;
+
+					//Debug.Log("Temp: " + tempOffset + " Offset: " + offset);
+				}
+
+				if (processing)
+				{
+					text += "</color>";
+
+					//Debug.Log("IN PROCESSING");
+				}
+
+				if (currChar == "<" && !firstTag && !enteredFirst)
+				{
+					//Debug.Log("IN < SECOND");
+
+					currentTag++;
+
+					firstTag = true;
+
+					// Increment Offset by standard size of /color>
+					int tempOffset = 7;
+					offset += tempOffset;
+
+					text = lines[index].line.Substring(0,stoppingPoint + tempOffset);
+
+					processing = false;
+
+					//Debug.Log("Temp: " + tempOffset + " Offset: " + offset);
+				}
+
 				GetComponent<Text> ().text = text;
+
+				//Debug.Log("Stopping Point: " + stoppingPoint + " Current Char: " + currChar + " Processing: " + processing);
+				//Debug.Log(text);
 			}
 		}
 	}
@@ -266,7 +330,11 @@ public class TextScroller : ButtonAction
 						}
 					}
 
-					Debug.Log("Key: " + lines[index].options.isKey + " Location: " + lines[index].options.isLocation + " Hint: " + lines[index].options.isHint);
+					//Debug.Log("Key: " + lines[index].options.isKey + " Location: " + lines[index].options.isLocation + " Hint: " + lines[index].options.isHint);
+
+					offset = 0;
+					currentTag = 0;
+					processing = false;
 
 					if (lines[index].options.isKey)
 					{

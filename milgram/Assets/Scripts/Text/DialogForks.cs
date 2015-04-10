@@ -5,13 +5,21 @@ using UnityEngine.UI;
 using System;
 
 [Serializable]
+public class StatRequirement
+{
+	public StatSystem.Stats stat;
+	public float value;
+}
+
+[Serializable]
 public class TheseDialogQueuers
 {
 	private DialogQueuer thisDialogQueuer;
 
 	public bool containsKey = false;
 	public bool containsLocation = false;
-
+	public bool hasStatRequirement = false;
+	public StatRequirement statRequirement;
 	public int lettersPerSecond = 15;
 	public MonoBehaviour endedResponse;
 	public LineAndSpeaker[] lines;
@@ -118,6 +126,14 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 
 			while (!dialogQueued)
 			{
+				foreach(TheseDialogQueuers t in dialogQueuers)
+				{
+					if (t.statRequirement != null)
+					{
+						Debug.Log("Has stat requirement.");
+					}
+				}
+
 				int randomNum = UnityEngine.Random.Range(0,dialogQueuers.Count);
 					
 				// If we found a key in this dialog queuer all other branches on this tree are irrelevant

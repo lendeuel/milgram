@@ -351,19 +351,6 @@ public class TextScroller : ButtonAction
 						Debug.Log("Processing Hint.");
 						ProcessHint();
 					}
-
-					//					if (dialogQueuers[randomNum].isKey) DataHolder.keysFound++;
-					//
-					//					if (dialogQueuers[randomNum].isLocation)
-					//					{
-					//						GameObject.FindGameObjectWithTag("NewLocation").
-					//							GetComponent<FadeIntoObject>().FocusOn(); 
-					//
-					//						dialogQueuers[randomNum].location.SetActive(true);
-					//
-					////						triggeredLocation = dialogQueuers[randomNum].location;
-					////						processLocation = true;
-					//					}
 				}
 
 				displayAll=false;

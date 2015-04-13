@@ -26,6 +26,7 @@ public class LineAndSpeaker
 {
 	public string line;
 	public Characters speaker;
+	public int lettersPerSecond = 15;
 	public Options options = new Options();	
 }
 
@@ -162,7 +163,9 @@ public class TextScroller : ButtonAction
 						}
 					}	
 				}
-			
+
+				lettersPerSecond = lines[index].lettersPerSecond;
+
 				mTimeElapsed += Time.deltaTime;
 				int stoppingPoint = (int)(mTimeElapsed * lettersPerSecond) + offset;
 				if(stoppingPoint>lines[index].line.Length)

@@ -21,7 +21,6 @@ public class TheseDialogQueuers
 	public bool hasStatRequirement = false;
 	public StatRequirement statRequirement;
 	[NonSerialized]public bool canBeQueued = true;
-	public int lettersPerSecond = 15;
 	public MonoBehaviour endedResponse;
 	public LineAndSpeaker[] lines;
 	
@@ -69,7 +68,6 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 			DialogQueuer temp = this.gameObject.AddComponent<DialogQueuer>();
 			temp.chatWindow = GameObject.FindGameObjectWithTag("DialogHandler");
 			temp.lines = d.lines;
-			temp.lettersPerSecond = d.lettersPerSecond;
 			temp.endedResponse = this;
 			
 			d.setThisDialogQueuer(temp);

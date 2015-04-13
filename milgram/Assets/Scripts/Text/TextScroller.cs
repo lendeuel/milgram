@@ -17,6 +17,8 @@ public class Options
 	public string hintsText;
 	public DialogForks hintsDialogFork;
 	[Range (0,1)] public float volume = 1;
+	public bool hasSpecificSound = false;
+	public AudioClip specificSound;
 }
 
 [Serializable]
@@ -145,8 +147,16 @@ public class TextScroller : ButtonAction
 					{
 						if (c.character == lines[index].speaker)
 						{
-							int randomClip = UnityEngine.Random.Range(0, c.thisCharactersAudio.Length);
-							source.clip = c.thisCharactersAudio[randomClip];
+							if (lines[index].options.hasSpecificSound)
+							{
+								source.clip = lines[index].options.specificSound;
+							}
+							else
+							{
+								int randomClip = UnityEngine.Random.Range(0, c.thisCharactersAudio.Length);
+								source.clip = c.thisCharactersAudio[randomClip];
+							}
+
 							source.volume = lines[index].options.volume;
 							source.Play();
 						}

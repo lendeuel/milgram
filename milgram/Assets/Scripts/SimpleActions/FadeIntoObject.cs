@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class FadeIntoObject : MonoBehaviour 
 {
@@ -11,14 +12,13 @@ public class FadeIntoObject : MonoBehaviour
 	public void FocusOn(GameObject theObject)
 	{
 		theGameObject = theObject;
-		StartCoroutine("Wait", delayToStart);
-
+		StartCoroutine("Wait");
 	}
 
 	public void FocusOn()
 	{
 		theGameObject = this.gameObject;
-		StartCoroutine("Wait", delayToStart);
+		StartCoroutine("Wait");
 	}
 
 	IEnumerator Wait()
@@ -35,11 +35,16 @@ public class FadeIntoObject : MonoBehaviour
 		}
 		else
 		{
-			theGameObject.AddComponent<FadeInFadeOut>().FadeIn();
+			FadeInFadeOut fd = theGameObject.AddComponent<FadeInFadeOut>();
+			fd.gameObjectsToFade = new Image[1];
+			fd.gameObjectsToFade[0] = theGameObject.GetComponent<Image>();
+			fd.fadeTime = delayToFadeOut;
+
+			fd.FadeIn();
 
 			yield return new WaitForSeconds(delayToFadeOut);
 
-			theGameObject.GetComponent<FadeInFadeOut>().FadeOut();
+			fd.FadeOut();
 		}
 	}
 }

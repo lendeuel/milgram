@@ -149,22 +149,20 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 			}
 			
 			// Before next step make sure there's at least one dialogQueuer that can be queued
-			count = 0;
-			foreach(TheseDialogQueuers t in dialogQueuers)
-			{
-				if (t.canBeQueued)
-				{
-					count++;
-				}
-			}
-			
-			Debug.Log(count);
-			
-			if (count == 0)
-			{
-				NoneLeft();
-				return;
-			}
+//			count = 0;
+//			foreach(TheseDialogQueuers t in dialogQueuers)
+//			{
+//				if (t.canBeQueued)
+//				{
+//					count++;
+//				}
+//			}
+//			
+//			if (count == 0)
+//			{
+//				NoneLeft();
+//				return;
+//			}
 			
 			
 			int randomNum = 0;

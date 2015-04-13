@@ -240,8 +240,9 @@ public class TextScroller : ButtonAction
 	{
 		DataHolder.locationsFound++;
 
-		GameObject.FindGameObjectWithTag("NewLocation").
-			GetComponent<FadeIntoObject>().FocusOn(); 
+		GameObject.FindGameObjectWithTag("NewLocation").GetComponent<FadeIntoObject>().FocusOn(); 
+
+		GameObject.FindGameObjectWithTag("Map").GetComponent<FadeIntoObject>().FocusOn();
 
 		if (lines[index].options.notesText != "")
 		{

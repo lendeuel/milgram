@@ -22,8 +22,6 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 
 	public override void takeAction ()
 	{
-
-
 		chatWindow.GetComponent<Image>().enabled = true;
 		chatWindow.GetComponent<BoxCollider2D>().enabled = true;
 		chatWindow.GetComponentInChildren<Text>().enabled = true;
@@ -34,6 +32,8 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 		try{GameObject.FindGameObjectWithTag("NotepadHints").SetActive(false);}catch(NullReferenceException e){}
 		try{GameObject.FindGameObjectWithTag("NotepadNotes").SetActive(false);}catch(NullReferenceException e){}
 		try{GameObject.FindGameObjectWithTag("File").SetActive(false);}catch(NullReferenceException e){}
+		GameObject.FindGameObjectWithTag("Map").GetComponent<MoveToTools>().MoveToOriginalLocation();
+		GameObject.FindGameObjectWithTag("ToolRack").GetComponent<MoveToTools>().MoveToOriginalLocation();
 
 	}
 

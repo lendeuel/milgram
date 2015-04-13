@@ -12,7 +12,7 @@ public class ToggleThisTurnOffThat : ButtonAction
 
 	public override void takeAction ()
 	{
-		if (!DataHolder.mapOut)
+		if (!GameObject.FindGameObjectWithTag("Map").GetComponent<MoveToTools>().movedOut)
 		{
 			if (thisGameObject.activeSelf)
 			{

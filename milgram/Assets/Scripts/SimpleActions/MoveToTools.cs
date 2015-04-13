@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class MoveToTools : ButtonAction
 {
@@ -9,7 +10,9 @@ public class MoveToTools : ButtonAction
 	public Vector3 placeToMove = new Vector3(500, 71.4f, -154); 
 	private int numTrack = 0;
 	public float speed;
-	private bool mMoving = false;
+	public bool mMoving = false;
+
+	[NonSerialized]public bool movedOut = false;
 
 	void Start()
 	{
@@ -26,42 +29,44 @@ public class MoveToTools : ButtonAction
 
 	public override void takeAction()
 	{
-		if (gameObject.tag == "Map")
-		{
+		//if (gameObject.tag == "Map")
+		//{
 			if (DataHolder.allowInteractions)
 			{
 				numTrack++;
 				if(numTrack % 2 == 1) 
 				{
-					DataHolder.mapOut = true;
+					movedOut = true;
 					destination = placeToMove;
 				}
 				else if(numTrack % 2 == 0)
 				{	
-					DataHolder.mapOut = false;
+					movedOut = false;
 					destination = location;
 				}
 
 				mMoving=true;
 			}
-		}
-		else
-		{
-			if (DataHolder.allowInteractions)// && DataHolder.keysFound == 3)
-			{
-				numTrack++;
-				if(numTrack % 2 == 1) 
-				{
-					destination = placeToMove;
-				}
-				else if(numTrack % 2 == 0)
-				{	
-					destination = location;
-				}
-				
-				mMoving=true;
-			}
-		}
+//		}
+//		else
+//		{
+//			if (DataHolder.allowInteractions)// && DataHolder.keysFound == 3)
+//			{
+//				numTrack++;
+//				if(numTrack % 2 == 1) 
+//				{
+//					movedOut = true;
+//					destination = placeToMove;
+//				}
+//				else if(numTrack % 2 == 0)
+//				{	
+//					movedOut = false;
+//					destination = location;
+//				}
+//				
+//				mMoving=true;
+//			}
+//		}
 	}
 
 	public void MoveToDestination()

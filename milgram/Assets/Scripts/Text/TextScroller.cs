@@ -16,6 +16,7 @@ public class Options
 	public bool isHint;
 	public string hintsText;
 	public DialogForks hintsDialogFork;
+	[Range (0,1)] public float volume = 1;
 }
 
 [Serializable]
@@ -23,7 +24,7 @@ public class LineAndSpeaker
 {
 	public string line;
 	public Characters speaker;
-	public Options options;	
+	public Options options = new Options();	
 }
 
 [Serializable]
@@ -146,6 +147,7 @@ public class TextScroller : ButtonAction
 						{
 							int randomClip = UnityEngine.Random.Range(0, c.thisCharactersAudio.Length);
 							source.clip = c.thisCharactersAudio[randomClip];
+							source.volume = lines[index].options.volume;
 							source.Play();
 						}
 					}	
@@ -311,7 +313,6 @@ public class TextScroller : ButtonAction
 
 	public override void takeAction()
 	{
-		//Debug.Log ("box clicked");
 		if(index<lines.Count)
 		{
 			if(displayAll)
@@ -320,17 +321,17 @@ public class TextScroller : ButtonAction
 				index++;
 				if(index<lines.Count)
 				{
-					//Debug.Log("In 1: " + index);
 					foreach(CharacterToMaterial c in characterToMaterialMapping)
 					{
 						if(c.character == lines[index].speaker)
 						{
-							//Debug.Log("changing sprite");
 							chatWindow.sprite = c.material;
 						}
 					}
 
 					//Debug.Log("Key: " + lines[index].options.isKey + " Location: " + lines[index].options.isLocation + " Hint: " + lines[index].options.isHint);
+
+					//source.volume = lines[index].options.volume;
 
 					offset = 0;
 					currentTag = 0;

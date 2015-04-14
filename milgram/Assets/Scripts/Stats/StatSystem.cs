@@ -25,10 +25,10 @@ public class StatSystem : MonoBehaviour
 
 	void Update()
 	{
-		Debug.Log ("Health:" + GetValueForStat (Stats.health));
-		Debug.Log ("Willingness:" + GetValueForStat (Stats.willingness));
-		Debug.Log ("Willpower:" + GetValueForStat (Stats.willpower));
-		Debug.Log ("Tolerance:" + GetValueForStat (Stats.tolerance));
+//		Debug.Log ("Health:" + GetValueForStat (Stats.health));
+//		Debug.Log ("Willingness:" + GetValueForStat (Stats.willingness));
+//		Debug.Log ("Willpower:" + GetValueForStat (Stats.willpower));
+//		Debug.Log ("Tolerance:" + GetValueForStat (Stats.tolerance));
 	}
 
 	public void AddValueToStat (Stats stat, float value)

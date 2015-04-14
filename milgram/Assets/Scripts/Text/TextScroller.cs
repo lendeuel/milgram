@@ -16,6 +16,9 @@ public class Options
 	public bool isHint;
 	public string hintsText;
 	public DialogForks hintsDialogFork;
+	public bool hasModify;
+	public List<StatsToModify> stats;
+
 	[Range (0,1)] public float volume = 1;
 	public bool hasSpecificSound = false;
 	public AudioClip specificSound;
@@ -242,6 +245,13 @@ public class TextScroller : ButtonAction
 		}
 	}
 
+	public void ProcessModify()
+	{
+		ModifyStats m = GameObject.FindGameObjectWithTag("GameController").GetComponent<ModifyStats>();
+		m.stats = lines[index].options.stats;
+		m.modify();
+	}
+
 	public void ProcessKey()
 	{
 		source2.clip = hintDiscovered;
@@ -380,6 +390,11 @@ public class TextScroller : ButtonAction
 					{
 						Debug.Log("Processing Hint.");
 						ProcessHint();
+					}
+					if (lines[index].options.hasModify)
+					{
+						Debug.Log("Processing Modify.");
+						ProcessModify();
 					}
 				}
 

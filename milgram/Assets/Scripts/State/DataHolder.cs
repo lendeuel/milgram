@@ -44,5 +44,7 @@ public class DataHolder
 		locationsFound = locationsFoundI;
 		hintsFound = hintsFoundI;
 		censorText = censorTextI;
+
+		Application.LoadLevel(1);
 	}
 }

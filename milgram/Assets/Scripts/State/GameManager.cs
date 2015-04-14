@@ -38,7 +38,12 @@ public class GameManager : MonoBehaviour
 	{
 		DataHolder.SetStart();
 	}
-	
+
+	public void Reset()
+	{
+		DataHolder.Reset();
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{

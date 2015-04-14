@@ -10,6 +10,7 @@ public class DataHolder
 	public static int keysFound = 0;
 	public static int locationsFound = 0;
 	public static int hintsFound = 0;
+	public static bool censorText = false;
 
 	// These are only needed if we keep the restart button
 	private static bool allowInteractionsI;
@@ -19,6 +20,7 @@ public class DataHolder
 	private static int keysFoundI;
 	private static int locationsFoundI;
 	private static int hintsFoundI;
+	private static bool censorTextI;
 
 	public static void SetStart()
 	{
@@ -29,6 +31,7 @@ public class DataHolder
 		keysFoundI = keysFound;
 		locationsFoundI = locationsFound;
 		hintsFoundI = hintsFound;
+		censorTextI = censorText;
 	}
 
 	public static void Reset()
@@ -40,5 +43,6 @@ public class DataHolder
 		keysFound = keysFoundI;
 		locationsFound = locationsFoundI;
 		hintsFound = hintsFoundI;
+		censorText = censorTextI;
 	}
 }

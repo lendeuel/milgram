@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 	private bool playedKeys = false;
 	private bool playedStart = false;
 
+	public bool censorTheText = false;
+
 	public Forks theForks;
 	public TrackStateOf trackStates;
 	public bool playStart = false;
@@ -40,6 +42,8 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		DataHolder.censorText = censorTheText;
+
 		if (trackStates.notepadHints.activeSelf || trackStates.notepadNotes.activeSelf)
 		{
 			DataHolder.notepadOpen = true;

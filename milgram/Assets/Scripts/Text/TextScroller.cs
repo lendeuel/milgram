@@ -7,6 +7,8 @@ using System;
 [Serializable]
 public class Options
 {
+	public bool needsCensored;
+	public string censoredText;
 	public bool isKey;
 	public bool isLocation;
 	public string notesText;
@@ -166,7 +168,7 @@ public class TextScroller : ButtonAction
 								source.clip = c.thisCharactersAudio[randomClip];
 							}
 
-							source.volume = 0;//lines[index].options.volume;
+							source.volume = lines[index].options.volume;
 							source.Play();
 						}
 					}	
@@ -312,34 +314,34 @@ public class TextScroller : ButtonAction
 	public void addString(LineAndSpeaker s)
 	{
 		hasEnded = false;
+
 		DataHolder.allowInteractions = false;
+
 		lines.Add (s);
+
 		if(index>=lines.Count)
 		{
 			mTimeElapsed = 0;
 		}
+
+		ProcessNew();
 	}
 
 	public void addStrings(LineAndSpeaker[] s)
 	{
 		hasEnded = false;
-		//Debug.Log (lines.Count);
+
 		DataHolder.allowInteractions = false;
+
 		foreach(LineAndSpeaker l in s)
 		{
 			lines.Add (l);
-		}
-		//Debug.Log (lines.Count);
-		foreach(LineAndSpeaker l in lines)
-		{
-			//Debug.Log(l.line);
 		}
 
 		foreach(CharacterToMaterial c in characterToMaterialMapping)
 		{
 			if(c.character == lines[index].speaker)
 			{
-				//Debug.Log("changing sprite");
 				chatWindow.sprite = c.material;
 			}
 		}
@@ -348,6 +350,8 @@ public class TextScroller : ButtonAction
 		{
 			mTimeElapsed = 0;
 		}
+
+		ProcessNew();
 	}
 
 	public override void takeAction()
@@ -358,47 +362,8 @@ public class TextScroller : ButtonAction
 			{
 				mTimeElapsed = 0;
 				index++;
-				if(index<lines.Count)
-				{
-					foreach(CharacterToMaterial c in characterToMaterialMapping)
-					{
-						if(c.character == lines[index].speaker)
-						{
-							chatWindow.sprite = c.material;
-						}
-					}
 
-					//Debug.Log("Key: " + lines[index].options.isKey + " Location: " + lines[index].options.isLocation + " Hint: " + lines[index].options.isHint);
-
-					//source.volume = lines[index].options.volume;
-
-					offset = 0;
-					currentTag = 0;
-					processing = false;
-
-					if (lines[index].options.isKey)
-					{
-						Debug.Log("Processing Key.");
-						ProcessKey();
-					}
-					if (lines[index].options.isLocation)
-					{
-						Debug.Log("Processing Location.");
-						ProcessLocation();
-					}
-					if (lines[index].options.isHint)
-					{
-						Debug.Log("Processing Hint.");
-						ProcessHint();
-					}
-					if (lines[index].options.hasModify)
-					{
-						Debug.Log("Processing Modify.");
-						ProcessModify();
-					}
-				}
-
-				displayAll=false;
+				ProcessNew();
 			}
 			else
 			{
@@ -407,6 +372,55 @@ public class TextScroller : ButtonAction
 				GameObject.FindObjectOfType<TimeManager>().DialogueSkipped();
 			}
 		}
+	}
+
+	void ProcessNew()
+	{
+		if(index<lines.Count)
+		{
+			foreach(CharacterToMaterial c in characterToMaterialMapping)
+			{
+				if(c.character == lines[index].speaker)
+				{
+					chatWindow.sprite = c.material;
+				}
+			}
+			
+			//Debug.Log("Key: " + lines[index].options.isKey + " Location: " + lines[index].options.isLocation + " Hint: " + lines[index].options.isHint);
+			
+			if (lines[index].options.needsCensored && DataHolder.censorText)
+			{
+				Debug.Log("Censoring");
+				lines[index].line = lines[index].options.censoredText;
+			}
+			
+			offset = 0;
+			currentTag = 0;
+			processing = false;
+			
+			if (lines[index].options.isKey)
+			{
+				Debug.Log("Processing Key.");
+				ProcessKey();
+			}
+			if (lines[index].options.isLocation)
+			{
+				Debug.Log("Processing Location.");
+				ProcessLocation();
+			}
+			if (lines[index].options.isHint)
+			{
+				Debug.Log("Processing Hint.");
+				ProcessHint();
+			}
+			if (lines[index].options.hasModify)
+			{
+				Debug.Log("Processing Modify.");
+				ProcessModify();
+			}
+		}
+		
+		displayAll=false;
 	}
 
 	void OnMouseUp()

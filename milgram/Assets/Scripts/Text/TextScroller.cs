@@ -46,6 +46,9 @@ public class TextScroller : ButtonAction
 		//void FocusOnLocation(GameObject location);
 	}
 
+	public AudioClip hintDiscovered;
+	public AudioClip locationDiscovered;
+
 	public bool destroyOnComplete=true;
 	public LineAndSpeaker[] linesToLoad;
 	public float lettersPerSecond=15;
@@ -65,10 +68,12 @@ public class TextScroller : ButtonAction
 	private bool firstTag = true;
 
 	private AudioSource source;
+	private AudioSource source2;
 
 	void Start()
 	{
 		source = GetComponent<AudioSource>();
+		source2 = gameObject.AddComponent<AudioSource>();
 
 		lines = new List<LineAndSpeaker>();
 
@@ -158,7 +163,7 @@ public class TextScroller : ButtonAction
 								source.clip = c.thisCharactersAudio[randomClip];
 							}
 
-							source.volume = lines[index].options.volume;
+							source.volume = 0;//lines[index].options.volume;
 							source.Play();
 						}
 					}	
@@ -239,7 +244,11 @@ public class TextScroller : ButtonAction
 
 	public void ProcessKey()
 	{
+		source2.clip = hintDiscovered;
+		source2.Play();
+
 		DataHolder.keysFound++;
+
 		GameObject.FindGameObjectWithTag("NewHint").
 			GetComponent<FadeIntoObject>().FocusOn(); 
 
@@ -251,6 +260,9 @@ public class TextScroller : ButtonAction
 
 	public void ProcessLocation()
 	{
+		source2.clip = locationDiscovered;
+		source2.Play();
+
 		DataHolder.locationsFound++;
 
 		GameObject.FindGameObjectWithTag("NewLocation").GetComponent<FadeIntoObject>().FocusOn(); 
@@ -267,6 +279,9 @@ public class TextScroller : ButtonAction
 
 	public void ProcessHint()
 	{
+		source2.clip = hintDiscovered;
+		source2.Play();
+
 		DataHolder.hintsFound++;
 
 		GameObject.FindGameObjectWithTag("NewHint").

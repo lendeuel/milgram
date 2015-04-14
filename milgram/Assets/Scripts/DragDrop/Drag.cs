@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Drag : MonoBehaviour 
 {
+	private FadeInFadeOut drawer;
+	private bool fadedIn = false;
+
 	public AudioClip onMouseOver;
 	public AudioClip onClick;
 
@@ -18,6 +21,8 @@ public class Drag : MonoBehaviour
 	void Start()
 	{
 		source = gameObject.AddComponent<AudioSource>();
+
+		drawer = GameObject.FindGameObjectWithTag("DrawerHighlight").GetComponent<FadeInFadeOut>();
 	}
 	
 	void OnMouseEnter()
@@ -44,6 +49,13 @@ public class Drag : MonoBehaviour
 
 		if (DataHolder.allowInteractions)
 		{
+			if (!fadedIn)
+			{
+				fadedIn = true;
+				drawer.FadeIn();
+			}
+
+
 			if (onClick != null && !hasPlayedClick)
 			{
 				hasPlayedClick = true;
@@ -72,6 +84,12 @@ public class Drag : MonoBehaviour
 
 		if (DataHolder.allowInteractions)
 		{
+			if (fadedIn)
+			{
+				fadedIn = false;
+				drawer.FadeOut();
+			}
+
 			GameObject.FindObjectOfType<ListenerManager>().OnDrop(gameObject);
 			this.transform.position = originalLocation;
 		}

@@ -7,6 +7,8 @@ using System;
 [Serializable]
 public class Options
 {
+	public bool hasStatRequirement;
+	public StatRequirement statRequired;
 	public bool needsCensored;
 	public string censoredText;
 	public bool isKey;
@@ -378,6 +380,22 @@ public class TextScroller : ButtonAction
 	{
 		if(index<lines.Count)
 		{
+			// Check to see if next line has a stat requirement.  
+			// If it does and it's not met, delete from index+1 to end of lines array
+			if (lines[index+1].options.hasStatRequirement)
+			{
+				// Check to see if the requirement is met
+				if (GameObject.FindObjectOfType<StatSystem>().GetValueForStat(lines[index+1].options.statRequired.stat) >= lines[index+1].options.statRequired.value)
+				{
+					// Requirement was met, do nothing
+				}
+				else
+				{
+					// Requirement wasn't met, remove all lines past current index.
+					lines.RemoveRange(index+1, lines.Count - (index+1));
+				}
+			}
+
 			foreach(CharacterToMaterial c in characterToMaterialMapping)
 			{
 				if(c.character == lines[index].speaker)

@@ -18,7 +18,7 @@ public class TheseDialogQueuers
 	
 	public bool containsKey = false;
 	public bool containsLocation = false;
-	public bool hasStatRequirement = false;
+	public bool hasBranchStatRequirement = false;
 	public StatRequirement statRequirement;
 	[NonSerialized]public bool canBeQueued = true;
 	public MonoBehaviour endedResponse;
@@ -127,7 +127,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 			int count = 0;
 			foreach(TheseDialogQueuers t in dialogQueuers)
 			{
-				if (t.hasStatRequirement)
+				if (t.hasBranchStatRequirement)
 				{
 					// Check to see if the requirement is met
 					if (GameObject.FindObjectOfType<StatSystem>().GetValueForStat(t.statRequirement.stat) >= t.statRequirement.value)

@@ -2,7 +2,9 @@
 	FadeObjectInOut.cs
  	Hayden Scott-Baron (Dock) - http://starfruitgames.com
  	6 Dec 2012 
- 
+
+	Modified by: Trevor Newell
+	
 	This allows you to easily fade an object and its children. 
 	If an object is already partially faded it will continue from there. 
 	If you choose a different speed, it will use the new speed. 
@@ -12,10 +14,12 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class FadeInFadeOut : MonoBehaviour
 {
 	// publically editable speed
+	public bool disabled = false;
 	public Image[] gameObjectsToFade;
 	public float fadeDelay = 0.0f; 
 	public float fadeTime = 0.5f; 
@@ -24,7 +28,7 @@ public class FadeInFadeOut : MonoBehaviour
 	private bool fadeOutOnStart = true;
 	private bool logInitialFadeSequence = false; 
 	private bool fading;
-	
+
 	// store colours
 	private Color[] colors; 
 	
@@ -191,15 +195,21 @@ public class FadeInFadeOut : MonoBehaviour
 	public void FadeIn (float newFadeTime)
 	{
 		//Debug.Log("Fading In: " + newFadeTime);
-		StopAllCoroutines(); 
-		StartCoroutine("FadeSequence", newFadeTime); 
+		if (!disabled)
+		{
+			StopAllCoroutines(); 
+			StartCoroutine("FadeSequence", newFadeTime); 
+		}
 	}
 	
 	public void FadeOut (float newFadeTime)
 	{
 		//Debug.Log("Fading Out: " + (-newFadeTime));
-		StopAllCoroutines(); 
-		StartCoroutine("FadeSequence", -newFadeTime); 
+		if (!disabled)
+		{
+			StopAllCoroutines(); 
+			StartCoroutine("FadeSequence", -newFadeTime); 
+		}
 	}
 	
 	

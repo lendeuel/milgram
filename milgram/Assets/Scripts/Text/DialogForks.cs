@@ -145,24 +145,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				
 				count++;
 			}
-			
-			// Before next step make sure there's at least one dialogQueuer that can be queued
-//			count = 0;
-//			foreach(TheseDialogQueuers t in dialogQueuers)
-//			{
-//				if (t.canBeQueued)
-//				{
-//					count++;
-//				}
-//			}
-//			
-//			if (count == 0)
-//			{
-//				NoneLeft();
-//				return;
-//			}
-			
-			
+					
 			int randomNum = 0;
 			
 			if (hasAStatRequirement)
@@ -207,7 +190,14 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				}
 				else 
 				{
-					baseFork.dialogQueuers.RemoveRange(0, baseFork.dialogQueuers.Count);
+					try
+					{
+						baseFork.dialogQueuers.RemoveRange(0, baseFork.dialogQueuers.Count);
+					}
+					catch (NullReferenceException e)
+					{
+						Debug.Log("Base Fork null, is this what you want?");
+					}
 				}
 				
 				return;
@@ -236,6 +226,12 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				AddQueuers(dialogQueuers[randomNum].lines[indexOfFork].options.dialogFork, randomNum);
 				dialogQueuers.RemoveAt(randomNum);
 			}
+
+			// Disable highlighter
+			if (dialogQueuers.Count == 0)
+			{
+				gameObject.GetComponent<FadeInFadeOut>().disabled = true;
+			}
 		}
 		// If it branches into this code it means the user clicked the box when no DialogQueuers were on this DialogFork
 		else
@@ -249,16 +245,16 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 	public void NoneLeft()
 	{
 		Debug.Log("In None Left");
-		LineAndSpeaker line = new LineAndSpeaker();
-		line.speaker = Characters.Suspect;
-		line.options.volume = 0;
-		line.line = "...";
-		lines = new List<LineAndSpeaker>();
-		lines.Add(line);
-				
-		option.lines = lines.ToArray();
-		option.endedResponse = this;
-		option.takeAction();
+//		LineAndSpeaker line = new LineAndSpeaker();
+//		line.speaker = Characters.Suspect;
+//		line.options.volume = 0;
+//		line.line = "...";
+//		lines = new List<LineAndSpeaker>();
+//		lines.Add(line);
+//				
+//		option.lines = lines.ToArray();
+//		option.endedResponse = this;
+//		option.takeAction();
 	}
 	
 	public void textScrollerEnded()

@@ -24,7 +24,7 @@ public class Options
 	public bool hasModify;
 	public List<StatsToModify> stats;
 	
-	[Range (0,1)] public float volume = 1;
+	//[Range (0,1)] public float volume = 1;
 	public bool hasSpecificSound = false;
 	public AudioClip specificSound;
 }
@@ -172,7 +172,7 @@ public class TextScroller : ButtonAction
 								source.clip = c.thisCharactersAudio[randomClip];
 							}
 							
-							source.volume = lines[index].options.volume;
+							//source.volume = lines[index].options.volume;
 							source.Play();
 						}
 					}	
@@ -296,7 +296,8 @@ public class TextScroller : ButtonAction
 		GameObject.FindGameObjectWithTag("NewLocation").GetComponent<FadeIntoObject>().FocusOn(); 
 		
 		GameObject.FindGameObjectWithTag("Map").GetComponent<FadeIntoObject>().FocusOn();
-		
+
+		Debug.Log(lines[index].line);
 		lines[index].options.location.SetActive(true);							
 	}
 	

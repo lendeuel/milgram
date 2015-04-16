@@ -20,11 +20,13 @@ public class Drag : MonoBehaviour
 
 	void Start()
 	{
+		originalLocation = this.transform.localPosition;
+
 		source = gameObject.AddComponent<AudioSource>();
 
 		drawer = GameObject.FindGameObjectWithTag("DrawerHighlight").GetComponent<FadeInFadeOut>();
 	}
-	
+
 	void OnMouseEnter()
 	{
 		if (DataHolder.allowInteractions)
@@ -45,7 +47,7 @@ public class Drag : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		originalLocation = this.transform.position;
+		//originalLocation = this.transform.position;
 
 		if (DataHolder.allowInteractions)
 		{
@@ -78,6 +80,11 @@ public class Drag : MonoBehaviour
 		}
 	}
 
+	public void Reset()
+	{
+		this.transform.localPosition = originalLocation;
+	}
+
 	void OnMouseUp()
 	{
 		hasPlayedClick = false;
@@ -91,7 +98,7 @@ public class Drag : MonoBehaviour
 			}
 
 			GameObject.FindObjectOfType<ListenerManager>().OnDrop(gameObject);
-			this.transform.position = originalLocation;
+			this.transform.localPosition = originalLocation;
 		}
 	}
 }

@@ -138,10 +138,10 @@ public class NotepadManager : MonoBehaviour
 
 	public void SetToHintPage(int pageNumber)
 	{
-		Debug.Log("In SetToHintPage: " + pageNumber);
+		//Debug.Log("In SetToHintPage: " + pageNumber);
 		if (theHintPages.Count == 0)
 		{
-			Debug.Log("Returning early.");
+			//Debug.Log("Returning early.");
 			return;
 		}
 
@@ -149,7 +149,7 @@ public class NotepadManager : MonoBehaviour
 		
 		if (pageNumber == -1)
 		{
-			Debug.Log("At min.");
+			//Debug.Log("At min.");
 			viewHintPage = 0;
 			AssembleObjects(0);
 			return;
@@ -157,13 +157,13 @@ public class NotepadManager : MonoBehaviour
 		
 		if (pageNumber >= theHintPages.Count)
 		{
-			Debug.Log("At max. Count: " + theHintPages.Count + " Page Number: " + pageNumber);
+			//Debug.Log("At max. Count: " + theHintPages.Count + " Page Number: " + pageNumber);
 			viewHintPage = theHintPages.Count - 1;
 			AssembleObjects(viewHintPage);
 			return;
 		}
 		
-		Debug.Log("In bounds.  Page Num: " + pageNumber);
+		//Debug.Log("In bounds.  Page Num: " + pageNumber);
 		AssembleObjects(pageNumber);
 		return;
 	}
@@ -229,19 +229,19 @@ public class NotepadManager : MonoBehaviour
 
 		if (pageNumber == -1)
 		{
-			Debug.Log("At min.");
+			//Debug.Log("At min.");
 			viewNotePage = 0;
 			return theNotePages[0].AssembleLines();
 		}
 
 		if (pageNumber >= theNotePages.Count)
 		{
-			Debug.Log("At max. Count: " + theNotePages.Count + " Page Number: " + pageNumber);
+			//Debug.Log("At max. Count: " + theNotePages.Count + " Page Number: " + pageNumber);
 			viewNotePage = theNotePages.Count - 1;
 			return theNotePages[viewNotePage].AssembleLines();
 		}
 
-		Debug.Log("In bounds.  Page Num: " + pageNumber);
+		//Debug.Log("In bounds.  Page Num: " + pageNumber);
 		return theNotePages[pageNumber].AssembleLines();
 	}
 	

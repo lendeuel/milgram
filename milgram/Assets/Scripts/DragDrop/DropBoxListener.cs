@@ -38,6 +38,8 @@ public class DropBoxListener : SimpleDragListener
 			source.Play();
 		}
 
+		drop.GetComponent<Drag>().Reset();
+
 		if (drop.GetComponent<ModifyStats>() != null)
 			drop.GetComponent<ModifyStats>().modify();
 

@@ -4,8 +4,8 @@ using System.Collections;
 public class Button : MonoBehaviour 
 {
 	public ButtonAction action;
-	public AudioClip onMouseOver;
-	public AudioClip onClick;
+	public AudioClip[] onMouseOver;
+	public AudioClip[] onClick;
 	private AudioSource source;
 
 	private bool hasPlayedEnter = false;
@@ -22,7 +22,8 @@ public class Button : MonoBehaviour
 			if (onMouseOver != null && !hasPlayedEnter)
 			{
 				hasPlayedEnter = true;
-				source.clip = onMouseOver;
+				int randomClip = UnityEngine.Random.Range(0, onMouseOver.Length);
+				source.clip = onMouseOver[randomClip];
 				source.Play();
 			}
 		}
@@ -39,7 +40,8 @@ public class Button : MonoBehaviour
 		{
 			if (onClick != null)
 			{
-				source.clip = onClick;
+				int randomClip = UnityEngine.Random.Range(0, onClick.Length);
+				source.clip = onClick[randomClip];
 				source.Play();
 			}
 

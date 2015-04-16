@@ -54,9 +54,9 @@ public class TextScroller : ButtonAction
 		//void FocusOnLocation(GameObject location);
 	}
 	
-	public AudioClip hintDiscovered;
-	public AudioClip locationDiscovered;
-	public AudioClip objectiveDiscovered;
+	public AudioClip[] hintDiscovered;
+	public AudioClip[] locationDiscovered;
+	public AudioClip[] objectiveDiscovered;
 	
 	public bool destroyOnComplete=true;
 	public LineAndSpeaker[] linesToLoad;
@@ -260,7 +260,8 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessKey()
 	{
-		source2.clip = hintDiscovered;
+		int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
+		source.clip = hintDiscovered[randomClip];
 		source2.Play();
 		
 		DataHolder.keysFound++;
@@ -271,7 +272,8 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessObjective()
 	{
-		source2.clip = objectiveDiscovered;
+		int randomClip = UnityEngine.Random.Range(0, objectiveDiscovered.Length);
+		source.clip = objectiveDiscovered[randomClip];
 		source2.Play();
 		
 		GameObject.FindGameObjectWithTag("NewObjective").GetComponent<FadeIntoObject>().FocusOn(); 	
@@ -288,7 +290,8 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessLocation()
 	{
-		source2.clip = locationDiscovered;
+		int randomClip = UnityEngine.Random.Range(0, locationDiscovered.Length);
+		source.clip = locationDiscovered[randomClip];
 		source2.Play();
 		
 		DataHolder.locationsFound++;
@@ -303,7 +306,8 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessHint()
 	{
-		source2.clip = hintDiscovered;
+		int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
+		source.clip = hintDiscovered[randomClip];
 		source2.Play();
 		
 		DataHolder.hintsFound++;

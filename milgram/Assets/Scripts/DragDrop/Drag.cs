@@ -6,8 +6,8 @@ public class Drag : MonoBehaviour
 	private FadeInFadeOut drawer;
 	private bool fadedIn = false;
 
-	public AudioClip onMouseOver;
-	public AudioClip onClick;
+	public AudioClip[] onMouseOver;
+	public AudioClip[] onClick;
 
 	Vector3 screenPoint;
 	Vector3 offset;
@@ -34,7 +34,8 @@ public class Drag : MonoBehaviour
 			if (onMouseOver != null && !hasPlayedEnter)
 			{
 				hasPlayedEnter = true;
-				source.clip = onMouseOver;
+				int randomClip = UnityEngine.Random.Range(0, onMouseOver.Length);
+				source.clip = onMouseOver[randomClip];
 				source.Play();
 			}
 		}
@@ -61,7 +62,8 @@ public class Drag : MonoBehaviour
 			if (onClick != null && !hasPlayedClick)
 			{
 				hasPlayedClick = true;
-				source.clip = onMouseOver;
+				int randomClip = UnityEngine.Random.Range(0, onClick.Length);
+				source.clip = onClick[randomClip];
 				source.Play();
 			}
 

@@ -19,7 +19,7 @@ public class Button : MonoBehaviour
 	{
 		if (DataHolder.allowInteractions)
 		{
-			if (onMouseOver != null && !hasPlayedEnter)
+			if (onMouseOver.Length != 0 && !hasPlayedEnter)
 			{
 				hasPlayedEnter = true;
 				int randomClip = UnityEngine.Random.Range(0, onMouseOver.Length);
@@ -38,7 +38,7 @@ public class Button : MonoBehaviour
 	{
 		if(DataHolder.allowInteractions || action is TextScroller || action is LoadScene)
 		{
-			if (onClick != null)
+			if (onClick.Length != 0)
 			{
 				int randomClip = UnityEngine.Random.Range(0, onClick.Length);
 				source.clip = onClick[randomClip];

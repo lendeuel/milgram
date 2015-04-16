@@ -31,7 +31,7 @@ public class Drag : MonoBehaviour
 	{
 		if (DataHolder.allowInteractions)
 		{
-			if (onMouseOver != null && !hasPlayedEnter)
+			if (onMouseOver.Length != 0 && !hasPlayedEnter)
 			{
 				hasPlayedEnter = true;
 				int randomClip = UnityEngine.Random.Range(0, onMouseOver.Length);
@@ -59,7 +59,7 @@ public class Drag : MonoBehaviour
 			}
 
 
-			if (onClick != null && !hasPlayedClick)
+			if (onClick.Length != 0 && !hasPlayedClick)
 			{
 				hasPlayedClick = true;
 				int randomClip = UnityEngine.Random.Range(0, onClick.Length);

@@ -260,10 +260,13 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessKey()
 	{
-		int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
-		source.clip = hintDiscovered[randomClip];
-		source2.Play();
-		
+		if (hintDiscovered.Length != 0)
+		{
+			int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
+			source.clip = hintDiscovered[randomClip];
+			source2.Play();
+		}
+
 		DataHolder.keysFound++;
 		
 		GameObject.FindGameObjectWithTag("NewHint").
@@ -272,10 +275,12 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessObjective()
 	{
-		int randomClip = UnityEngine.Random.Range(0, objectiveDiscovered.Length);
-		source.clip = objectiveDiscovered[randomClip];
-		source2.Play();
-		
+		if (objectiveDiscovered.Length != 0)
+		{
+			int randomClip = UnityEngine.Random.Range(0, objectiveDiscovered.Length);
+			source.clip = objectiveDiscovered[randomClip];
+			source2.Play();
+		}
 		GameObject.FindGameObjectWithTag("NewObjective").GetComponent<FadeIntoObject>().FocusOn(); 	
 
 		if (lines[index].options.objectiveText != "")
@@ -290,10 +295,12 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessLocation()
 	{
-		int randomClip = UnityEngine.Random.Range(0, locationDiscovered.Length);
-		source.clip = locationDiscovered[randomClip];
-		source2.Play();
-		
+		if (locationDiscovered.Length != 0)
+		{
+			int randomClip = UnityEngine.Random.Range(0, locationDiscovered.Length);
+			source.clip = locationDiscovered[randomClip];
+			source2.Play();
+		}
 		DataHolder.locationsFound++;
 		
 		GameObject.FindGameObjectWithTag("NewLocation").GetComponent<FadeIntoObject>().FocusOn(); 
@@ -306,10 +313,13 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessHint()
 	{
-		int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
-		source.clip = hintDiscovered[randomClip];
-		source2.Play();
-		
+		if (hintDiscovered.Length != 0)
+		{
+			int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
+			source.clip = hintDiscovered[randomClip];
+			source2.Play();
+		}
+
 		DataHolder.hintsFound++;
 		
 		GameObject.FindGameObjectWithTag("NewHint").

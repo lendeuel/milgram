@@ -37,6 +37,11 @@ public class DropBoxListener : SimpleDragListener
 		//drawerSprite.Display(1);
 	}
 
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		Debug.Log("In Collider");
+	}
+
 	public override void OnDrop (GameObject drop)
 	{
 		if (onDrop != null)

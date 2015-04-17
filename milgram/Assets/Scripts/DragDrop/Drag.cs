@@ -30,6 +30,11 @@ public class Drag : MonoBehaviour
 		drawerSprite = GameObject.FindGameObjectWithTag("Drawer").GetComponent<DisplaySprite>();
 	}
 
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		Debug.Log("In Collider");
+	}
+
 	void OnMouseEnter()
 	{
 		if (DataHolder.allowInteractions)

@@ -7,12 +7,15 @@ public class DropBoxListener : SimpleDragListener
 	public AudioClip onDrop;
 	private AudioSource source;
 	private bool hasPlayedEnter = false;
+	private DisplaySprite drawerSprite;
 
 	void Start()
 	{
 		source = gameObject.AddComponent<AudioSource>();
 
 		GameObject.FindObjectOfType<ListenerManager>().Register(this);
+
+		drawerSprite = GameObject.FindGameObjectWithTag("Drawer").GetComponent<DisplaySprite>();
 	}
 
 	void OnMouseEnter()
@@ -23,11 +26,15 @@ public class DropBoxListener : SimpleDragListener
 			source.clip = onMouseOver;
 			source.Play();
 		}
+
+		//drawerSprite.Display(2);
 	}
 
 	void OnMouseExit()
 	{
 		hasPlayedEnter = false;
+
+		//drawerSprite.Display(1);
 	}
 
 	public override void OnDrop (GameObject drop)

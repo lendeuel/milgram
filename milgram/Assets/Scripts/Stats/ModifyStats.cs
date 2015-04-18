@@ -8,6 +8,11 @@ public class StatsToModify
 {
 	public StatSystem.Stats stat;
 	public float modifyValue;
+
+	public StatsToModify()
+	{
+
+	}
 }
 
 public class ModifyStats : ButtonAction
@@ -24,7 +29,7 @@ public class ModifyStats : ButtonAction
 
 	void Start()
 	{
-		statSystem = FindObjectOfType<StatSystem> ();
+		statSystem = FindObjectOfType<StatSystem>();
 	}
 	
 	public void modify() 

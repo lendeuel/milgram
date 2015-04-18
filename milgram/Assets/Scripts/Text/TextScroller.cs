@@ -120,7 +120,7 @@ public class TextScroller : ButtonAction
 			{
 				if(endedResponse!=null)
 				{
-					Debug.Log("In textScroller ended responder");
+					//Debug.Log("In textScroller ended responder");
 					if(endedResponse is TextScrollerEndedResponder)
 					{
 						(endedResponse as TextScrollerEndedResponder).textScrollerEnded();
@@ -256,6 +256,7 @@ public class TextScroller : ButtonAction
 		ModifyStats m = GameObject.FindGameObjectWithTag("GameController").GetComponent<ModifyStats>();
 		m.stats = lines[index].options.stats;
 		m.modify();
+		//Destroy(m);
 	}
 	
 	public void ProcessKey()

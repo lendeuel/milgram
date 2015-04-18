@@ -259,7 +259,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 	
 	public void textScrollerEnded()
 	{	
-		Debug.Log("In DialogForks textscrollerended");
+		//Debug.Log("In DialogForks textscrollerended");
 		
 		chatWindow.GetComponent<Image>().enabled = false;
 		chatWindow.GetComponent<BoxCollider2D>().enabled = false;
@@ -267,7 +267,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		
 		if(processLocation)
 		{
-			Debug.Log("In Second Dialogforks textscrollerended");
+			//Debug.Log("In Second Dialogforks textscrollerended");
 			if(endedResponseWithLocation is TextScroller.TextScrollerEndedResponder)
 			{
 				(endedResponseWithLocation as TextScroller.TextScrollerEndedResponder).textScrollerEnded();
@@ -279,7 +279,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		}
 		else
 		{
-			Debug.Log("In Third dialogForks textscrollerended");
+			//Debug.Log("In Third dialogForks textscrollerended");
 		}
 		
 		//Destroy(this);

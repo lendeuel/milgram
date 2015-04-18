@@ -1,8 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
+
+[Serializable]
+public class StartingStats
+{
+	public float health;
+	public float willingness;
+	public float willpower;
+	public float tolerance;
+}
 
 public class StatSystem : MonoBehaviour 
 {
+	public StartingStats startingStats;
+
 	public enum Stats
 	{
 		health,
@@ -17,10 +29,12 @@ public class StatSystem : MonoBehaviour
 	{
 		stats = new Dictionary<Stats, float> ();
 
-		AddStat (Stats.health, 5.0f);
-		AddStat (Stats.willingness, 10.0f);
-		AddStat (Stats.willpower, 2.0f);
-		AddStat (Stats.tolerance, 7.0f);
+		AddStat (Stats.health, startingStats.health);
+		AddStat (Stats.willingness, startingStats.willingness);
+		AddStat (Stats.willpower, startingStats.willpower);
+		AddStat (Stats.tolerance, startingStats.tolerance);
+
+		DebugReportStats();
 	}
 
 	void Update()
@@ -33,7 +47,7 @@ public class StatSystem : MonoBehaviour
 
 	public void AddValueToStat (Stats stat, float value)
 	{
-		stats [stat] += value;
+		stats[stat] += value;
 	}
 
 	public void AddStat(Stats stat, float value)
@@ -54,11 +68,14 @@ public class StatSystem : MonoBehaviour
 		{
 			return 0;
 		}
+
 		return stats [stat];
 	}
 
 	public void SetStats(Dictionary<Stats, float> newDic)
 	{
+		DebugReportStats();
+
 		stats = newDic;
 	}
 

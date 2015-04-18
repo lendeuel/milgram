@@ -7,5 +7,6 @@ public enum Characters
 	Suspect,
 	Radio,
 	Boss,
-	Mars
+	Mars,
+	Strawman
 }

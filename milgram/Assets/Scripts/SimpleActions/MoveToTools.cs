@@ -71,6 +71,8 @@ public class MoveToTools : ButtonAction
 
 	public void MoveToDestination()
 	{
+		numTrack++;
+
 		destination = placeToMove;
 
 		mMoving = true;
@@ -78,6 +80,8 @@ public class MoveToTools : ButtonAction
 
 	public void MoveToOriginalLocation()
 	{
+		numTrack++;
+
 		destination = location;
 
 		mMoving = true;

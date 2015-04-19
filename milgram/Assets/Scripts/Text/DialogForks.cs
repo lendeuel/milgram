@@ -23,7 +23,9 @@ public class TheseDialogQueuers
 	[NonSerialized]public bool canBeQueued = true;
 	public MonoBehaviour endedResponse;
 	public LineAndSpeaker[] lines;
-	
+
+	public bool closeOnClick = true;
+
 	public DialogQueuer getThisDialogQueuer()
 	{
 		return thisDialogQueuer;
@@ -69,7 +71,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 			temp.chatWindow = GameObject.FindGameObjectWithTag("DialogHandler");
 			temp.lines = d.lines;
 			temp.endedResponse = this;
-			
+			temp.closeOnClick = d.closeOnClick;
 			d.setThisDialogQueuer(temp);
 		}
 	}

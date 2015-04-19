@@ -8,6 +8,7 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 {
 	public int lettersPerSecond = 15;
 
+	public bool closeOnClick = true; // Controls whether all objects open are closed when this is queued. i.e. Notepad, File, ToolRack, Map
 	public MonoBehaviour endedResponse;
 	public LineAndSpeaker[] lines;
 	public GameObject chatWindow;
@@ -29,12 +30,14 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 		s.endedResponse = endedResponse;
 		s.lettersPerSecond = lettersPerSecond;
 
-		try{GameObject.FindGameObjectWithTag("NotepadHints").SetActive(false);}catch(NullReferenceException e){}
-		try{GameObject.FindGameObjectWithTag("NotepadNotes").SetActive(false);}catch(NullReferenceException e){}
-		try{GameObject.FindGameObjectWithTag("File").SetActive(false);}catch(NullReferenceException e){}
-		GameObject.FindGameObjectWithTag("Map").GetComponent<MoveToTools>().MoveToOriginalLocation();
-		GameObject.FindGameObjectWithTag("ToolRack").GetComponent<MoveToTools>().MoveToOriginalLocation();
-
+		if (closeOnClick)
+		{
+			try{GameObject.FindGameObjectWithTag("NotepadHints").SetActive(false);}catch(NullReferenceException e){}
+			try{GameObject.FindGameObjectWithTag("NotepadNotes").SetActive(false);}catch(NullReferenceException e){}
+			try{GameObject.FindGameObjectWithTag("File").SetActive(false);}catch(NullReferenceException e){}
+			GameObject.FindGameObjectWithTag("Map").GetComponent<MoveToTools>().MoveToOriginalLocation();
+			GameObject.FindGameObjectWithTag("ToolRack").GetComponent<MoveToTools>().MoveToOriginalLocation();
+		}
 	}
 
 	public void textScrollerEnded()

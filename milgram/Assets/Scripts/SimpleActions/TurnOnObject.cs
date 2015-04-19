@@ -17,8 +17,10 @@ public class TurnOnObject : ButtonAction
 					g.SetActive (true);
 				}
 			}
-
-
+			else
+			{
+				g.SetActive(true);
+			}
 		}
 	}
 }

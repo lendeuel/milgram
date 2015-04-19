@@ -108,6 +108,14 @@ public class NotepadManager : MonoBehaviour
 
 		currentNotePage = theNotePages.Count - 1;
 
+		for (int i = 0; i < 4; i++)
+		{
+			hintObjects[i].collider2D.enabled = false;
+			hintObjects[i].GetComponent<Text>().text = "";
+			hintObjects[i].GetComponent<Button>().action = null;
+			hintObjects[i].GetComponent<FadeInFadeOut>().enabled = false;
+		}
+
 		for (int i = 0; i < theHintPages.Count; i++)
 		{
 			AssembleObjects(i);
@@ -184,7 +192,7 @@ public class NotepadManager : MonoBehaviour
 			theHintPages.Add(new HintPage(line, d));
 		}
 	}
-
+	
 	public void AssembleObjects(int index)
 	{
 		for (int i = 0; i < theHintPages[index].gameObjectsAdded; i++)
@@ -192,6 +200,7 @@ public class NotepadManager : MonoBehaviour
 			hintObjects[i].collider2D.enabled = true;
 			hintObjects[i].GetComponent<Text>().text = theHintPages[index].hintFork[i].theString;
 			hintObjects[i].GetComponent<Button>().action = theHintPages[index].hintFork[i].theFork;
+			hintObjects[i].GetComponent<FadeInFadeOut>().enabled = true;
 		}
 
 		if (theHintPages[index].gameObjectsAdded < maxObjectsPerPage)
@@ -201,6 +210,7 @@ public class NotepadManager : MonoBehaviour
 				hintObjects[i].collider2D.enabled = false;
 				hintObjects[i].GetComponent<Text>().text = "";
 				hintObjects[i].GetComponent<Button>().action = null;
+				hintObjects[i].GetComponent<FadeInFadeOut>().enabled = false;
 			}
 		}
 	}

@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour
 	public Forks theForks;
 	public TrackStateOf trackStates;
 	public bool playStart = false;
-
+	public bool startIsMultipleAction = false;
+	public bool startIsDialogFork = false;
 	void Start()
 	{
 		DataHolder.SetStart();
@@ -62,35 +63,42 @@ public class GameManager : MonoBehaviour
 
 		//Debug.Log("" + DataHolder.notepadOpen + "" + DataHolder.fileOpen);
 
-		if (!playedStart && playStart)
+		if (!playedStart && playStart && startIsDialogFork)
 		{
 			theForks.onStart.takeAction();
 
 			playedStart = true;
 		}
 
-		else if (GetComponent<StatSystem>().GetValueForStat(StatSystem.Stats.health) <= 0 && !playedPassedOut)
+		if (!playedStart && playStart && startIsMultipleAction)
+		{
+			gameObject.GetComponent<ButtonMultipleActions>().Run();
+			
+			playedStart = true;
+		}
+
+		if (GetComponent<StatSystem>().GetValueForStat(StatSystem.Stats.health) <= 0 && !playedPassedOut)
 		{
 			theForks.suspectPassedOut.takeAction();
 
 			playedPassedOut = true;
 		}
 
-		else if (DataHolder.isGameOver && !playedTimesUp)
+		if (DataHolder.isGameOver && !playedTimesUp)
 		{
 			theForks.timeIsUp.takeAction();
 
 			playedTimesUp = true;  
 		}
 
-		else if (DataHolder.locationsFound == 3 && !playedPlayerWins)
+		if (DataHolder.locationsFound == 3 && !playedPlayerWins)
 		{
 			theForks.playerWon.takeAction();
 
 			playedPlayerWins = true;  
 		}
 
-		else if (DataHolder.keysFound == 3 && !playedKeys)
+		if (DataHolder.keysFound == 3 && !playedKeys)
 		{
 			theForks.threeKeysFound.takeAction();
 			

@@ -23,10 +23,14 @@ public class Options
 	public DialogForks hintsDialogFork;
 	public bool hasModify;
 	public List<StatsToModify> stats;
-	
+	public bool fadeInOnly;
+	public FadeInFadeOut gameObjectToFadeIn;
+
 	//[Range (0,1)] public float volume = 1;
 	public bool hasSpecificSound = false;
 	public AudioClip specificSound;
+
+
 }
 
 [Serializable]
@@ -250,7 +254,15 @@ public class TextScroller : ButtonAction
 			}
 		}
 	}
-	
+
+	public void ProcessFadeInOnly()
+	{
+		FadeInOnly f = GameObject.FindGameObjectWithTag("GameController").GetComponent<FadeInOnly>();
+		lines[index].options.gameObjectToFadeIn.enabled = true;
+		f.objectToFadeIn = lines[index].options.gameObjectToFadeIn;
+		f.takeAction();
+	}
+
 	public void ProcessModify()
 	{
 		ModifyStats m = GameObject.FindGameObjectWithTag("GameController").GetComponent<ModifyStats>();
@@ -444,7 +456,13 @@ public class TextScroller : ButtonAction
 			offset = 0;
 			currentTag = 0;
 			processing = false;
-			
+
+			if (lines[index].options.fadeInOnly)
+			{
+				Debug.Log("Processing Fade In Only.");
+				ProcessFadeInOnly();
+			}
+
 			if (lines[index].options.isObjective)
 			{
 				Debug.Log("Processing Objective.");

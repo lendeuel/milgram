@@ -64,4 +64,9 @@ public class ButtonMultipleActions : MonoBehaviour
 			}
 		}
 	}
+
+	public void Run()
+	{
+		OnMouseUp();
+	}
 }

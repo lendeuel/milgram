@@ -247,16 +247,24 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		// Disable highlighter
 		if (dialogQueuers.Count == 0)
 		{
-			Debug.Log("In Disable");
-			gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
-			gameObject.GetComponent<FadeInFadeOut>().disabled = true;
+			try
+			{
+				Debug.Log("In Disable");
+				gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
+				gameObject.GetComponent<FadeInFadeOut>().disabled = true;
+			}
+			catch(NullReferenceException e){}
 		}
 	}
 
 	public void NoneLeft()
 	{
-		gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
-		gameObject.GetComponent<FadeInFadeOut>().disabled = true;
+		try
+		{
+			gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
+			gameObject.GetComponent<FadeInFadeOut>().disabled = true;
+		}
+		catch(NullReferenceException e){}
 
 		Debug.Log("In None Left");
 //		LineAndSpeaker line = new LineAndSpeaker();

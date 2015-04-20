@@ -22,7 +22,7 @@ public class Options
 	public string hintsText;
 	public DialogForks hintsDialogFork;
 	public bool hasModify;
-	public List<StatsToModify> stats;
+	public StatsToModify stats;
 	public bool fadeInOnly;
 	public FadeInFadeOut gameObjectToFadeIn;
 
@@ -271,7 +271,6 @@ public class TextScroller : ButtonAction
 		ModifyStats m = GameObject.FindGameObjectWithTag("GameController").GetComponent<ModifyStats>();
 		m.stats = lines[index].options.stats;
 		m.modify();
-		//Destroy(m);
 	}
 	
 	public void ProcessKey()

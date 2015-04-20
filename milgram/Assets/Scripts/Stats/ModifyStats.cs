@@ -6,13 +6,10 @@ using System;
 [Serializable]
 public class StatsToModify
 {
-	public StatSystem.Stats stat;
-	public float modifyValue;
-
-	public StatsToModify()
-	{
-
-	}
+	public float health = 0;
+	public float willingness = 0;
+	public float willpower = 0;
+	public float tolerance = 0;
 }
 
 public class ModifyStats : ButtonAction
@@ -20,7 +17,7 @@ public class ModifyStats : ButtonAction
 	private const int numberOfStats = 4;
 	private StatSystem statSystem; 
 
-	public List<StatsToModify> stats;
+	public StatsToModify stats;
 	
 	public override void takeAction()
 	{
@@ -34,10 +31,10 @@ public class ModifyStats : ButtonAction
 	
 	public void modify() 
 	{
-		foreach (StatsToModify s in stats)
-		{
-			statSystem.AddValueToStat(s.stat, s.modifyValue);
-		}
+		statSystem.AddValueToStat(StatSystem.Stats.health, stats.health);
+		statSystem.AddValueToStat(StatSystem.Stats.willpower, stats.willpower);
+		statSystem.AddValueToStat(StatSystem.Stats.willingness, stats.willingness);
+		statSystem.AddValueToStat(StatSystem.Stats.tolerance, stats.tolerance);
 
 		statSystem.DebugReportStats();
 	}

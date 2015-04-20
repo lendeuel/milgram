@@ -9,6 +9,6 @@ public class FadeInOnly : ButtonAction
 	{
 		Debug.Log("Fading");
 
-		objectToFadeIn.FadeIn();
+		objectToFadeIn.TutorialFade();
 	}
 }

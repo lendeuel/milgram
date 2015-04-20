@@ -29,6 +29,8 @@ public class FadeInFadeOut : MonoBehaviour
 	private bool logInitialFadeSequence = false; 
 	private bool fading;
 
+	private bool needsClicked = false;
+
 	// store colours
 	private Color[] colors; 
 	
@@ -157,6 +159,8 @@ public class FadeInFadeOut : MonoBehaviour
 	{
 		if (DataHolder.allowInteractions)
 		{
+			needsClicked = false;
+
 			FadeIn(fadeTime);
 		}
 	}
@@ -195,7 +199,7 @@ public class FadeInFadeOut : MonoBehaviour
 	public void FadeIn (float newFadeTime)
 	{
 		//Debug.Log("Fading In: " + newFadeTime);
-		if (!disabled)
+		if (!disabled && !needsClicked)
 		{
 			StopAllCoroutines(); 
 			StartCoroutine("FadeSequence", newFadeTime); 
@@ -205,13 +209,18 @@ public class FadeInFadeOut : MonoBehaviour
 	public void FadeOut (float newFadeTime)
 	{
 		//Debug.Log("Fading Out: " + (-newFadeTime));
-		if (!disabled)
+		if (!disabled && !needsClicked)
 		{
 			StopAllCoroutines(); 
 			StartCoroutine("FadeSequence", -newFadeTime); 
 		}
 	}
-	
+
+	public void TutorialFade()
+	{
+		FadeIn();
+		needsClicked = true;
+	}
 	
 	// These are for testing only. 
 	//		void Update()

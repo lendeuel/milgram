@@ -201,7 +201,9 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 						Debug.Log("Base Fork null, is this what you want?");
 					}
 				}
-				
+
+				Check();
+
 				return;
 			}
 			
@@ -229,11 +231,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				dialogQueuers.RemoveAt(randomNum);
 			}
 
-			// Disable highlighter
-			if (dialogQueuers.Count == 0)
-			{
-				gameObject.GetComponent<FadeInFadeOut>().disabled = true;
-			}
+			Check();
 		}
 		// If it branches into this code it means the user clicked the box when no DialogQueuers were on this DialogFork
 		else
@@ -243,9 +241,23 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		}
 		
 	}
-	
+
+	public void Check()
+	{
+		// Disable highlighter
+		if (dialogQueuers.Count == 0)
+		{
+			Debug.Log("In Disable");
+			gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
+			gameObject.GetComponent<FadeInFadeOut>().disabled = true;
+		}
+	}
+
 	public void NoneLeft()
 	{
+		gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
+		gameObject.GetComponent<FadeInFadeOut>().disabled = true;
+
 		Debug.Log("In None Left");
 //		LineAndSpeaker line = new LineAndSpeaker();
 //		line.speaker = Characters.Suspect;

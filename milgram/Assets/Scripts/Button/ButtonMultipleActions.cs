@@ -8,7 +8,9 @@ public class ButtonMultipleActions : MonoBehaviour
 	public AudioClip[] onMouseOver;
 	public AudioClip[] onClick;
 	private AudioSource source;
-	
+
+	private bool hasTakenAction = false;
+
 	private bool hasPlayedEnter = false;
 	
 	void Start()
@@ -39,19 +41,24 @@ public class ButtonMultipleActions : MonoBehaviour
 	{
 		//if (DataHolder.allowInteractions)
 		{
-			foreach(ButtonAction b in actions)
+			if (!hasTakenAction)
 			{
-				//if(b is TextScroller || b is LoadScene)
-				//{
-					if (onClick.Length != 0)
-					{
-						int randomClip = UnityEngine.Random.Range(0, onClick.Length);
-						source.clip = onClick[randomClip];
-						source.Play();
-					}
+				foreach(ButtonAction b in actions)
+				{
+					//if(b is TextScroller || b is LoadScene)
+					//{
+						if (onClick.Length != 0)
+						{
+							int randomClip = UnityEngine.Random.Range(0, onClick.Length);
+							source.clip = onClick[randomClip];
+							source.Play();
+						}
 
-					b.takeAction();
-				//}
+						b.takeAction();
+					//}
+				}
+
+				hasTakenAction = true;
 			}
 		}
 	}

@@ -306,7 +306,7 @@ public class TextScroller : ButtonAction
 		
 		GameObject.FindGameObjectWithTag("NewLocation").GetComponent<FadeIntoObject>().FocusOn(); 
 		
-		GameObject.FindGameObjectWithTag("Map").GetComponent<FadeIntoObject>().FocusOn();
+		GameObject.FindGameObjectWithTag("StaticMap").GetComponent<FadeIntoObject>().FocusOn();
 
 		Debug.Log(lines[index].line);
 		lines[index].options.location.SetActive(true);							

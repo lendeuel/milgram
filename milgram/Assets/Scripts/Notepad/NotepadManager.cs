@@ -180,6 +180,7 @@ public class NotepadManager : MonoBehaviour
 	{
 		if (theHintPages.Count == 0)
 		{
+			currentHintPage++;
 			theHintPages.Add(new HintPage(line, d));
 		}
 		else if (theHintPages[currentHintPage].gameObjectsAdded < maxObjectsPerPage)

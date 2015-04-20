@@ -35,20 +35,55 @@ public class GameManager : MonoBehaviour
 	public bool playStart = false;
 	public bool startIsMultipleAction = false;
 	public bool startIsDialogFork = false;
+
 	void Start()
 	{
 		DataHolder.SetStart();
+
+		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().volume = DataHolder.musicVolume;
+
+
 	}
 
 	public void Reset()
 	{
 		DataHolder.Reset();
+		Application.LoadLevel(Application.loadedLevel);
+	}
+
+	public void Load(int lvlIndex)
+	{
+		DataHolder.Reset();
+		Application.LoadLevel(lvlIndex);
+	}
+	
+	public void Load(string name)
+	{
+		DataHolder.Reset();
+		Application.LoadLevel(name);
+	}
+
+	public void SetMusicVolume(float value)
+	{
+		DataHolder.musicVolume = value;
+	}
+
+	public void SetSFXVolume(float value)
+	{
+		DataHolder.sfxVolume = value;
+	}
+
+	public void SetCensor(bool value)
+	{
+		DataHolder.censorText = value;
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
-		DataHolder.censorText = censorTheText;
+		//DataHolder.censorText = censorTheText;
+
+		Debug.Log("Censor: " + DataHolder.censorText + " Music Volume: " + DataHolder.musicVolume + " SFX Volume: " + DataHolder.sfxVolume);
 
 		if (trackStates.notepadHints.activeSelf || trackStates.notepadNotes.activeSelf)
 		{

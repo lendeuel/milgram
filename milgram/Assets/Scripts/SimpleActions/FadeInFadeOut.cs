@@ -169,6 +169,8 @@ public class FadeInFadeOut : MonoBehaviour
 	{
 		if (DataHolder.allowInteractions)
 		{
+			needsClicked = false;
+
 			FadeOut(0);
 		}
 	}

@@ -3,19 +3,40 @@ using System.Collections;
 
 public class LoadScene : ButtonAction
 {
+	public bool useIndex;
+	public bool useString;
 	public int index;
+	public string name;
 
 	public override void takeAction()
 	{
 		Debug.Log("Loading");
 
-		if (index != -1)
+		if (useIndex)
 		{
-			Application.LoadLevel(index);
+			if (index != -1)
+			{
+				Application.LoadLevel(index);
+			}
+			else
+			{
+				Application.Quit();
+			}
 		}
-		else
+
+		if(useString)
 		{
-			Application.Quit();
+			Application.LoadLevel(name);
 		}
+	}
+
+	public void Load(int lvlIndex)
+	{
+		Application.LoadLevel(lvlIndex);
+	}
+
+	public void Load(string name)
+	{
+		Application.LoadLevel(name);
 	}
 }

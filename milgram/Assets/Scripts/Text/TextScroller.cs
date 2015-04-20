@@ -80,14 +80,17 @@ public class TextScroller : ButtonAction
 	private bool processing = false;
 	private bool firstTag = true;
 	
-	private AudioSource source;
-	private AudioSource source2;
+	private AudioSource voiceAudioSource;
+	private AudioSource sfxAudioSource;
 	
 	void Start()
 	{
-		source = GetComponent<AudioSource>();
-		source2 = gameObject.AddComponent<AudioSource>();
-		
+		voiceAudioSource = GetComponent<AudioSource>();
+		sfxAudioSource = gameObject.AddComponent<AudioSource>();
+
+		voiceAudioSource.volume = DataHolder.sfxVolume;
+		sfxAudioSource.volume = DataHolder.sfxVolume;
+
 		lines = new List<LineAndSpeaker>();
 		
 		foreach(LineAndSpeaker s in linesToLoad)
@@ -154,13 +157,13 @@ public class TextScroller : ButtonAction
 		{
 			if(displayAll)
 			{
-				source.Stop();
+				voiceAudioSource.Stop();
 				
 				GetComponent<Text> ().text = lines[index].line;
 			}
 			else
 			{
-				if (!source.isPlaying)
+				if (!voiceAudioSource.isPlaying)
 				{
 					foreach(CharacterToMaterial c in characterToMaterialMapping)
 					{
@@ -168,16 +171,16 @@ public class TextScroller : ButtonAction
 						{
 							if (lines[index].options.hasSpecificSound)
 							{
-								source.clip = lines[index].options.specificSound;
+								voiceAudioSource.clip = lines[index].options.specificSound;
 							}
 							else
 							{
 								int randomClip = UnityEngine.Random.Range(0, c.thisCharactersAudio.Length);
-								source.clip = c.thisCharactersAudio[randomClip];
+								voiceAudioSource.clip = c.thisCharactersAudio[randomClip];
 							}
 							
 							//source.volume = lines[index].options.volume;
-							source.Play();
+							voiceAudioSource.Play();
 						}
 					}	
 				}
@@ -276,8 +279,8 @@ public class TextScroller : ButtonAction
 		if (hintDiscovered.Length != 0)
 		{
 			int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
-			source.clip = hintDiscovered[randomClip];
-			source2.Play();
+			voiceAudioSource.clip = hintDiscovered[randomClip];
+			sfxAudioSource.Play();
 		}
 
 		DataHolder.keysFound++;
@@ -291,8 +294,8 @@ public class TextScroller : ButtonAction
 		if (objectiveDiscovered.Length != 0)
 		{
 			int randomClip = UnityEngine.Random.Range(0, objectiveDiscovered.Length);
-			source.clip = objectiveDiscovered[randomClip];
-			source2.Play();
+			voiceAudioSource.clip = objectiveDiscovered[randomClip];
+			sfxAudioSource.Play();
 		}
 		GameObject.FindGameObjectWithTag("NewObjective").GetComponent<FadeIntoObject>().FocusOn(); 	
 
@@ -311,8 +314,8 @@ public class TextScroller : ButtonAction
 		if (locationDiscovered.Length != 0)
 		{
 			int randomClip = UnityEngine.Random.Range(0, locationDiscovered.Length);
-			source.clip = locationDiscovered[randomClip];
-			source2.Play();
+			voiceAudioSource.clip = locationDiscovered[randomClip];
+			sfxAudioSource.Play();
 		}
 		DataHolder.locationsFound++;
 		
@@ -329,8 +332,8 @@ public class TextScroller : ButtonAction
 		if (hintDiscovered.Length != 0)
 		{
 			int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
-			source.clip = hintDiscovered[randomClip];
-			source2.Play();
+			voiceAudioSource.clip = hintDiscovered[randomClip];
+			sfxAudioSource.Play();
 		}
 
 		DataHolder.hintsFound++;

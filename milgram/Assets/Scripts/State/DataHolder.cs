@@ -11,6 +11,8 @@ public class DataHolder
 	public static int locationsFound = 0;
 	public static int hintsFound = 0;
 	public static bool censorText = false;
+	public static float musicVolume = 1;
+	public static float sfxVolume = 1;
 
 	// These are only needed if we keep the restart button
 	private static bool allowInteractionsI;
@@ -44,7 +46,5 @@ public class DataHolder
 		locationsFound = locationsFoundI;
 		hintsFound = hintsFoundI;
 		censorText = censorTextI;
-
-		Application.LoadLevel(1);
 	}
 }

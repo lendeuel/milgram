@@ -7,6 +7,8 @@ public class ButtonMultipleActions : MonoBehaviour
 
 	public AudioClip[] onMouseOver;
 	public AudioClip[] onClick;
+	public bool runOnce = false;
+
 	private AudioSource source;
 
 	private bool hasTakenAction = false;
@@ -41,7 +43,7 @@ public class ButtonMultipleActions : MonoBehaviour
 	{
 		//if (DataHolder.allowInteractions)
 		{
-			if (!hasTakenAction)
+			if (!hasTakenAction || !runOnce)
 			{
 				foreach(ButtonAction b in actions)
 				{
@@ -58,7 +60,7 @@ public class ButtonMultipleActions : MonoBehaviour
 					//}
 				}
 
-				hasTakenAction = true;
+				if (runOnce) hasTakenAction = true;
 			}
 		}
 	}

@@ -71,7 +71,14 @@ public class MoveToTools : ButtonAction
 
 	public void MoveToDestination()
 	{
-		numTrack++;
+		if(numTrack % 2 == 1) 
+		{
+
+		}
+		else if(numTrack % 2 == 0)
+		{	
+			numTrack++;
+		}
 
 		destination = placeToMove;
 
@@ -80,7 +87,14 @@ public class MoveToTools : ButtonAction
 
 	public void MoveToOriginalLocation()
 	{
-		numTrack++;
+		if(numTrack % 2 == 1) 
+		{
+			numTrack++;
+		}
+		else if(numTrack % 2 == 0)
+		{	
+
+		}
 
 		destination = location;
 

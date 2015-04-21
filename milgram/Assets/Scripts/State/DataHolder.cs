@@ -13,6 +13,7 @@ public class DataHolder
 	public static bool censorText = false;
 	public static float musicVolume = 1;
 	public static float sfxVolume = 1;
+	public static StartingStats startStats;
 
 	// These are only needed if we keep the restart button
 	private static bool allowInteractionsI;
@@ -26,6 +27,8 @@ public class DataHolder
 
 	public static void SetStart()
 	{
+		startStats = GameObject.FindObjectOfType<StatSystem>().startingStats;
+
 		allowInteractionsI = allowInteractions;
 		isGameOverI = isGameOver;
 		fileOpenI = fileOpen;
@@ -38,6 +41,8 @@ public class DataHolder
 
 	public static void Reset()
 	{
+		GameObject.FindObjectOfType<StatSystem>().startingStats = startStats;
+
 		allowInteractions = allowInteractionsI;
 		isGameOver = isGameOverI;
 		fileOpen = fileOpenI;
@@ -47,4 +52,5 @@ public class DataHolder
 		hintsFound = hintsFoundI;
 		censorText = censorTextI;
 	}
+
 }

@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
 			playedStart = true;
 		}
 
-		if (GetComponent<StatSystem>().GetValueForStat(StatSystem.Stats.health) <= 10 && !playedPassedOut)
+		if (GetComponent<StatSystem>().GetValueForStat(StatSystem.Stats.health) >= 10 && !playedPassedOut)
 		{
 			theForks.suspectPassedOut.takeAction();
 

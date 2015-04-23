@@ -41,8 +41,6 @@ public class GameManager : MonoBehaviour
 		DataHolder.SetStart();
 
 		GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AudioSource>().volume = DataHolder.musicVolume;
-
-
 	}
 
 	public void Reset()

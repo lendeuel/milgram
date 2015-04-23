@@ -5,6 +5,15 @@ using UnityEngine.UI;
 using System;
 
 [Serializable]
+public class UserFork
+{
+	public Characters speaker;
+	public string textForOption1;
+	public DialogForks forkForOption1;
+	public string textForOption2;
+	public DialogForks forkForOption2;
+}
+[Serializable]
 public class StatRequirement
 {
 	public StatSystem.Stats stat;
@@ -26,6 +35,9 @@ public class TheseDialogQueuers
 
 	public bool closeOnClick = true;
 
+	public bool hasUserFork;
+	public UserFork userFork;
+
 	public DialogQueuer getThisDialogQueuer()
 	{
 		return thisDialogQueuer;
@@ -44,6 +56,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 	private List<TheseDialogQueuers> emptyDialogueQueuers;
 	
 	public DialogForks baseFork;
+
 	private bool hasParent = false;
 	
 	private MonoBehaviour endedResponseWithLocation;
@@ -67,6 +80,13 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		// Populate variables
 		foreach(TheseDialogQueuers d in dialogQueuers)
 		{
+			if (d.hasUserFork)
+			{
+				Debug.Log(d.lines.Length);
+				d.lines[d.lines.Length-1].options.hasUserFork = true;
+				d.lines[d.lines.Length-1].options.userFork = d.userFork;
+			}
+
 			DialogQueuer temp = this.gameObject.AddComponent<DialogQueuer>();
 			temp.chatWindow = GameObject.FindGameObjectWithTag("DialogHandler");
 			temp.lines = d.lines;
@@ -284,9 +304,19 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		//Debug.Log("In DialogForks textscrollerended");
 		
 		chatWindow.GetComponent<Image>().enabled = false;
-		chatWindow.GetComponent<BoxCollider2D>().enabled = false;
-		chatWindow.GetComponentInChildren<Text>().enabled = false;
-		
+		//chatWindow.GetComponent<BoxCollider2D>().enabled = false;
+		//chatWindow.GetComponentInChildren<Text>().enabled = false;
+
+		foreach (BoxCollider2D d in chatWindow.GetComponentsInChildren<BoxCollider2D>())
+		{
+			d.enabled = false;
+		}
+
+		foreach (Text d in chatWindow.GetComponentsInChildren<Text>())
+		{
+			d.enabled = false;
+		}
+
 		if(processLocation)
 		{
 			//Debug.Log("In Second Dialogforks textscrollerended");

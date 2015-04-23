@@ -26,6 +26,7 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 		chatWindow.GetComponent<Image>().enabled = true;
 		chatWindow.GetComponent<BoxCollider2D>().enabled = true;
 		chatWindow.GetComponentInChildren<Text>().enabled = true;
+
 		s.addStrings(lines);
 		s.endedResponse = endedResponse;
 		s.lettersPerSecond = lettersPerSecond;

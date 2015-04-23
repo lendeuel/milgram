@@ -30,6 +30,10 @@ public class Options
 	public bool hasSpecificSound = false;
 	public AudioClip specificSound;
 
+	[NonSerialized]public bool hasUserFork;
+	[NonSerialized]public UserFork userFork;
+	//public bool hasUserFork;
+	//public UserFork userFork;
 
 }
 
@@ -58,9 +62,9 @@ public class TextScroller : ButtonAction
 		//void FocusOnLocation(GameObject location);
 	}
 	
-	public AudioClip[] hintDiscovered;
-	public AudioClip[] locationDiscovered;
-	public AudioClip[] objectiveDiscovered;
+	public AudioClip[] hintDiscoveredAudio;
+	public AudioClip[] locationDiscoveredAudio;
+	public AudioClip[] objectiveDiscoveredAudio;
 	
 	public bool destroyOnComplete=true;
 	public LineAndSpeaker[] linesToLoad;
@@ -83,8 +87,22 @@ public class TextScroller : ButtonAction
 	private AudioSource voiceAudioSource;
 	private AudioSource sfxAudioSource;
 	
+	private Text option1Text;
+	private BoxCollider2D option1Collider;
+	private ButtonMultipleActions option1Button;
+	private Text option2Text;
+	private BoxCollider2D option2Collider;
+	private ButtonMultipleActions option2Button;
+
 	void Start()
 	{
+		option1Text = GameObject.FindGameObjectWithTag("Option1").GetComponent<Text>();
+		option2Text = GameObject.FindGameObjectWithTag("Option2").GetComponent<Text>();
+		option1Collider = GameObject.FindGameObjectWithTag("Option1").GetComponent<BoxCollider2D>();
+		option2Collider = GameObject.FindGameObjectWithTag("Option2").GetComponent<BoxCollider2D>();
+		option1Button = GameObject.FindGameObjectWithTag("Option1").GetComponent<ButtonMultipleActions>();
+		option2Button = GameObject.FindGameObjectWithTag("Option2").GetComponent<ButtonMultipleActions>();
+
 		voiceAudioSource = GetComponent<AudioSource>();
 		sfxAudioSource = gameObject.AddComponent<AudioSource>();
 
@@ -113,8 +131,18 @@ public class TextScroller : ButtonAction
 		}
 		
 		transform.parent.gameObject.GetComponent<Image>().enabled = false;
-		transform.parent.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-		transform.gameObject.GetComponent<Text>().enabled = false;
+		//transform.parent.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+		//transform.gameObject.GetComponent<Text>().enabled = false;
+
+		foreach (BoxCollider2D d in transform.parent.gameObject.GetComponentsInChildren<BoxCollider2D>())
+		{
+			d.enabled = false;
+		}
+		
+		foreach (Text d in transform.parent.gameObject.GetComponentsInChildren<Text>())
+		{
+			d.enabled = false;
+		}
 	}
 	
 	void Update()
@@ -123,6 +151,15 @@ public class TextScroller : ButtonAction
 		
 		if(index>=lines.Count)
 		{
+			if (lines.Count != 0)
+			{
+				if (lines[index-1].options.hasUserFork)
+				{
+					Debug.Log("In User Fork Thinger in Text Scroller");
+					ProcessUserFork();
+				}
+			}
+
 			if(!hasEnded)
 			{
 				if(endedResponse!=null)
@@ -258,6 +295,39 @@ public class TextScroller : ButtonAction
 		}
 	}
 
+	public void ProcessUserFork() 
+	{
+		// Set speaker
+		foreach(CharacterToMaterial c in characterToMaterialMapping)
+		{
+			if(c.character == lines[index-1].options.userFork.speaker)
+			{
+				chatWindow.sprite = c.material;
+			}
+		}
+
+		// Enable dialog Window 
+		chatWindow.GetComponent<Image>().enabled = true;
+
+		// Set Option1's text to option1String
+		option1Text.text = lines[index-1].options.userFork.textForOption1;
+			
+		// Set Option1's action to the fork attached to lines[index-1]
+		option1Button.actions[0] = lines[index-1].options.userFork.forkForOption1;
+
+		// Set Option2's text to option2String
+		option2Text.text = lines[index-1].options.userFork.textForOption2;
+		
+		// Set Option2's action to the fork attached to lines[index-1]
+		option2Button.actions[0] = lines[index-1].options.userFork.forkForOption2;
+
+		// Enable Text and BoxCollider2D
+		option1Text.enabled = true;
+		option2Text.enabled = true;
+		option1Collider.enabled = true;
+		option2Collider.enabled = true;
+	}
+
 	public void ProcessFadeInOnly()
 	{
 		FadeInOnly f = GameObject.FindGameObjectWithTag("GameController").GetComponent<FadeInOnly>();
@@ -275,10 +345,10 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessKey()
 	{
-		if (hintDiscovered.Length != 0)
+		if (hintDiscoveredAudio.Length != 0)
 		{
-			int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
-			voiceAudioSource.clip = hintDiscovered[randomClip];
+			int randomClip = UnityEngine.Random.Range(0, hintDiscoveredAudio.Length);
+			voiceAudioSource.clip = hintDiscoveredAudio[randomClip];
 			sfxAudioSource.Play();
 		}
 
@@ -290,10 +360,10 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessObjective()
 	{
-		if (objectiveDiscovered.Length != 0)
+		if (objectiveDiscoveredAudio.Length != 0)
 		{
-			int randomClip = UnityEngine.Random.Range(0, objectiveDiscovered.Length);
-			voiceAudioSource.clip = objectiveDiscovered[randomClip];
+			int randomClip = UnityEngine.Random.Range(0, objectiveDiscoveredAudio.Length);
+			voiceAudioSource.clip = objectiveDiscoveredAudio[randomClip];
 			sfxAudioSource.Play();
 		}
 		GameObject.FindGameObjectWithTag("NewObjective").GetComponent<FadeIntoObject>().FocusOn(); 	
@@ -310,10 +380,10 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessLocation()
 	{
-		if (locationDiscovered.Length != 0)
+		if (locationDiscoveredAudio.Length != 0)
 		{
-			int randomClip = UnityEngine.Random.Range(0, locationDiscovered.Length);
-			voiceAudioSource.clip = locationDiscovered[randomClip];
+			int randomClip = UnityEngine.Random.Range(0, locationDiscoveredAudio.Length);
+			voiceAudioSource.clip = locationDiscoveredAudio[randomClip];
 			sfxAudioSource.Play();
 		}
 		DataHolder.locationsFound++;
@@ -328,10 +398,10 @@ public class TextScroller : ButtonAction
 	
 	public void ProcessHint()
 	{
-		if (hintDiscovered.Length != 0)
+		if (hintDiscoveredAudio.Length != 0)
 		{
-			int randomClip = UnityEngine.Random.Range(0, hintDiscovered.Length);
-			voiceAudioSource.clip = hintDiscovered[randomClip];
+			int randomClip = UnityEngine.Random.Range(0, hintDiscoveredAudio.Length);
+			voiceAudioSource.clip = hintDiscoveredAudio[randomClip];
 			sfxAudioSource.Play();
 		}
 
@@ -419,6 +489,8 @@ public class TextScroller : ButtonAction
 	{
 		if(index<lines.Count)
 		{
+			linesToLoad = lines.ToArray();
+
 			// Check to see if next line has a stat requirement.  
 			// If it does and it's not met, delete from index+1 to end of lines array
 			try 

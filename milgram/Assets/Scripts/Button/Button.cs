@@ -45,6 +45,16 @@ public class Button : MonoBehaviour
 				source.Play();
 			}
 
+//			if (action is DialogForks)
+//			{
+//				DialogForks d = action as DialogForks;
+//				if (d.dialogQueuers.Count == 1)
+//				{
+//					gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
+//					gameObject.GetComponent<FadeInFadeOut>().enabled = false;
+//				}
+//			}
+
 			action.takeAction();
 		}
 	}

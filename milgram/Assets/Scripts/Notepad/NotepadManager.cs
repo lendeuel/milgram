@@ -201,7 +201,17 @@ public class NotepadManager : MonoBehaviour
 			hintObjects[i].collider2D.enabled = true;
 			hintObjects[i].GetComponent<Text>().text = theHintPages[index].hintFork[i].theString;
 			hintObjects[i].GetComponent<Button>().action = theHintPages[index].hintFork[i].theFork;
+
 			hintObjects[i].GetComponent<FadeInFadeOut>().enabled = true;
+
+			if (theHintPages[index].hintFork[i].theFork.dialogQueuers.Count != 0)
+			{
+				hintObjects[i].GetComponent<FadeInFadeOut>().disabled = false;
+			}
+			else
+			{
+				hintObjects[i].GetComponent<FadeInFadeOut>().disabled = true;
+			}
 		}
 
 		if (theHintPages[index].gameObjectsAdded < maxObjectsPerPage)
@@ -211,7 +221,7 @@ public class NotepadManager : MonoBehaviour
 				hintObjects[i].collider2D.enabled = false;
 				hintObjects[i].GetComponent<Text>().text = "";
 				hintObjects[i].GetComponent<Button>().action = null;
-				hintObjects[i].GetComponent<FadeInFadeOut>().enabled = false;
+				hintObjects[i].GetComponent<FadeInFadeOut>().disabled = true;
 			}
 		}
 	}

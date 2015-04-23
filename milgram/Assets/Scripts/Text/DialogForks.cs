@@ -269,7 +269,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		{
 			try
 			{
-				Debug.Log("In Disable");
+				//Debug.Log("In Disable");
 				gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
 				gameObject.GetComponent<FadeInFadeOut>().disabled = true;
 			}

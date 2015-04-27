@@ -61,6 +61,8 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 	
 	public DialogForks baseFork;
 
+	public bool isGameOverSequence = false;
+
 	private bool hasParent = false;
 	
 	private MonoBehaviour endedResponseWithLocation;
@@ -91,6 +93,11 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				Debug.Log(d.lines.Length);
 				d.lines[d.lines.Length-1].options.hasUserFork = true;
 				d.lines[d.lines.Length-1].options.userFork = d.userFork;
+			}
+
+			if (isGameOverSequence)
+			{
+				d.lines[d.lines.Length-1].options.isGameOverSequence = true;
 			}
 
 			DialogQueuer temp = this.gameObject.AddComponent<DialogQueuer>();

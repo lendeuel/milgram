@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 	private bool playedKeys = false;
 	private bool playedStart = false;
 
-	public bool censorTheText = false;
+	//public bool censorTheText = false;
 
 	public Forks theForks;
 	public TrackStateOf trackStates;

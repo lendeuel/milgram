@@ -7,6 +7,9 @@ public class Drag : MonoBehaviour
 	private bool fadedIn = false;
 	private DisplaySprite drawerSprite;
 
+	public bool oneTimeUse = false;
+	private bool interactionsAllowed = true;
+
 	public AudioClip[] onMouseOver;
 	public AudioClip[] onClick;
 
@@ -30,14 +33,9 @@ public class Drag : MonoBehaviour
 		drawerSprite = GameObject.FindGameObjectWithTag("Drawer").GetComponent<DisplaySprite>();
 	}
 
-	void OnCollisionEnter2D(Collision2D col)
-	{
-		Debug.Log("In Collider");
-	}
-
 	void OnMouseEnter()
 	{
-		if (DataHolder.allowInteractions)
+		if (DataHolder.allowInteractions)// && interactionsAllowed)
 		{
 			if (onMouseOver.Length != 0 && !hasPlayedEnter)
 			{
@@ -58,7 +56,7 @@ public class Drag : MonoBehaviour
 	{
 		//originalLocation = this.transform.position;
 
-		if (DataHolder.allowInteractions)
+		if (DataHolder.allowInteractions)// && interactionsAllowed)
 		{
 			if (!fadedIn)
 			{
@@ -83,7 +81,7 @@ public class Drag : MonoBehaviour
 
 	void OnMouseDrag()
 	{
-		if (DataHolder.allowInteractions)
+		if (DataHolder.allowInteractions)// && interactionsAllowed)
 		{
 			Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
 			Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
@@ -93,6 +91,14 @@ public class Drag : MonoBehaviour
 
 	public void Reset()
 	{
+		if (oneTimeUse)
+		{
+			interactionsAllowed = false;
+
+			gameObject.SetActive(false);
+			//Destroy(this.gameObject);
+		}
+
 		this.transform.localPosition = originalLocation;
 	}
 
@@ -100,7 +106,7 @@ public class Drag : MonoBehaviour
 	{
 		hasPlayedClick = false;
 
-		if (DataHolder.allowInteractions)
+		if (DataHolder.allowInteractions)// && interactionsAllowed)
 		{
 			if (fadedIn)
 			{

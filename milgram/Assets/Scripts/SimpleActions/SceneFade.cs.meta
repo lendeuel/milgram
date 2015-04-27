@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: af46b9f2955e1394dbf0790f839f3956
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - imageToFade: {fileID: 21300000, guid: bb738aa0cf958d44da85221caf9abd09, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

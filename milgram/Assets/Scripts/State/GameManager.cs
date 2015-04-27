@@ -52,13 +52,13 @@ public class GameManager : MonoBehaviour
 	public void Load(int lvlIndex)
 	{
 		DataHolder.Reset();
-		Application.LoadLevel(lvlIndex);
+		gameObject.GetComponent<LoadScene>().Load (lvlIndex);
 	}
 	
 	public void Load(string name)
 	{
 		DataHolder.Reset();
-		Application.LoadLevel(name);
+		gameObject.GetComponent<LoadScene>().Load (name);
 	}
 
 	public void SetMusicVolume(float value)

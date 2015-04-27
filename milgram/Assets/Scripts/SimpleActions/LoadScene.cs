@@ -16,7 +16,7 @@ public class LoadScene : ButtonAction
 		{
 			if (index != -1)
 			{
-				Application.LoadLevel(index);
+				GameObject.FindObjectOfType<SceneFade>().LoadScene(index);
 			}
 			else
 			{
@@ -26,17 +26,17 @@ public class LoadScene : ButtonAction
 
 		if(useString)
 		{
-			Application.LoadLevel(name);
+			GameObject.FindObjectOfType<SceneFade>().LoadScene(name);
 		}
 	}
 
 	public void Load(int lvlIndex)
 	{
-		Application.LoadLevel(lvlIndex);
+		GameObject.FindObjectOfType<SceneFade>().LoadScene(index);
 	}
 
 	public void Load(string name)
 	{
-		Application.LoadLevel(name);
+		GameObject.FindObjectOfType<SceneFade>().LoadScene(name);
 	}
 }

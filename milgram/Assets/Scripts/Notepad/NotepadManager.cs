@@ -89,11 +89,13 @@ public class GameObjectHolder
 public class NotepadManager : MonoBehaviour 
 {
 	public List<NotePage> theNotePages;
+	public List<string> theLines;
 	public int maxLinesPerPage;
 	private int currentNotePage = 0;
 	private int viewNotePage = 0;
 
 	public List<HintPage> theHintPages;
+	public List<HintAndFork> theHintLines;
 	public List<GameObject> hintObjects;
 	private int maxObjectsPerPage = 4;
 	private int currentHintPage = 0;
@@ -101,9 +103,17 @@ public class NotepadManager : MonoBehaviour
 	
 	void Start()
 	{
+		theLines = new List<string>();
+		theHintLines = new List<HintAndFork>();
+
 		foreach(NotePage n in theNotePages)
 		{
 			n.AssembleLines();
+
+			foreach(string s in n.theLines)
+			{
+				theLines.Add(s);
+			}
 		}
 
 		currentNotePage = theNotePages.Count - 1;
@@ -182,6 +192,27 @@ public class NotepadManager : MonoBehaviour
 		{
 			currentHintPage++;
 			theHintPages.Add(new HintPage(line, d));
+			theHintLines.Add(new HintAndFork(line, d));
+		}
+		else if (theHintPages[currentHintPage].gameObjectsAdded < maxObjectsPerPage)
+		{
+			theHintPages[currentHintPage].AddHint(line,d);
+			theHintLines.Add(new HintAndFork(line, d));
+		}
+		else
+		{
+			currentHintPage++;
+			theHintPages.Add(new HintPage(line, d));
+			theHintLines.Add(new HintAndFork(line, d));
+		}
+	}
+
+	public void AddHint2(string line, DialogForks d)
+	{
+		if (theHintPages.Count == 0)
+		{
+			currentHintPage++;
+			theHintPages.Add(new HintPage(line, d));
 		}
 		else if (theHintPages[currentHintPage].gameObjectsAdded < maxObjectsPerPage)
 		{
@@ -193,7 +224,7 @@ public class NotepadManager : MonoBehaviour
 			theHintPages.Add(new HintPage(line, d));
 		}
 	}
-	
+
 	public void AssembleObjects(int index)
 	{
 		for (int i = 0; i < theHintPages[index].gameObjectsAdded; i++)
@@ -226,7 +257,53 @@ public class NotepadManager : MonoBehaviour
 		}
 	}
 
+	public void RemoveHint(String hint)
+	{
+		// Remove the hint
+		foreach(HintAndFork l in theHintLines)
+		{
+			if (l.theString.CompareTo(hint) == 0)
+			{
+				theHintLines.Remove(l);
+				break;
+			}
+		}
+		
+		// Reassemble hint pages to fill in missing gap.
+		theHintPages = new List<HintPage>();
+		
+		currentHintPage = 0;
+		
+		foreach (HintAndFork l in theHintLines)
+		{
+			AddHint2(l.theString, l.theFork);
+		}
+	}
+
 // Notes
+	public void RemoveNote(String note)
+	{
+		// Remove the note
+		foreach(string l in theLines)
+		{
+			if (l.CompareTo(note) == 0)
+			{
+				theLines.Remove(l);
+				break;
+			}
+		}
+
+		// Reassemble note pages to fill in missing gap.
+		theNotePages = new List<NotePage>();
+		viewNotePage = 0;
+		currentNotePage = 0;
+
+		foreach (string l in theLines)
+		{
+			AddLine2(l);
+		}
+	}
+
 	public string SetNotepage(bool forward)
 	{
 		if (forward)
@@ -267,6 +344,26 @@ public class NotepadManager : MonoBehaviour
 	}
 	
 	public void AddLine(string line)
+	{
+		if (theNotePages.Count == 0)
+		{
+			theNotePages.Add(new NotePage(line));
+			theLines.Add(line);
+		}
+		else if (theNotePages[currentNotePage].linesAdded < maxLinesPerPage)
+		{
+			theNotePages[currentNotePage].AddString(line);
+			theLines.Add(line);
+		}
+		else
+		{
+			currentNotePage++;
+			theNotePages.Add(new NotePage(line));
+			theLines.Add(line);
+		}
+	}
+
+	public void AddLine2(string line)
 	{
 		if (theNotePages.Count == 0)
 		{

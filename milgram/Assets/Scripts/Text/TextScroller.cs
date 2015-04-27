@@ -94,8 +94,16 @@ public class TextScroller : ButtonAction
 	private BoxCollider2D option2Collider;
 	private ButtonMultipleActions option2Button;
 
+	private Vector3 newLocationStart;
+	private Vector3 newHintStart;
+	private Vector3 newObjectiveStart;
+
 	void Start()
 	{
+		newLocationStart = GameObject.FindGameObjectWithTag("NewLocation").GetComponent<Transform>().position;
+		newHintStart = GameObject.FindGameObjectWithTag("NewHint").GetComponent<Transform>().position;
+		newObjectiveStart = GameObject.FindGameObjectWithTag("NewObjective").GetComponent<Transform>().position;
+
 		option1Text = GameObject.FindGameObjectWithTag("Option1").GetComponent<Text>();
 		option2Text = GameObject.FindGameObjectWithTag("Option2").GetComponent<Text>();
 		option1Collider = GameObject.FindGameObjectWithTag("Option1").GetComponent<BoxCollider2D>();
@@ -368,6 +376,9 @@ public class TextScroller : ButtonAction
 		}
 		GameObject.FindGameObjectWithTag("NewObjective").GetComponent<FadeIntoObject>().FocusOn(); 	
 
+		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeInFadeOut>().FadeOut(0);
+		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeInOnly>().takeAction();
+
 		if (lines[index].options.objectiveText != "")
 		{
 			GameObject.FindObjectOfType<NotepadManager>().AddLine(lines[index].options.objectiveText);
@@ -407,9 +418,11 @@ public class TextScroller : ButtonAction
 
 		DataHolder.hintsFound++;
 		
-		GameObject.FindGameObjectWithTag("NewHint").
-			GetComponent<FadeIntoObject>().FocusOn();
-		
+		GameObject.FindGameObjectWithTag("NewHint").GetComponent<FadeIntoObject>().FocusOn();
+
+		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeInFadeOut>().FadeOut(0);
+		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeInOnly>().takeAction(); 
+
 		if (lines[index].options.hintsText != "")
 		{
 			GameObject.FindObjectOfType<NotepadManager>()
@@ -526,7 +539,92 @@ public class TextScroller : ButtonAction
 				//Debug.Log("Censoring");
 				lines[index].line = lines[index].options.censoredText;
 			}
-			
+
+			// Reset positions of New items from last call to this method
+			GameObject.FindGameObjectWithTag("NewLocation").GetComponent<Transform>().position = newLocationStart;
+			GameObject.FindGameObjectWithTag("NewHint").GetComponent<Transform>().position = newHintStart;
+			GameObject.FindGameObjectWithTag("NewObjective").GetComponent<Transform>().position = newObjectiveStart;
+
+			int count = 0;
+			if (lines[index].options.isHint)
+			{
+				count++;
+			}
+			if (lines[index].options.isKey)
+			{
+				count++;
+			}
+			if (lines[index].options.isLocation)
+			{
+				count++;
+			}
+			if (lines[index].options.isObjective)
+			{
+				count++;
+			}
+
+			int offset = 15;
+			if (count > 1)
+			{
+				if (count == 2)
+				{
+					if (lines[index].options.isHint || lines[index].options.isKey)
+					{
+						Vector3 temp = new Vector3(newHintStart.x, newHintStart.y - offset, newHintStart.z);
+
+						GameObject.FindGameObjectWithTag("NewHint").GetComponent<Transform>().position = temp;
+					}
+					else if (lines[index].options.isLocation)
+					{
+						Vector3 temp = new Vector3(newLocationStart.x, newLocationStart.y - offset, newLocationStart.z);
+						
+						GameObject.FindGameObjectWithTag("NewLocation").GetComponent<Transform>().position = temp;
+					}
+					else if (lines[index].options.isObjective)
+					{
+						Vector3 temp = new Vector3(newObjectiveStart.x, newObjectiveStart.y - offset, newObjectiveStart.z);
+						
+						GameObject.FindGameObjectWithTag("NewObjective").GetComponent<Transform>().position = temp;
+					}
+				}
+				else if (count == 3)
+				{
+					int tempCount = 0;
+
+					if (lines[index].options.isHint)
+					{
+						tempCount++;
+						Vector3 temp = new Vector3(newHintStart.x, newHintStart.y - offset*tempCount, newHintStart.z);
+						
+						GameObject.FindGameObjectWithTag("NewHint").GetComponent<Transform>().position = temp;
+					}
+
+					if (lines[index].options.isLocation)
+					{
+						tempCount++;
+						Vector3 temp = new Vector3(newLocationStart.x, newLocationStart.y - offset*tempCount, newLocationStart.z);
+						
+						GameObject.FindGameObjectWithTag("NewLocation").GetComponent<Transform>().position = temp;
+					}
+
+					if (lines[index].options.isKey && tempCount <= 1)
+					{
+						tempCount++;
+						Vector3 temp = new Vector3(newHintStart.x, newLocationStart.y - offset*tempCount, newLocationStart.z);
+						
+						GameObject.FindGameObjectWithTag("NewHint").GetComponent<Transform>().position = temp;
+					}
+
+					if (lines[index].options.isObjective && tempCount <= 1)
+					{
+						tempCount++;
+						Vector3 temp = new Vector3(newObjectiveStart.x, newObjectiveStart.y - offset*tempCount, newObjectiveStart.z);
+						
+						GameObject.FindGameObjectWithTag("NewObjective").GetComponent<Transform>().position = temp;
+					}
+
+				}
+			}
 			offset = 0;
 			currentTag = 0;
 			processing = false;

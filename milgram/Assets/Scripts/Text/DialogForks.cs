@@ -73,7 +73,9 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 	private GameObject chatWindow;
 	
 	private bool processLocation = false;
-	
+
+	[NonSerialized]public bool delete = false;
+
 	void Start()
 	{
 		chatWindow = GameObject.FindGameObjectWithTag("DialogHandler");
@@ -280,13 +282,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		// Disable highlighter
 		if (dialogQueuers.Count == 0)
 		{
-			try
-			{
-				//Debug.Log("In Disable");
-				gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
-				gameObject.GetComponent<FadeInFadeOut>().disabled = true;
-			}
-			catch(NullReferenceException e){}
+			NoneLeft();
 		}
 	}
 
@@ -299,7 +295,9 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		}
 		catch(NullReferenceException e){}
 
-		Debug.Log("In None Left");
+		delete = true;
+
+		//Debug.Log("In None Left");
 //		LineAndSpeaker line = new LineAndSpeaker();
 //		line.speaker = Characters.Suspect;
 //		line.options.volume = 0;

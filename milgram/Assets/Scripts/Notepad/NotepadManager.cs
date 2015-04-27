@@ -137,6 +137,14 @@ public class NotepadManager : MonoBehaviour
 	void Update()
 	{
 		//Debug.Log("Current Page: " + currentPage + " View Page: " + viewPage);
+		foreach(HintAndFork h in theHintLines)
+		{
+			if (h.theFork.dialogQueuers.Count == 0)
+			{
+				RemoveHint(h.theString);
+				break;
+			}
+		}
 	}
 		
 // Hints
@@ -277,6 +285,14 @@ public class NotepadManager : MonoBehaviour
 		foreach (HintAndFork l in theHintLines)
 		{
 			AddHint2(l.theString, l.theFork);
+		}
+
+		for (int i = 0; i < 4; i++)
+		{
+			hintObjects[i].collider2D.enabled = false;
+			hintObjects[i].GetComponent<Text>().text = "";
+			hintObjects[i].GetComponent<Button>().action = null;
+			hintObjects[i].GetComponent<FadeInFadeOut>().disabled = true;
 		}
 	}
 

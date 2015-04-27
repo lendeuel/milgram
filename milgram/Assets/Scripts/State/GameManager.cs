@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 	{
 		//DataHolder.censorText = censorTheText;
 
-		Debug.Log("Censor: " + DataHolder.censorText + " Music Volume: " + DataHolder.musicVolume + " SFX Volume: " + DataHolder.sfxVolume);
+		//Debug.Log("Censor: " + DataHolder.censorText + " Music Volume: " + DataHolder.musicVolume + " SFX Volume: " + DataHolder.sfxVolume);
 
 		if (trackStates.notepadHints.activeSelf || trackStates.notepadNotes.activeSelf)
 		{

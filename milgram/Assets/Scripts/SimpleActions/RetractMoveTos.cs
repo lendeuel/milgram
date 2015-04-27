@@ -5,7 +5,7 @@ public class RetractMoveTos : ButtonAction
 {
 	public override void takeAction()
 	{
-		Debug.Log("Moving");
+		//Debug.Log("Moving");
 
 		MoveToTools[] m = GameObject.FindObjectsOfType<MoveToTools>();
 

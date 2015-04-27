@@ -523,7 +523,7 @@ public class TextScroller : ButtonAction
 			
 			if (lines[index].options.needsCensored && DataHolder.censorText)
 			{
-				Debug.Log("Censoring");
+				//Debug.Log("Censoring");
 				lines[index].line = lines[index].options.censoredText;
 			}
 			
@@ -533,34 +533,34 @@ public class TextScroller : ButtonAction
 
 			if (lines[index].options.fadeInOnly)
 			{
-				Debug.Log("Processing Fade In Only.");
+				//Debug.Log("Processing Fade In Only.");
 				ProcessFadeInOnly();
 			}
 
 			if (lines[index].options.isObjective)
 			{
-				Debug.Log("Processing Objective.");
+				//Debug.Log("Processing Objective.");
 				ProcessObjective();
 			}
 			
 			if (lines[index].options.isKey)
 			{
-				Debug.Log("Processing Key.");
+				//Debug.Log("Processing Key.");
 				ProcessKey();
 			}
 			if (lines[index].options.isLocation)
 			{
-				Debug.Log("Processing Location.");
+				//Debug.Log("Processing Location.");
 				ProcessLocation();
 			}
 			if (lines[index].options.isHint)
 			{
-				Debug.Log("Processing Hint.");
+				//Debug.Log("Processing Hint.");
 				ProcessHint();
 			}
 			if (lines[index].options.hasModify)
 			{
-				Debug.Log("Processing Modify.");
+				//Debug.Log("Processing Modify.");
 				ProcessModify();
 			}
 		}

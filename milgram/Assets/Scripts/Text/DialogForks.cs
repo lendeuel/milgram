@@ -90,12 +90,11 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		{
 			if (d.hasUserFork)
 			{
-				Debug.Log(d.lines.Length);
 				d.lines[d.lines.Length-1].options.hasUserFork = true;
 				d.lines[d.lines.Length-1].options.userFork = d.userFork;
 			}
 
-			if (isGameOverSequence)
+			if (d.isGameOverSequence)
 			{
 				d.lines[d.lines.Length-1].options.isGameOverSequence = true;
 			}
@@ -319,7 +318,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 	
 	public void textScrollerEnded()
 	{	
-		//Debug.Log("In DialogForks textscrollerended");
+		Debug.Log("In DialogForks textscrollerended");
 		
 		chatWindow.GetComponent<Image>().enabled = false;
 		//chatWindow.GetComponent<BoxCollider2D>().enabled = false;

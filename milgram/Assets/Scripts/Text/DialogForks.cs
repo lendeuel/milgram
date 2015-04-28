@@ -94,7 +94,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 				d.lines[d.lines.Length-1].options.userFork = d.userFork;
 			}
 
-			if (d.isGameOverSequence)
+			if (isGameOverSequence)
 			{
 				d.lines[d.lines.Length-1].options.isGameOverSequence = true;
 			}

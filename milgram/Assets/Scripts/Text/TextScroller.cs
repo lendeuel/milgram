@@ -167,6 +167,12 @@ public class TextScroller : ButtonAction
 					Debug.Log("In User Fork Thinger in Text Scroller");
 					ProcessUserFork();
 				}
+
+				if (lines[index-1].options.isGameOverSequence)
+				{
+					//Debug.Log("In Game Over");
+					ProcessGameOver();
+				}
 			}
 
 			if(!hasEnded)
@@ -302,6 +308,11 @@ public class TextScroller : ButtonAction
 				//Debug.Log(text);
 			}
 		}
+	}
+
+	public void ProcessGameOver()
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent<LoadScene>().Load("MainMenu");
 	}
 
 	public void ProcessUserFork() 

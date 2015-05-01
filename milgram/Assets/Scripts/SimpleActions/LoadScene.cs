@@ -30,6 +30,11 @@ public class LoadScene : ButtonAction
 		}
 	}
 
+	public void LoadThisScene()
+	{
+		GameObject.FindObjectOfType<SceneFade>().LoadScene(Application.loadedLevel);
+	}
+
 	public void Load(int lvlIndex)
 	{
 		GameObject.FindObjectOfType<SceneFade>().LoadScene(index);

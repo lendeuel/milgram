@@ -49,6 +49,12 @@ public class GameManager : MonoBehaviour
 		Application.LoadLevel(Application.loadedLevel);
 	}
 
+	public void LoadThisScene()
+	{
+		DataHolder.Reset();
+		gameObject.GetComponent<LoadScene>().LoadThisScene();
+	}
+
 	public void Load(int lvlIndex)
 	{
 		DataHolder.Reset();

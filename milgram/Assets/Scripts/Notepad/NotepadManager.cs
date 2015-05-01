@@ -89,13 +89,13 @@ public class GameObjectHolder
 public class NotepadManager : MonoBehaviour 
 {
 	public List<NotePage> theNotePages;
-	public List<string> theLines;
+	[NonSerialized]public List<string> theLines;
 	public int maxLinesPerPage;
 	private int currentNotePage = 0;
 	private int viewNotePage = 0;
 
 	public List<HintPage> theHintPages;
-	public List<HintAndFork> theHintLines;
+	[NonSerialized]public List<HintAndFork> theHintLines;
 	public List<GameObject> hintObjects;
 	private int maxObjectsPerPage = 4;
 	private int currentHintPage = 0;

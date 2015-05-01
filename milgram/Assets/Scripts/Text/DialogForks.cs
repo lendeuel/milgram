@@ -25,10 +25,6 @@ public class TheseDialogQueuers
 {
 	private DialogQueuer thisDialogQueuer;
 
-	public bool removesHint = false;
-	public bool removesObjective = false;
-	public string hintOrObjectiveText;
-
 	public bool containsKey = false;
 	public bool containsLocation = false;
 	public bool hasBranchStatRequirement = false;
@@ -210,15 +206,6 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 						return;
 					}
 				}
-			}
-
-			if (dialogQueuers[randomNum].removesHint)
-			{
-				GameObject.FindObjectOfType<NotepadManager>().RemoveHint(dialogQueuers[randomNum].hintOrObjectiveText);
-			}
-			else if (dialogQueuers[randomNum].removesObjective)
-			{
-				GameObject.FindObjectOfType<NotepadManager>().RemoveNote(dialogQueuers[randomNum].hintOrObjectiveText);
 			}
 
 			// If we found a key in this dialog queuer all other branches on this tree are irrelevant

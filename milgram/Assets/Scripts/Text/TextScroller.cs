@@ -7,6 +7,8 @@ using System;
 [Serializable]
 public class Options
 {
+	public bool removesObjective;
+	public string removeObjectiveWithText;
 	public bool hasStatRequirement;
 	public StatRequirement statRequired;
 	public bool needsCensored;
@@ -98,9 +100,10 @@ public class TextScroller : ButtonAction
 	private Vector3 newLocationStart;
 	private Vector3 newHintStart;
 	private Vector3 newObjectiveStart;
-
+	private Vector3 objectiveCompleteStart;
 	void Start()
 	{
+		objectiveCompleteStart = GameObject.FindGameObjectWithTag("ObjectiveComplete").GetComponent<Transform>().position;
 		newLocationStart = GameObject.FindGameObjectWithTag("NewLocation").GetComponent<Transform>().position;
 		newHintStart = GameObject.FindGameObjectWithTag("NewHint").GetComponent<Transform>().position;
 		newObjectiveStart = GameObject.FindGameObjectWithTag("NewObjective").GetComponent<Transform>().position;
@@ -307,6 +310,28 @@ public class TextScroller : ButtonAction
 				//Debug.Log("Stopping Point: " + stoppingPoint + " Current Char: " + currChar + " Processing: " + processing);
 				//Debug.Log(text);
 			}
+		}
+	}
+
+	public void ProcessRemoveObjective()
+	{
+		if (objectiveDiscoveredAudio.Length != 0)
+		{
+			int randomClip = UnityEngine.Random.Range(0, objectiveDiscoveredAudio.Length);
+			voiceAudioSource.clip = objectiveDiscoveredAudio[randomClip];
+			sfxAudioSource.Play();
+		}
+
+		GameObject.FindGameObjectWithTag("ObjectiveComplete").GetComponent<FadeInFadeOut>().FadeOut(0);
+		GameObject.FindGameObjectWithTag("ObjectiveComplete").GetComponent<FadeIntoObject>().FocusOn(); 	
+		
+		if (lines[index].options.objectiveText != "")
+		{
+			GameObject.FindObjectOfType<NotepadManager>().RemoveNote(lines[index].options.removeObjectiveWithText);
+		}
+		else
+		{
+			Debug.Log("You are trying to remove a blank objective from the notepad.");
 		}
 	}
 
@@ -557,6 +582,7 @@ public class TextScroller : ButtonAction
 			}
 
 			// Reset positions of New items from last call to this method
+			GameObject.FindGameObjectWithTag("ObjectiveComplete").GetComponent<Transform>().position = objectiveCompleteStart;
 			GameObject.FindGameObjectWithTag("NewLocation").GetComponent<Transform>().position = newLocationStart;
 			GameObject.FindGameObjectWithTag("NewHint").GetComponent<Transform>().position = newHintStart;
 			GameObject.FindGameObjectWithTag("NewObjective").GetComponent<Transform>().position = newObjectiveStart;
@@ -575,6 +601,10 @@ public class TextScroller : ButtonAction
 				count++;
 			}
 			if (lines[index].options.isObjective)
+			{
+				count++;
+			}
+			if (lines[index].options.removesObjective)
 			{
 				count++;
 			}
@@ -623,7 +653,7 @@ public class TextScroller : ButtonAction
 						GameObject.FindGameObjectWithTag("NewLocation").GetComponent<Transform>().position = temp;
 					}
 
-					if (lines[index].options.isKey && tempCount <= 1)
+					if (lines[index].options.isKey && tempCount <= 2)
 					{
 						tempCount++;
 						Vector3 temp = new Vector3(newHintStart.x, newLocationStart.y - offset*tempCount, newLocationStart.z);
@@ -631,7 +661,7 @@ public class TextScroller : ButtonAction
 						GameObject.FindGameObjectWithTag("NewHint").GetComponent<Transform>().position = temp;
 					}
 
-					if (lines[index].options.isObjective && tempCount <= 1)
+					if (lines[index].options.isObjective && tempCount <= 2)
 					{
 						tempCount++;
 						Vector3 temp = new Vector3(newObjectiveStart.x, newObjectiveStart.y - offset*tempCount, newObjectiveStart.z);
@@ -639,11 +669,26 @@ public class TextScroller : ButtonAction
 						GameObject.FindGameObjectWithTag("NewObjective").GetComponent<Transform>().position = temp;
 					}
 
+					if (lines[index].options.removesObjective && tempCount <= 2)
+					{
+						tempCount++;
+						Vector3 temp = new Vector3(objectiveCompleteStart.x, objectiveCompleteStart.y - offset*tempCount, objectiveCompleteStart.z);
+						
+						GameObject.FindGameObjectWithTag("ObjectiveComplete").GetComponent<Transform>().position = temp;
+					}
+
 				}
 			}
+
 			offset = 0;
 			currentTag = 0;
 			processing = false;
+
+			if (lines[index].options.removesObjective)
+			{
+				//Debug.Log("Processing Remove Objective");
+				ProcessRemoveObjective();
+			}
 
 			if (lines[index].options.fadeInOnly)
 			{

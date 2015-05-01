@@ -65,7 +65,8 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 
 	private bool hasParent = false;
 	
-	private MonoBehaviour endedResponseWithLocation;
+	private MonoBehaviour endedResponse;
+
 	private GameObject triggeredLocation;
 	
 	private DialogQueuer option;
@@ -84,7 +85,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		
 		GameObject go = GameObject.FindGameObjectWithTag("GameController");
 		option = go.GetComponent<DialogQueuer>();
-		
+
 		// Populate variables
 		foreach(TheseDialogQueuers d in dialogQueuers)
 		{
@@ -321,8 +322,6 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		Debug.Log("In DialogForks textscrollerended");
 		
 		chatWindow.GetComponent<Image>().enabled = false;
-		//chatWindow.GetComponent<BoxCollider2D>().enabled = false;
-		//chatWindow.GetComponentInChildren<Text>().enabled = false;
 
 		foreach (BoxCollider2D d in chatWindow.GetComponentsInChildren<BoxCollider2D>())
 		{
@@ -334,22 +333,14 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 			d.enabled = false;
 		}
 
-		if(processLocation)
-		{
-			//Debug.Log("In Second Dialogforks textscrollerended");
-			if(endedResponseWithLocation is TextScroller.TextScrollerEndedResponder)
-			{
-				(endedResponseWithLocation as TextScroller.TextScrollerEndedResponder).textScrollerEnded();
-			}
-			else
-			{
-				Debug.Log("Ended responder must implement TextScrollerEndedResponder");
-			}
-		}
-		else
-		{
-			//Debug.Log("In Third dialogForks textscrollerended");
-		}
+//		if(this is TextScroller.TextScrollerEndedResponder)
+//		{
+//			(this as TextScroller.TextScrollerEndedResponder).textScrollerEnded();
+//		}
+//		else
+//		{
+//			Debug.Log("Ended responder must implement TextScrollerEndedResponder");
+//		}
 		
 		//Destroy(this);
 	}

@@ -386,10 +386,11 @@ public class TextScroller : ButtonAction
 			voiceAudioSource.clip = objectiveDiscoveredAudio[randomClip];
 			sfxAudioSource.Play();
 		}
+		GameObject.FindGameObjectWithTag("NewObjective").GetComponent<FadeInFadeOut>().FadeOut(0);
 		GameObject.FindGameObjectWithTag("NewObjective").GetComponent<FadeIntoObject>().FocusOn(); 	
 
 		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeInFadeOut>().FadeOut(0);
-		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeInOnly>().takeAction();
+		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeIntoObject>().FocusOn();
 
 		if (lines[index].options.objectiveText != "")
 		{
@@ -410,9 +411,11 @@ public class TextScroller : ButtonAction
 			sfxAudioSource.Play();
 		}
 		DataHolder.locationsFound++;
-		
+
+		GameObject.FindGameObjectWithTag("NewLocation").GetComponent<FadeInFadeOut>().FadeOut(0);
 		GameObject.FindGameObjectWithTag("NewLocation").GetComponent<FadeIntoObject>().FocusOn(); 
-		
+
+		GameObject.FindGameObjectWithTag("StaticMap").GetComponent<FadeInFadeOut>().FadeOut(0);
 		GameObject.FindGameObjectWithTag("StaticMap").GetComponent<FadeIntoObject>().FocusOn();
 
 		Debug.Log(lines[index].line);
@@ -429,11 +432,12 @@ public class TextScroller : ButtonAction
 		}
 
 		DataHolder.hintsFound++;
-		
+
+		GameObject.FindGameObjectWithTag("NewHint").GetComponent<FadeInFadeOut>().FadeOut(0);
 		GameObject.FindGameObjectWithTag("NewHint").GetComponent<FadeIntoObject>().FocusOn();
 
 		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeInFadeOut>().FadeOut(0);
-		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeInOnly>().takeAction(); 
+		GameObject.FindGameObjectWithTag("Print").GetComponent<FadeIntoObject>().FocusOn(); 
 
 		if (lines[index].options.hintsText != "")
 		{

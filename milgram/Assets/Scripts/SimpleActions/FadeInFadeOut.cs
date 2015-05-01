@@ -19,7 +19,7 @@ using System;
 public class FadeInFadeOut : MonoBehaviour
 {
 	// publically editable speed
-	public bool disabled = false;
+	[NonSerialized]public bool disabled = false;
 	public Image[] gameObjectsToFade;
 	public float fadeDelay = 0.0f; 
 	public float fadeTime = 0.5f; 

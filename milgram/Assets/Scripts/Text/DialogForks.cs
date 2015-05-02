@@ -57,6 +57,8 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 	
 	public DialogForks baseFork;
 
+	public bool deleteOnEmpty = false;
+
 	public bool isGameOverSequence = false;
 
 	private bool hasParent = false;
@@ -286,6 +288,11 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		{
 			gameObject.GetComponent<FadeInFadeOut>().FadeOut(0);
 			gameObject.GetComponent<FadeInFadeOut>().disabled = true;
+
+			if (deleteOnEmpty)
+			{
+				Destroy(gameObject);
+			}
 		}
 		catch(NullReferenceException e){}
 

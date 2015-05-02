@@ -51,6 +51,7 @@ public class Button : MonoBehaviour
 			if (action is DialogForks && gameObject.CompareTag("HintElement"))
 			{
 				DialogForks d = action as DialogForks;
+
 				if (d.dialogQueuers.Count == 0 || d.delete)
 				{
 					GameObject.FindObjectOfType<NotepadManager>().RemoveHint(gameObject.GetComponent<Text>().text);

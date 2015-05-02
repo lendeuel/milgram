@@ -75,14 +75,19 @@ public class TextScroller : ButtonAction
 	public LineAndSpeaker[] linesToLoad;
 	public float lettersPerSecond=15;
 	public MonoBehaviour endedResponse;
+
 	private float mTimeElapsed=0;
 	private int index = 0;
 	private bool displayAll=false;
 	private List<LineAndSpeaker> lines;
+
 	public CharacterToMaterial[] characterToMaterialMapping;
 	private Image chatWindow;
 	private bool hasEnded=false;
-	
+
+	public bool startAtNCharacters = true;
+	public int n = 25;
+
 	private string[] splitString;
 	private int offset = 0;
 	private int currentTag = 0;
@@ -245,7 +250,18 @@ public class TextScroller : ButtonAction
 				lettersPerSecond = lines[index].lettersPerSecond;
 				
 				mTimeElapsed += Time.deltaTime;
-				int stoppingPoint = (int)(mTimeElapsed * lettersPerSecond) + offset;
+
+				int stoppingPoint = 0;
+
+				if (startAtNCharacters)
+				{
+					stoppingPoint = (int)(mTimeElapsed * lettersPerSecond) + n + offset;
+				}
+				else
+				{
+					stoppingPoint = (int)(mTimeElapsed * lettersPerSecond) + offset;
+				}
+
 				if(stoppingPoint>lines[index].line.Length)
 				{
 					stoppingPoint=lines[index].line.Length;

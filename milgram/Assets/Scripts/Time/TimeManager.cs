@@ -6,6 +6,13 @@ using UnityEngine.UI;
 
 public class TimeManager : MonoBehaviour
 {
+	private AudioSource source;
+
+	public AudioClip hourChange;
+	private int lastDay;
+	public AudioClip dayChange;
+	private int lastHour;
+
 	public int penaltyForSkipping = 7;
 
 	public int spacing = 2;
@@ -30,6 +37,10 @@ public class TimeManager : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		source = gameObject.GetComponent<AudioSource>();
+
+		source.volume = DataHolder.sfxVolume;
+
 		for (int i = 0; i < spacing; i++)
 		{
 			theSpaces += " ";
@@ -51,7 +62,10 @@ public class TimeManager : MonoBehaviour
 		}
 		
 		ts = new TimeSpan(startingDays, startingHours, startingMinutes, 0);
-		
+
+		lastDay = startingDays;
+		lastHour = startingHours;
+
 		SetNumbers();
 		
 		t = new Timer(defaultIntervalInMilliseconds);
@@ -95,7 +109,29 @@ public class TimeManager : MonoBehaviour
 		}
 		
 		ts = ts.Subtract(new TimeSpan(days, hours, minutes, 0, 0));
-		
+
+		if (lastDay != ts.Days)
+		{
+			lastDay = ts.Days;
+
+			if (dayChange != null)
+			{
+				source.clip = dayChange;
+				source.Play();
+			}
+		}
+
+		if (lastHour != ts.Hours)
+		{
+			lastHour = ts.Hours;
+
+			if (hourChange != null)
+			{
+				source.clip = hourChange;
+				source.Play();
+			}
+		}
+
 		startingDays = ts.Days;
 		startingHours = ts.Hours;
 		startingMinutes = ts.Minutes;

@@ -16,11 +16,11 @@ public class RetractIfNotClicked : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		Debug.Log("In RetractIfNotClicked Update.");
+		//Debug.Log("In RetractIfNotClicked Update.");
 
 		if (Input.GetKeyUp(KeyCode.Mouse0))
 		{
-			Debug.Log("In RetractIfNotClicked MouseUp.");
+			//Debug.Log("In RetractIfNotClicked MouseUp.");
 
 			RaycastHit2D hit = new RaycastHit2D();        
 			Ray ray = GameObject.FindGameObjectWithTag("MainCamera").camera.ScreenPointToRay (Input.mousePosition);
@@ -31,7 +31,7 @@ public class RetractIfNotClicked : MonoBehaviour
 
 			if (hit)
 			{
-				Debug.Log(hit.collider.gameObject.name);
+				//Debug.Log(hit.collider.gameObject.name);
 
 				if (hit.collider.gameObject != ignore)
 				{
@@ -41,33 +41,33 @@ public class RetractIfNotClicked : MonoBehaviour
 					{
 						if (hit.collider.gameObject == g)
 						{
-							Debug.Log("Clicked!!!");
+							//Debug.Log("Clicked!!!");
 
 							retract = false;
 
 							break;
 						}
-						else
-						{
-							Debug.Log("Clicked outside");
-						}
+						//else
+						//{
+						//	Debug.Log("Clicked outside");
+						//}
 					}
 
 					if (retract)
 					{
-						Debug.Log("Retracting " + ignore.name);
+						//Debug.Log("Retracting " + ignore.name);
 
 						Retract();
 					}
 				}
-				else
-				{
-					Debug.Log("Hit " + ignore.name);
-				}
+				//else
+				//{
+				//	Debug.Log("Hit " + ignore.name);
+				//}
 			}
 			else
 			{
-				Debug.Log ("Clicked outside of any object.");
+				//Debug.Log ("Clicked outside of any object.");
 
 				Retract();
 			}

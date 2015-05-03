@@ -86,7 +86,7 @@ public class TextScroller : ButtonAction
 	private bool hasEnded=false;
 
 	public bool startAtNCharacters = true;
-	public int n = 25;
+	public int startIndex = 25;
 
 	private string[] splitString;
 	private int offset = 0;
@@ -110,6 +110,8 @@ public class TextScroller : ButtonAction
 	private Vector3 objectiveCompleteStart;
 	void Start()
 	{
+		startIndex = startIndex - 1;
+
 		objectiveCompleteStart = GameObject.FindGameObjectWithTag("ObjectiveComplete").GetComponent<Transform>().position;
 		newLocationStart = GameObject.FindGameObjectWithTag("NewLocation").GetComponent<Transform>().position;
 		newHintStart = GameObject.FindGameObjectWithTag("NewHint").GetComponent<Transform>().position;
@@ -255,7 +257,7 @@ public class TextScroller : ButtonAction
 
 				if (startAtNCharacters)
 				{
-					stoppingPoint = (int)(mTimeElapsed * lettersPerSecond) + n + offset;
+					stoppingPoint = (int)(mTimeElapsed * lettersPerSecond) + startIndex + offset;
 				}
 				else
 				{
@@ -328,6 +330,144 @@ public class TextScroller : ButtonAction
 				//Debug.Log("Stopping Point: " + stoppingPoint + " Current Char: " + currChar + " Processing: " + processing);
 				//Debug.Log(text);
 			}
+		}
+	}
+
+	public void ProcessLine()
+	{
+		int[] openingTagIndexes;
+		int[] closingTagIndexes;
+
+		string[] theSplit = lines[index].line.Split(new char[]{'<','>'});
+		int numOpen = 0;
+		int numClose = 0;
+
+		for (int i = 0; i < theSplit.Length-1; i = i+2)
+		{
+			numOpen++;
+			numClose++;
+		}
+
+		string currChar = "";
+		string text = lines [index].line.Substring (0, startIndex);
+		if (text.Length != 0)
+		{
+			currChar = lines[index].line.Substring(text.Length - 1, 1);
+		}
+
+		//Debug.Log("Start Index: " + startIndex + " Start Char: " + currChar);
+		//Debug.Log("Open: " + numOpen + " Close: " + numClose);
+
+		openingTagIndexes = new int[numOpen];
+		closingTagIndexes = new int[numClose];
+
+		openingTagIndexes[0] = lines[index].line.IndexOf("<");
+		closingTagIndexes[0] = lines[index].line.IndexOf(">");
+
+		//Debug.Log(openingTagIndexes[0] + " " + closingTagIndexes[0]);
+
+		//Get indexes of all opening and closing tags.
+		for (int i = 1; i < numOpen; i++)
+		{
+			openingTagIndexes[i] = lines[index].line.IndexOf("<", openingTagIndexes[i-1] + 1);
+			closingTagIndexes[i] = lines[index].line.IndexOf(">", closingTagIndexes[i-1] + 1);
+
+			//Debug.Log(openingTagIndexes[i] + " " + closingTagIndexes[i]);
+		}
+
+		for (int i = 0; i < numOpen; i++)
+		{
+			currentTag = i / 2;
+
+			//Debug.Log("CurrentTag: " + currentTag);
+
+			// Start index is before first open tag 
+			if (startIndex <= openingTagIndexes[0])
+			{
+				//Debug.Log("Index is before first < tag.");
+
+				return;
+			}
+
+			// Start index is on first open tag.  Can ignore
+			if (i % 2 == 0 && startIndex == openingTagIndexes[i])
+			{
+				//Debug.Log("Index is on first < tag.");
+
+				return;
+			}
+
+			// Start index is in between first tag.
+			if (i % 2 == 0 && startIndex > openingTagIndexes[i] && startIndex < closingTagIndexes[i])
+			{
+				//Debug.Log("Index is between first < and >.");
+				
+				firstTag = false;
+				
+				splitString = lines[index].line.Split(new char[]{'<','>'});
+
+				offset += splitString[1+(4*currentTag)].Length + 2 - (startIndex - openingTagIndexes[i]);
+				
+				processing = true;
+
+				return;
+			}
+
+			// Start index is on first close tag. Can ignore.
+			if (i % 2 == 0 && startIndex == closingTagIndexes[i])
+			{
+				//Debug.Log("Index is on first > tag.");
+				
+				return;
+			}
+
+			// Start index is in between first and second tag
+			if (i % 2 == 1 && startIndex > closingTagIndexes[i-1] && startIndex < openingTagIndexes[i])
+			{
+				//Debug.Log("Index is in between tags.");
+				
+				processing = true;
+
+				return;
+			}
+
+			// Start index is on second open tag.
+			if (i % 2 == 1 && startIndex == openingTagIndexes[i])
+			{
+				//Debug.Log("Index is on second < tag.");
+
+				currentTag++;
+
+				offset += (closingTagIndexes[i] - startIndex) + 1;
+
+				return;
+			}
+
+			// Start index is in between second tags.
+			if (i % 2 == 1 && startIndex > openingTagIndexes[i] && startIndex < closingTagIndexes[i])
+			{
+				//Debug.Log("Index is in between second < and >.");
+
+				currentTag++;
+
+				offset +=  closingTagIndexes[i] - startIndex + 1;
+
+				return;
+			}
+
+			// Start index is on second close tag.
+			if (i % 2 == 1 && startIndex == closingTagIndexes[i])
+			{
+				currentTag++;
+
+				//Debug.Log("Index is on second > tag.");
+
+				offset += 1;
+
+				return;
+			}
+
+			//Debug.Log("Case unaccounted for");
 		}
 	}
 
@@ -751,6 +891,11 @@ public class TextScroller : ButtonAction
 			{
 				//Debug.Log("Processing Modify.");
 				ProcessModify();
+			}
+
+			if (lines[index].line.Contains("<"))
+			{
+				ProcessLine();
 			}
 		}
 		

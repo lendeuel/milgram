@@ -51,6 +51,8 @@ public class TheseDialogQueuers
 
 public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 {
+	public bool playInOrder = false;
+
 	public List<TheseDialogQueuers> dialogQueuers;
 	
 	private List<TheseDialogQueuers> emptyDialogueQueuers;
@@ -109,6 +111,11 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 	
 	public void AddQueuers(DialogForks d, int randomNum)
 	{
+		if (d.playInOrder)
+		{
+			playInOrder = true;
+		}
+
 		d.hasParent = true;
 		
 		d.takeAction();
@@ -180,19 +187,22 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 			}
 					
 			int randomNum = 0;
-			
+
 			if (hasAStatRequirement)
 			{
 				randomNum = indexOfStatRequirement;
 			}
 			else
 			{
-				randomNum = UnityEngine.Random.Range(0,dialogQueuers.Count);
-				
+				if (!playInOrder)
+				{
+					randomNum = UnityEngine.Random.Range(0,dialogQueuers.Count);
+				}
+
 				if (!dialogQueuers[randomNum].canBeQueued)
 				{
 					bool noneLeft = true;
-					
+				
 					for(int i = 0; i < dialogQueuers.Count; i++)
 					{
 						if (dialogQueuers[i].canBeQueued)
@@ -201,7 +211,7 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 							noneLeft = false;
 						}
 					}
-					
+				
 					if (noneLeft)
 					{
 						NoneLeft();

@@ -25,8 +25,9 @@ public class Options
 	public DialogForks hintsDialogFork;
 	public bool hasModify;
 	public StatsToModify stats;
-	//public bool hasAnimation;
-	//public Animator animation;
+	public bool hasAnimation;
+	public Animator animation;
+
 	public bool fadeInOnly;
 	public FadeInFadeOut gameObjectToFadeIn;
 
@@ -636,8 +637,7 @@ public class TextScroller : ButtonAction
 
 	public void ProcessAnimation()
 	{
-		//PlayMode m = PlayMode.StopSameLayer;
-		//lines[index].options.animation.Play(m);
+		lines[index].options.animation.Play(0);
 	}
 
 	public void addString(LineAndSpeaker s)
@@ -854,10 +854,10 @@ public class TextScroller : ButtonAction
 				ProcessRemoveObjective();
 			}
 
-			//if (lines[index].options.hasAnimation)
+			if (lines[index].options.hasAnimation)
 			{
 				//Debug.Log("Processing Animation");
-				//ProcessAnimation();
+				ProcessAnimation();
 			}
 
 			if (lines[index].options.fadeInOnly)

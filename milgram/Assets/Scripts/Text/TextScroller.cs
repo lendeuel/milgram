@@ -38,6 +38,9 @@ public class Options
 	[NonSerialized]public bool isGameOverSequence;
 	[NonSerialized]public bool hasUserFork;
 	[NonSerialized]public UserFork userFork;
+	[NonSerialized]public bool loadsScene;
+	[NonSerialized]public string loadString;
+
 	//public bool hasUserFork;
 	//public UserFork userFork;
 
@@ -185,6 +188,12 @@ public class TextScroller : ButtonAction
 				{
 					//Debug.Log("In Game Over");
 					ProcessGameOver();
+				}
+
+				if (lines[index-1].options.loadsScene)
+				{
+					//Debug.Log("In Game Over");
+					ProcessLoadSequence();
 				}
 			}
 
@@ -638,6 +647,11 @@ public class TextScroller : ButtonAction
 	public void ProcessAnimation()
 	{
 		lines[index].options.animation.Play(0);
+	}
+
+	public void ProcessLoadSequence()
+	{
+		GameObject.FindGameObjectWithTag("GameController").GetComponent<LoadScene>().Load(lines[index].options.loadString);
 	}
 
 	public void addString(LineAndSpeaker s)

@@ -35,6 +35,9 @@ public class TheseDialogQueuers
 
 	public bool closeOnClick = true;
 
+	public bool loadsScene = false;
+	public string sceneString;
+
 	public bool hasUserFork;
 	public UserFork userFork;
 
@@ -93,6 +96,12 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 			{
 				d.lines[d.lines.Length-1].options.hasUserFork = true;
 				d.lines[d.lines.Length-1].options.userFork = d.userFork;
+			}
+
+			if (d.loadsScene)
+			{
+				d.lines[d.lines.Length-1].options.loadsScene = true;
+				d.lines[d.lines.Length-1].options.loadString = d.sceneString;
 			}
 
 			if (isGameOverSequence)

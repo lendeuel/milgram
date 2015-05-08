@@ -39,7 +39,7 @@ public class FadeIntoObject : MonoBehaviour
 			fd.gameObjectsToFade = new Image[1];
 			fd.gameObjectsToFade[0] = theGameObject.GetComponent<Image>();
 			fd.fadeTime = delayToFadeOut;
-
+			fd.maxAlpha = 1f;
 			fd.FadeIn();
 
 			yield return new WaitForSeconds(delayToFadeOut);

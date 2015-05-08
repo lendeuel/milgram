@@ -651,7 +651,7 @@ public class TextScroller : ButtonAction
 
 	public void ProcessLoadSequence()
 	{
-		GameObject.FindGameObjectWithTag("GameController").GetComponent<LoadScene>().Load(lines[index].options.loadString);
+		GameObject.FindGameObjectWithTag("GameController").GetComponent<LoadScene>().Load(lines[index-1].options.loadString);
 	}
 
 	public void addString(LineAndSpeaker s)

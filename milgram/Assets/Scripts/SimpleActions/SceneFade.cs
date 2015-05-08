@@ -4,10 +4,9 @@ using UnityEngine.UI;
 
 public class SceneFade : MonoBehaviour
 {
-	//public Sprite blackImageToFade;
-	//public Sprite startImageToFade;
-
 	public float fadeSpeed = 1.5f;          // Speed that the screen fades to and from black.
+
+	public float startDelay = 3f;
 
 	private bool sceneStarting = true;      // Whether or not the scene is still fading in.
 
@@ -21,24 +20,21 @@ public class SceneFade : MonoBehaviour
 	private bool loadByIndex = false;
 
 	private GameObject goChild;
+	private GameObject go;
 
 	private bool fadeStarted = false;
+
 	void Awake ()
 	{ 
-		GameObject go = GameObject.FindGameObjectWithTag("Fader");
+		go = GameObject.FindGameObjectWithTag("Fader");
 		goChild = GameObject.FindGameObjectWithTag("FaderChild");
 
 		go.name = "screenFader";
 
 		// Set the texture so that it is the the size of the screen and covers it.
 		image = go.GetComponent<Image>();
-		//image.sprite = blackImageToFade;
 
 		image2 = goChild.GetComponent<Image>();
-		//image.sprite = startImageToFade;
-
-		//image.color = new Color(image.color.r,image.color.g,image.color.b,1);
-		//image2.color = new Color(image.color.r,image.color.g,image.color.b,1);
 
 		RectTransform temp = go.GetComponent<RectTransform>();
 		temp.sizeDelta = new Vector2(Screen.width, Screen.height);
@@ -61,20 +57,42 @@ public class SceneFade : MonoBehaviour
 		}
 	}
 	
-	
+	IEnumerator Wait(GameObject theGameObject)
+	{
+		if (theGameObject.GetComponent<FadeInFadeOut>() != null)
+		{
+			yield return new WaitForSeconds(startDelay);
+			
+			theGameObject.GetComponent<FadeInFadeOut>().FadeOut(1);
+		}
+		else
+		{
+			FadeInFadeOut fd = theGameObject.AddComponent<FadeInFadeOut>();
+			fd.gameObjectsToFade = new Image[1];
+			fd.gameObjectsToFade[0] = theGameObject.GetComponent<Image>();
+			fd.fadeTime = startDelay;
+			fd.maxAlpha = 1f;
+			
+			yield return new WaitForSeconds(startDelay);
+			
+			fd.FadeOut(1);
+		}
+	}
+
 	void FadeToClear ()
 	{
 		// Lerp the colour of the texture between itself and transparent.
 		image.enabled = true;
 
-
-		image.color = Color.Lerp(image.color, Color.clear, fadeSpeed * Time.deltaTime);
+		StartCoroutine("Wait", go);
+		//image.color = Color.Lerp(image.color, Color.clear, fadeSpeed * .999f * Time.deltaTime);
 
 		if (image2.sprite != null)
 		{
-			//image2.enabled = true;
+			image2.enabled = true;
 
-			//image2.color = Color.Lerp(image.color, Color.clear, fadeSpeed * Time.deltaTime);
+			StartCoroutine("Wait", goChild);
+			//image2.color = Color.Lerp(image.color, Color.clear, fadeSpeed * .999f * Time.deltaTime);
 		}
 	}
 	
@@ -88,33 +106,32 @@ public class SceneFade : MonoBehaviour
 	
 	void StartScene ()
 	{
-		// Fade the texture to clear.
-		FadeToClear();
-
+		// Fade the texture to clear
 		if (!fadeStarted)
 		{
-			if (image2.sprite != null)
-			{
-				goChild.GetComponent<FadeIntoObject>().FocusOn();
-			}
+			FadeToClear();
+
+			fadeStarted = true;
+
+			sceneStarting = false;
 		}
 
-		if (image2.sprite != null)
-		{
-			bool blackFadedOut = false;
-			bool imageFadedOut = false;
-
-			// If the texture is almost clear...
-			if(image.color.a <= 0.05f)
-			{
-				// ... set the colour to clear and disable the GUITexture.
-				image.color = Color.clear;
-				image.enabled = false;
-
-				sceneStarting = false;
-
-				blackFadedOut = true;
-			}
+//		if (image2.sprite != null)
+//		{
+//			bool blackFadedOut = false;
+//			bool imageFadedOut = false;
+//
+//			// If the texture is almost clear...
+//			if(image.color.a <= 0.05f)
+//			{
+//				// ... set the colour to clear and disable the GUITexture.
+//				image.color = Color.clear;
+//				image.enabled = false;
+//
+//				//sceneStarting = false;
+//
+//				blackFadedOut = true;
+//			}
 //			if(image2.color.a <= 0.05f)
 //			{
 //				// ... set the colour to clear and disable the GUITexture.
@@ -123,26 +140,26 @@ public class SceneFade : MonoBehaviour
 //
 //				imageFadedOut = true;
 //			}
-
-			// The scene is no longer starting.
-			if (blackFadedOut && imageFadedOut)
-			{
-				sceneStarting = false;
-			}
-		}
-		else
-		{
-			// If the texture is almost clear...
-			if(image.color.a <= 0.05f)
-			{
-				// ... set the colour to clear and disable the GUITexture.
-				image.color = Color.clear;
-				image.enabled = false;
-				
-				// The scene is no longer starting.
-				sceneStarting = false;
-			}
-		}
+//
+//			// The scene is no longer starting.
+//			if (blackFadedOut && imageFadedOut)
+//			{
+//				sceneStarting = false;
+//			}
+//		}
+//		else
+//		{
+//			// If the texture is almost clear...
+//			if(image.color.a <= 0.05f)
+//			{
+//				// ... set the colour to clear and disable the GUITexture.
+//				image.color = Color.clear;
+//				image.enabled = false;
+//				
+//				// The scene is no longer starting.
+//				sceneStarting = false;
+//			}
+//		}
 	}
 	
 	public void LoadScene(int index)

@@ -24,6 +24,7 @@ public class FadeInFadeOut : MonoBehaviour
 	public float fadeDelay = 0.0f; 
 	public float fadeTime = 0.5f; 
 	[Range(0,1)]public float maxAlpha = .5f;
+	public bool fadeScreen = false;
 	private bool fadeInOnStart = false; 
 	private bool fadeOutOnStart = true;
 	private bool logInitialFadeSequence = false; 
@@ -53,8 +54,12 @@ public class FadeInFadeOut : MonoBehaviour
 			logInitialFadeSequence = true; 
 			FadeIn (); 
 		}
-		
-		if (fadeOutOnStart)
+
+		if (fadeScreen)
+		{
+			FadeOut(fadeTime);
+		}
+		else if (fadeOutOnStart)
 		{
 			FadeOut (0); 
 		}

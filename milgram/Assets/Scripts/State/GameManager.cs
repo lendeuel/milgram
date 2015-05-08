@@ -89,16 +89,66 @@ public class GameManager : MonoBehaviour
 
 		//Debug.Log("Censor: " + DataHolder.censorText + " Music Volume: " + DataHolder.musicVolume + " SFX Volume: " + DataHolder.sfxVolume);
 
+		if (GameObject.FindGameObjectWithTag("Map").GetComponent<MoveToTools>().movedOut)
+		{
+			Debug.Log("MapTrue");
+			
+			GameObject.FindGameObjectWithTag("StaticFile").GetComponent<BoxCollider2D>().enabled = false;
+		}
+		else
+		{
+			Debug.Log("MapFalse");
+			
+			GameObject.FindGameObjectWithTag("StaticFile").GetComponent<BoxCollider2D>().enabled = true;
+		}
+
+
+		if (GameObject.FindGameObjectWithTag("ToolRack").GetComponent<MoveToTools>().movedOut)
+		{
+			Debug.Log("ToolRackTrue");
+
+			GameObject.FindGameObjectWithTag("StaticMap").GetComponent<BoxCollider2D>().enabled = false;
+		}
+		else
+		{
+			Debug.Log("ToolRackFalse");
+
+			GameObject.FindGameObjectWithTag("StaticMap").GetComponent<BoxCollider2D>().enabled = true;
+		}
+
 		if (trackStates.notepadHints.activeSelf || trackStates.notepadNotes.activeSelf)
 		{
+			Debug.Log("NotepadTrue");
+
 			DataHolder.notepadOpen = true;
+
+			GameObject.FindGameObjectWithTag("StaticFile").GetComponent<BoxCollider2D>().enabled = false;
 		}
-		else if (!trackStates.notepadHints.activeSelf && !trackStates.notepadNotes.activeSelf)
+		else if (!trackStates.notepadHints.activeSelf && !trackStates.notepadNotes.activeSelf && !GameObject.FindGameObjectWithTag("Map").GetComponent<MoveToTools>().movedOut)
 		{
+			Debug.Log("NotepadFalse");
+
 			DataHolder.notepadOpen = false;
+
+			GameObject.FindGameObjectWithTag("StaticFile").GetComponent<BoxCollider2D>().enabled = true;
 		}
 
 		DataHolder.fileOpen = trackStates.file.activeSelf;
+
+		if (DataHolder.fileOpen)
+		{
+			Debug.Log("FileTrue");
+
+			GameObject.FindGameObjectWithTag("Notepad").GetComponent<BoxCollider2D>().enabled = false;
+		}
+		else
+		{
+			Debug.Log("FileFalse");
+
+			GameObject.FindGameObjectWithTag("Notepad").GetComponent<BoxCollider2D>().enabled = true;
+		}
+
+
 
 		//Debug.Log("" + DataHolder.notepadOpen + "" + DataHolder.fileOpen);
 

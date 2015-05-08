@@ -24,7 +24,11 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 	public override void takeAction ()
 	{
 		chatWindow.GetComponent<Image>().enabled = true;
-		chatWindow.GetComponent<BoxCollider2D>().enabled = true;
+		foreach(BoxCollider2D box in chatWindow.GetComponents<BoxCollider2D>())
+		{
+			box.enabled = true;
+		}
+		//chatWindow.GetComponent<BoxCollider2D>().enabled = true;
 		chatWindow.GetComponentInChildren<Text>().enabled = true;
 
 		s.addStrings(lines);
@@ -45,7 +49,11 @@ public class DialogQueuer : ButtonAction, TextScroller.TextScrollerEndedResponde
 	{
 		Debug.Log("In DialogQueuer textscrollerended");
 		chatWindow.GetComponent<Image>().enabled = false;
-		chatWindow.GetComponent<BoxCollider2D>().enabled = false;
+		foreach(BoxCollider2D box in chatWindow.GetComponents<BoxCollider2D>())
+		{
+			box.enabled = true;
+		}
+		//chatWindow.GetComponent<BoxCollider2D>().enabled = false;
 		chatWindow.GetComponentInChildren<Text>().enabled = false;
 	
 		if(endedResponse!=null)

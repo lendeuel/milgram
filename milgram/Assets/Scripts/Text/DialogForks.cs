@@ -336,6 +336,11 @@ public class DialogForks : ButtonAction, TextScroller.TextScrollerEndedResponder
 		
 		chatWindow.GetComponent<Image>().enabled = false;
 
+		foreach(BoxCollider2D box in chatWindow.GetComponents<BoxCollider2D>())
+		{
+			box.enabled = true;
+		}
+
 		foreach (BoxCollider2D d in chatWindow.GetComponentsInChildren<BoxCollider2D>())
 		{
 			d.enabled = false;

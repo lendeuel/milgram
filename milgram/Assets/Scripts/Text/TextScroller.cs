@@ -97,7 +97,8 @@ public class TextScroller : ButtonAction
 	private int currentTag = 0;
 	private bool processing = false;
 	private bool firstTag = true;
-	
+	private bool setEntered = false;
+
 	private AudioSource voiceAudioSource;
 	private AudioSource sfxAudioSource;
 	
@@ -112,6 +113,7 @@ public class TextScroller : ButtonAction
 	private Vector3 newHintStart;
 	private Vector3 newObjectiveStart;
 	private Vector3 objectiveCompleteStart;
+
 	void Start()
 	{
 		startIndex = startIndex - 1;
@@ -285,13 +287,16 @@ public class TextScroller : ButtonAction
 				if (text.Length != 0)
 				{
 					currChar = lines[index].line.Substring(text.Length - 1, 1);
+
+					//Debug.Log(currChar);
 				}
 				
 				bool enteredFirst = false;
-				
+
 				if (currChar == "<" && firstTag)
 				{
-					//Debug.Log("IN < FIRST");
+					Debug.Log("IN < FIRST");
+
 					enteredFirst = true;
 					
 					firstTag = false;
@@ -313,12 +318,12 @@ public class TextScroller : ButtonAction
 				{
 					text += "</color>";
 					
-					//Debug.Log("IN PROCESSING");
+					Debug.Log("IN PROCESSING");
 				}
 				
 				if (currChar == "<" && !firstTag && !enteredFirst)
 				{
-					//Debug.Log("IN < SECOND");
+					Debug.Log("IN < SECOND");
 					
 					currentTag++;
 					
@@ -345,6 +350,8 @@ public class TextScroller : ButtonAction
 
 	public void ProcessLine()
 	{
+		offset = 0;
+
 		int[] openingTagIndexes;
 		int[] closingTagIndexes;
 
@@ -362,11 +369,11 @@ public class TextScroller : ButtonAction
 		string text = lines [index].line.Substring (0, startIndex);
 		if (text.Length != 0)
 		{
-			currChar = lines[index].line.Substring(text.Length - 1, 1);
+			currChar = lines[index].line.Substring(text.Length-1, 1);
 		}
 
-		//Debug.Log("Start Index: " + startIndex + " Start Char: " + currChar);
-		//Debug.Log("Open: " + numOpen + " Close: " + numClose);
+		Debug.Log("Start Index: " + startIndex + " Start Char: " + currChar);
+		Debug.Log("Open: " + numOpen + " Close: " + numClose);
 
 		openingTagIndexes = new int[numOpen];
 		closingTagIndexes = new int[numClose];
@@ -374,7 +381,7 @@ public class TextScroller : ButtonAction
 		openingTagIndexes[0] = lines[index].line.IndexOf("<");
 		closingTagIndexes[0] = lines[index].line.IndexOf(">");
 
-		//Debug.Log(openingTagIndexes[0] + " " + closingTagIndexes[0]);
+		Debug.Log(openingTagIndexes[0] + " " + closingTagIndexes[0]);
 
 		//Get indexes of all opening and closing tags.
 		for (int i = 1; i < numOpen; i++)
@@ -382,19 +389,19 @@ public class TextScroller : ButtonAction
 			openingTagIndexes[i] = lines[index].line.IndexOf("<", openingTagIndexes[i-1] + 1);
 			closingTagIndexes[i] = lines[index].line.IndexOf(">", closingTagIndexes[i-1] + 1);
 
-			//Debug.Log(openingTagIndexes[i] + " " + closingTagIndexes[i]);
+			Debug.Log(openingTagIndexes[i] + " " + closingTagIndexes[i]);
 		}
 
 		for (int i = 0; i < numOpen; i++)
 		{
 			currentTag = i / 2;
 
-			//Debug.Log("CurrentTag: " + currentTag);
+			Debug.Log("CurrentTag: " + currentTag);
 
 			// Start index is before first open tag 
 			if (startIndex <= openingTagIndexes[0])
 			{
-				//Debug.Log("Index is before first < tag.");
+				Debug.Log("Index is before first < tag.");
 
 				return;
 			}
@@ -402,7 +409,7 @@ public class TextScroller : ButtonAction
 			// Start index is on first open tag.  Can ignore
 			if (i % 2 == 0 && startIndex == openingTagIndexes[i])
 			{
-				//Debug.Log("Index is on first < tag.");
+				Debug.Log("Index is on first < tag.");
 
 				return;
 			}
@@ -410,8 +417,10 @@ public class TextScroller : ButtonAction
 			// Start index is in between first tag.
 			if (i % 2 == 0 && startIndex > openingTagIndexes[i] && startIndex < closingTagIndexes[i])
 			{
-				//Debug.Log("Index is between first < and >.");
-				
+				Debug.Log("Index is between first < and >.");
+
+				setEntered = true;
+
 				firstTag = false;
 				
 				splitString = lines[index].line.Split(new char[]{'<','>'});
@@ -426,7 +435,7 @@ public class TextScroller : ButtonAction
 			// Start index is on first close tag. Can ignore.
 			if (i % 2 == 0 && startIndex == closingTagIndexes[i])
 			{
-				//Debug.Log("Index is on first > tag.");
+				Debug.Log("Index is on first > tag.");
 				
 				return;
 			}
@@ -434,7 +443,7 @@ public class TextScroller : ButtonAction
 			// Start index is in between first and second tag
 			if (i % 2 == 1 && startIndex > closingTagIndexes[i-1] && startIndex < openingTagIndexes[i])
 			{
-				//Debug.Log("Index is in between tags.");
+				Debug.Log("Index is in between tags.");
 				
 				processing = true;
 
@@ -444,7 +453,7 @@ public class TextScroller : ButtonAction
 			// Start index is on second open tag.
 			if (i % 2 == 1 && startIndex == openingTagIndexes[i])
 			{
-				//Debug.Log("Index is on second < tag.");
+				Debug.Log("Index is on second < tag.");
 
 				currentTag++;
 
@@ -456,7 +465,7 @@ public class TextScroller : ButtonAction
 			// Start index is in between second tags.
 			if (i % 2 == 1 && startIndex > openingTagIndexes[i] && startIndex < closingTagIndexes[i])
 			{
-				//Debug.Log("Index is in between second < and >.");
+				Debug.Log("Index is in between second < and >.");
 
 				currentTag++;
 
@@ -470,14 +479,14 @@ public class TextScroller : ButtonAction
 			{
 				currentTag++;
 
-				//Debug.Log("Index is on second > tag.");
+				Debug.Log("Index is on second > tag.");
 
 				offset += 1;
 
 				return;
 			}
 
-			//Debug.Log("Case unaccounted for");
+			Debug.Log("Case unaccounted for");
 		}
 	}
 
